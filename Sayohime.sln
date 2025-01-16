@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35707.178 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sayohime", "Sayohime", "{0E5F87CD-99F0-4915-8842-BB320E2D822D}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Sayohime.Shared", "Sayohime.Shared\Sayohime.Shared.shproj", "{F5532B57-A596-400E-8687-92564B90EB9E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sayohime.DesktopGL", "Sayohime.DesktopGL\Sayohime.DesktopGL.csproj", "{72E36DAB-8C54-44F1-978F-80B499546474}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sayohime.BlazorGL", "Sayohime.BlazorGL\Sayohime.BlazorGL.csproj", "{B2C2AF70-7B75-416B-96B6-B59D3A6E55F0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{72E36DAB-8C54-44F1-978F-80B499546474}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72E36DAB-8C54-44F1-978F-80B499546474}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72E36DAB-8C54-44F1-978F-80B499546474}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72E36DAB-8C54-44F1-978F-80B499546474}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2C2AF70-7B75-416B-96B6-B59D3A6E55F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2C2AF70-7B75-416B-96B6-B59D3A6E55F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2C2AF70-7B75-416B-96B6-B59D3A6E55F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2C2AF70-7B75-416B-96B6-B59D3A6E55F0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F5532B57-A596-400E-8687-92564B90EB9E} = {0E5F87CD-99F0-4915-8842-BB320E2D822D}
+		{72E36DAB-8C54-44F1-978F-80B499546474} = {0E5F87CD-99F0-4915-8842-BB320E2D822D}
+		{B2C2AF70-7B75-416B-96B6-B59D3A6E55F0} = {0E5F87CD-99F0-4915-8842-BB320E2D822D}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Sayohime.Shared\Sayohime.Shared.projitems*{72e36dab-8c54-44f1-978f-80b499546474}*SharedItemsImports = 5
+		Sayohime.Shared\Sayohime.Shared.projitems*{b2c2af70-7b75-416b-96b6-b59d3a6e55f0}*SharedItemsImports = 5
+		Sayohime.Shared\Sayohime.Shared.projitems*{f5532b57-a596-400e-8687-92564b90eb9e}*SharedItemsImports = 13
+	EndGlobalSection
+EndGlobal
