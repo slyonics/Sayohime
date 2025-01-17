@@ -24,6 +24,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Main\CrossPlatformGame.cs" />
+    <Compile Include="Models\GameProfile.cs" />
     <Compile Include="Pages\Index.razor.cs" />
     <Compile Include="Program.cs" />
   </ItemGroup>
@@ -56,5 +58,8 @@
     </KniContentReference>
   </ItemGroup>
   <Import Project="..\Sayohime.Shared\Sayohime.Shared.projitems" Label="Shared" />
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="$(SolutionDir)$(SolutionName)Content\JamPacker.exe Enumerate $(SolutionDir)$(SolutionName)Content $(SolutionDir)$(SolutionName).Shared\Main $(TargetDir)" />
+  </Target>
 
 </Project>

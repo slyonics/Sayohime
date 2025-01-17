@@ -44,6 +44,8 @@
     <PackageReference Include="nkast.Xna.Framework.Content.Pipeline.Builder" Version="4.0.9001" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Main\CrossPlatformGame.cs" />
+    <Compile Include="Models\GameProfile.cs" />
     <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -57,5 +59,8 @@
     <None Include="app.manifest" />
   </ItemGroup>
   <Import Project="..\Sayohime.Shared\Sayohime.Shared.projitems" Label="Shared" />
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="$(SolutionDir)$(SolutionName)Content\JamPacker.exe Enumerate $(SolutionDir)$(SolutionName)Content $(SolutionDir)$(SolutionName).Shared\Main $(TargetDir)" />
+  </Target>
 
 </Project>

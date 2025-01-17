@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<View>
+
+	<Panel Anchor="$CenterX,$CenterY" Bounds="-63,-30,126,44" Style="Convobox">
+		<Label Text="Bind NameLabel" Alignment="Vertical" Color="#7F3D3F" Font="Dialogue" Bounds="0,1,126,15"/>
+		<Textbox Name="NamingBox" Text="Jaime" Style="BattleFrame" ActiveStyle="BattleFrame" Active="True" Bounds="0,2,84,20" InnerMargin="8,1,8,6" Font="Dialogue" Alignment="Vertical" Validator="ValidateName" Color="#EFA70F"/>
+	</Panel>
+
+</View>
