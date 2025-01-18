@@ -27,6 +27,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\GameProfile.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\HeroModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\HeroRecord.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\ItemModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ItemRecord.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ModelCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ModelProperty.cs" />

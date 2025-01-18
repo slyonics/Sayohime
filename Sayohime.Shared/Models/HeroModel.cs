@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace Sayohime.Models
@@ -11,5 +12,11 @@ namespace Sayohime.Models
 		{
 
 		}
-	}
+
+        public HeroModel(BinaryReader binaryReader)
+            : base()
+        {
+
+        }
+    }
 }

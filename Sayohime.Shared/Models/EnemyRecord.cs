@@ -36,12 +36,12 @@ namespace Sayohime.Models
             Magic = clone.Magic;
             Attack = clone.Attack;
             AttackMultiplier = clone.AttackMultiplier;
-            Defense = clone.Defense;
-            Evade = clone.Evade;
+            Endurance = clone.Endurance;
+            PhysicalEvade = clone.PhysicalEvade;
             MagicMultiplier = clone.MagicMultiplier;
             MagicDefense = clone.MagicDefense;
             MagicEvade = clone.MagicEvade;
-            Analysis = clone.Analysis;
+            Description = clone.Description;
             Attacks = (AttackData[])clone.Attacks.Clone();
             if (clone.ElementWeak != null) ElementWeak = (ElementType[])clone.ElementWeak.Clone();
             if (clone.ElementStrong != null) ElementStrong = (ElementType[])clone.ElementStrong.Clone();
@@ -66,12 +66,12 @@ namespace Sayohime.Models
         public int Magic { get; set; }
         public int Attack { get; set; }
         public int AttackMultiplier { get; set; }
-        public int Defense { get; set; }
-        public int Evade { get; set; }
+        public int Endurance { get; set; }
+        public int PhysicalEvade { get; set; }
         public int MagicMultiplier { get; set; }
         public int MagicDefense { get; set; }
         public int MagicEvade { get; set; }
-        public string Analysis { get; set; }
+        public string Description { get; set; }
 
         public AttackData[] Attacks { get; set; }
 

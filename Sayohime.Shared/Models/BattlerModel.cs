@@ -6,6 +6,14 @@ using System.Threading.Tasks;
 
 namespace Sayohime.Models
 {
+    public enum ClassType
+    {
+        None,
+
+        Maho,
+        Monster
+    }
+
 	public enum ElementType
 	{
 		None,
@@ -43,27 +51,25 @@ namespace Sayohime.Models
 
 	public class BattlerModel
     {
-        public BattlerModel()
-        {
-            HP.Value = MaxHP.Value;
-        }
-
         public BattlerModel(EnemyRecord enemyRecord)
         {
             Name.Value = enemyRecord.Name;
             Class.Value = enemyRecord.Class;
             Level.Value = enemyRecord.Level;
+
             MaxHP.Value = enemyRecord.HP;
             HP.Value = MaxHP.Value;
             MaxMP.Value = enemyRecord.MP;
             MP.Value = MaxMP.Value;
-            Agility.Value = enemyRecord.Agility;
-            Magic.Value = enemyRecord.Magic;
+
             Attack.Value = enemyRecord.Attack;
-            Defense.Value = enemyRecord.Defense;
-            AttackMultiplier.Value = enemyRecord.AttackMultiplier;
-            MagicMultiplier.Value = enemyRecord.MagicMultiplier;
-            Evade.Value = enemyRecord.Evade;
+            Agility.Value = enemyRecord.Agility;
+            Endurance.Value = enemyRecord.Endurance;
+            Magic.Value = enemyRecord.Magic;
+            Luck.Value = enemyRecord.Luck;
+
+            PhysicalDefense.Value = enemyRecord.PhysicalDefense;
+            PhysicalEvade.Value = enemyRecord.PhysicalEvade;
             MagicDefense.Value = enemyRecord.MagicDefense;
             MagicEvade.Value = enemyRecord.MagicEvade;
 
@@ -82,14 +88,14 @@ namespace Sayohime.Models
             AilmentImmune.ModelList = new List<ModelProperty<AilmentType>>();
             if (enemyRecord.AilmentImmune != null) foreach (var ailment in enemyRecord.AilmentImmune) AilmentImmune.Add(ailment);
 
-            Analysis.Value = enemyRecord.Analysis;
+            Description.Value = enemyRecord.Description;
         }
 
 
         public ModelProperty<string> Name { get; set; } = new ModelProperty<string>("Enemy");
         public ModelProperty<ClassType> Class { get; set; } = new ModelProperty<ClassType>(ClassType.Monster);
         public ModelProperty<int> Level { get; set; } = new ModelProperty<int>(1);
-        public ModelProperty<string> Analysis { get; set; } = new ModelProperty<string>("This is your own party member, you fool.");
+        public ModelProperty<string> Description { get; set; } = new ModelProperty<string>("This is your own party member, you fool.");
 
         public ModelCollection<AilmentType> StatusAilments { get; set; } = new ModelCollection<AilmentType>();
         public ModelProperty<long> HP { get; set; } = new ModelProperty<long>(10);
@@ -99,18 +105,16 @@ namespace Sayohime.Models
 
         public ModelProperty<int> Strength { get; set; } = new ModelProperty<int>(3);
         public ModelProperty<int> Agility { get; set; } = new ModelProperty<int>(3);
-        public ModelProperty<int> Vitality { get; set; } = new ModelProperty<int>(3);
+        public ModelProperty<int> Endurance { get; set; } = new ModelProperty<int>(3);
         public ModelProperty<int> Magic { get; set; } = new ModelProperty<int>(3);
+        public ModelProperty<int> Luck { get; set; } = new ModelProperty<int>(3);
 
         public ModelProperty<int> Attack { get; set; } = new ModelProperty<int>(0);
         public ModelProperty<int> Hit { get; set; } = new ModelProperty<int>(100);
-        public ModelProperty<int> AttackMultiplier { get; set; } = new ModelProperty<int>(0);
-        public ModelProperty<int> Defense { get; set; } = new ModelProperty<int>(0);
-        public ModelProperty<int> Evade { get; set; } = new ModelProperty<int>(0);
-        public ModelProperty<int> MagicMultiplier { get; set; } = new ModelProperty<int>(0);
+        public ModelProperty<int> PhysicalDefense { get; set; } = new ModelProperty<int>(0);
+        public ModelProperty<int> PhysicalEvade { get; set; } = new ModelProperty<int>(0);
         public ModelProperty<int> MagicDefense { get; set; } = new ModelProperty<int>(0);
         public ModelProperty<int> MagicEvade { get; set; } = new ModelProperty<int>(0);
-        public ModelProperty<int> Weight { get; set; } = new ModelProperty<int>(0);
 
         public ModelCollection<ElementType> ElementWeak { get; set; } = new ModelCollection<ElementType>();
         public ModelCollection<ElementType> ElementStrong { get; set; } = new ModelCollection<ElementType>();
