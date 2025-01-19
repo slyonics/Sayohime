@@ -22,8 +22,8 @@ namespace Sayohime.Models
         }
 
         public string Name { get; set; }
-        public int Level { get; set; }
         public ClassType Class { get; set; }
+        public int Level { get; set; }
         public string Sprite { get; set; }
         public int ShadowOffset { get; set; }
         public int Exp { get; set; }

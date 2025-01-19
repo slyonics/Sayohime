@@ -93,11 +93,9 @@ namespace Sayohime.Scenes.ConversationScene
             string sprite = tokens[2];
             int positionX = int.Parse(tokens[3]);
             int positionY = int.Parse(tokens[4]);
-            PaletteHue color1 = Enum.Parse<PaletteHue>(tokens[5]);
-			PaletteHue color2 = Enum.Parse<PaletteHue>(tokens[6]);
-            byte brightness = byte.Parse(tokens[7]);
+            byte brightness = byte.Parse(tokens[5]);
 
-			Portrait portrait = new Portrait(conversationScene, name, sprite, new Vector2(positionX, positionY), color1, color2, brightness);
+			Portrait portrait = new Portrait(conversationScene, name, sprite, new Vector2(positionX, positionY), brightness);
             conversationScene.AddPortrait(portrait);
         }
 

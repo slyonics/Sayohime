@@ -12,7 +12,7 @@ namespace Sayohime.Models
 
         public ItemModel(string itemName, int quantity)
         {
-            ItemRecord = new ItemRecord(ItemRecord.ITEMS.First(x => x.Name == itemName));
+            ItemRecord = ItemRecord.ITEMS.First(x => x.Name == itemName);
             Quantity.Value = quantity;
         }
 

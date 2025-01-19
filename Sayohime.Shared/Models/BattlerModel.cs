@@ -72,13 +72,14 @@ namespace Sayohime.Models
             Name.Value = enemyRecord.Name;
             Class.Value = enemyRecord.Class;
             Level.Value = enemyRecord.Level;
+			Description.Value = enemyRecord.Description;
 
-            MaxHP.Value = enemyRecord.HP;
+			MaxHP.Value = enemyRecord.HP;
             HP.Value = MaxHP.Value;
             MaxMP.Value = enemyRecord.MP;
             MP.Value = MaxMP.Value;
 
-            Attack.Value = enemyRecord.Attack;
+            Strength.Value = enemyRecord.Strength;
             Agility.Value = enemyRecord.Agility;
             Endurance.Value = enemyRecord.Endurance;
             Magic.Value = enemyRecord.Magic;
@@ -103,8 +104,6 @@ namespace Sayohime.Models
 
             AilmentImmune.ModelList = new List<ModelProperty<AilmentType>>();
             if (enemyRecord.AilmentImmune != null) foreach (var ailment in enemyRecord.AilmentImmune) AilmentImmune.Add(ailment);
-
-            Description.Value = enemyRecord.Description;
         }
 
 
@@ -125,14 +124,12 @@ namespace Sayohime.Models
         public ModelProperty<int> Magic { get; set; } = new ModelProperty<int>(3);
         public ModelProperty<int> Luck { get; set; } = new ModelProperty<int>(3);
 
-        public ModelProperty<int> Attack { get; set; } = new ModelProperty<int>(0);
-        public ModelProperty<int> Hit { get; set; } = new ModelProperty<int>(100);
         public ModelProperty<int> PhysicalDefense { get; set; } = new ModelProperty<int>(0);
         public ModelProperty<int> PhysicalEvade { get; set; } = new ModelProperty<int>(0);
         public ModelProperty<int> MagicDefense { get; set; } = new ModelProperty<int>(0);
         public ModelProperty<int> MagicEvade { get; set; } = new ModelProperty<int>(0);
 
-        public ModelCollection<ElementType> ElementWeak { get; set; } = new ModelCollection<ElementType>();
+		public ModelCollection<ElementType> ElementWeak { get; set; } = new ModelCollection<ElementType>();
         public ModelCollection<ElementType> ElementStrong { get; set; } = new ModelCollection<ElementType>();
         public ModelCollection<ElementType> ElementImmune { get; set; } = new ModelCollection<ElementType>();
         public ModelCollection<ElementType> ElementAbsorb { get; set; } = new ModelCollection<ElementType>();

@@ -80,7 +80,7 @@ namespace Sayohime.Scenes.MapScene
                 case Orientation.Left: spawnPosition.X -= TileMap.TILE_SIZE; break;
             }
 
-			var leaderHero = new Hero(this, Tilemap, spawnPosition, GameSprite.Actors_AdvM, PaletteHue.LightBlue, iOrientation: spawnOrientation);
+			var leaderHero = new Hero(this, Tilemap, spawnPosition, GameSprite.Actors_AdvM, spawnOrientation);
 			leaderHero.CenterOn(spawnPosition);
 			Tilemap.GetTile(leaderHero.Center).Occupants.Add(leaderHero);
 			leaderHero.HostTile = Tilemap.GetTile(leaderHero.Center);

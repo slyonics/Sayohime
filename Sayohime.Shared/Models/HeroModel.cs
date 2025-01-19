@@ -16,5 +16,13 @@ namespace Sayohime.Models
         {
 
         }
-    }
+
+		public void WriteToFile(BinaryWriter binaryWriter)
+		{
+
+		}
+
+		public ModelProperty<int> Attack { get; set; } = new ModelProperty<int>(0);
+		public ModelProperty<int> Hit { get; set; } = new ModelProperty<int>(100);
+	}
 }
