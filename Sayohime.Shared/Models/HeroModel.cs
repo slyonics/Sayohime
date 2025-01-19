@@ -8,13 +8,11 @@ namespace Sayohime.Models
 	public class HeroModel : BattlerModel
 	{
 		public HeroModel()
-			: base()
 		{
 
 		}
 
-        public HeroModel(BinaryReader binaryReader)
-            : base()
+		public HeroModel(BinaryReader binaryReader)
         {
 
         }

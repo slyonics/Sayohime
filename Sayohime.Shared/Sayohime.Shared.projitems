@@ -78,13 +78,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\ConversationScene\ConversationController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\ConversationScene\ConversationScene.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\ConversationScene\ConversationViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scenes\ConversationScene\Portrait.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\ConversationScene\SelectionViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Scenes\MapScene\Airship.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\MapScene\AnnouncePopup.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\MapScene\CaterpillarController.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Scenes\MapScene\Chest.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Scenes\MapScene\Enemy.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Scenes\MapScene\EnemyController.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scenes\MapScene\ChaseController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\MapScene\EventController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\MapScene\EventTrigger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\MapScene\Hero.cs" />
@@ -92,5 +90,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\MapScene\MapScene.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\MapScene\Npc.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\MapScene\NpcController.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scenes\MapScene\PathingController.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scenes\MapScene\Trainer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scenes\MapScene\TrainerController.cs" />
   </ItemGroup>
 </Project>

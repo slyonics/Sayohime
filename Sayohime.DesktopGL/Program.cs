@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sayohime.Main;
+using System;
 
 namespace Sayohime
 {
@@ -13,7 +14,7 @@ namespace Sayohime
         [STAThread]
         static void Main()
         {
-            using (var game = new SayohimeGame())
+            using (var game = new CrossPlatformGame())
                 game.Run();
         }
     }

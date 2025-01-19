@@ -1,6 +1,7 @@
 using System;
 using Microsoft.JSInterop;
 using Microsoft.Xna.Framework;
+using Sayohime.Main;
 
 namespace Sayohime.Pages
 {
@@ -24,7 +25,7 @@ namespace Sayohime.Pages
             // init game
             if (_game == null)
             {
-                _game = new SayohimeGame();
+                _game = new CrossPlatformGame();
                 _game.Run();
             }
 

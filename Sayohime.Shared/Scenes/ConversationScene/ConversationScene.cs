@@ -21,12 +21,18 @@ namespace Sayohime.Scenes.ConversationScene
 		public ConversationViewModel ConversationViewModel { get; private set; }
 		public ConversationController ConversationController { get; set; }
         
+		public List<Portrait> Portraits { get; } = new List<Portrait>();
+
+        public PaletteShader PaletteShader { get; } = new PaletteShader(1.0f);
+
         int safetyShutdown = 100;
 
 
 		public ConversationScene(ConversationRecord iConversationData)
 			: base()
 		{
+            entityShader = PaletteShader;
+
             conversationData = iConversationData;
 
             if (conversationData.ShowOnStart)
@@ -70,6 +76,8 @@ namespace Sayohime.Scenes.ConversationScene
         {
             base.Update(gameTime);
 
+            Portraits.RemoveAll(x => x.Terminated);
+
             if (ControllerStack.Any(x => x.Count > 0)) safetyShutdown = 100;
             else
             {
@@ -88,7 +96,16 @@ namespace Sayohime.Scenes.ConversationScene
 
         public void FinishDialogue()
         {
-            
+            foreach (Portrait portrait in Portraits)
+            {
+                portrait.FinishTransition();
+            }
+        }
+
+        public void AddPortrait(Portrait portrait)
+        {
+            Portraits.Add(portrait);
+            AddEntity(portrait);
         }
 
         public void RunScript(string[] script)

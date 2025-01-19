@@ -5,8 +5,13 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 
 using Sayohime.Main;
+using Sayohime.Models;
 using Sayohime.SceneObjects;
+using Sayohime.SceneObjects.Controllers;
 using Sayohime.SceneObjects.Maps;
+using Sayohime.SceneObjects.Shaders;
+using System.Threading.Tasks;
+using Sayohime.SceneObjects.Particles;
 
 namespace Sayohime.Scenes.MapScene
 {
@@ -34,7 +39,7 @@ namespace Sayohime.Scenes.MapScene
             }
         }
 
-        private const float DEFAULT_WALK_LENGTH = 1.0f / 3;
+        private const float DEFAULT_WALK_LENGTH = 1.0f / 4;
 
         private MapScene mapScene;
 
@@ -57,7 +62,7 @@ namespace Sayohime.Scenes.MapScene
 
         public override void PreUpdate(GameTime gameTime)
         {
-            if (!(CrossPlatformGame.CurrentScene is MapScene) || mapScene.Party[0].Hide) return;
+            if (CrossPlatformGame.CurrentScene is not MapScene || mapScene.Party[0].Hide) return;
 
             InputFrame playerInput = Input.CurrentInput;
 
@@ -67,24 +72,22 @@ namespace Sayohime.Scenes.MapScene
 
                 if (movementList == null)
                 {
-                    if (mapScene.ProcessAutoEvents())
-                    {
-                        return;
-                    }
+                    if (mapScene.ProcessAutoEvents()) return;
+                    if (TrainerEncounters()) return;
 
                     if (Input.CurrentInput.CommandPressed(Command.Menu))
                     {
+                        /*
                         Controller suspendController = mapScene.AddController(new Controller(PriorityLevel.MenuLevel));
 
-                        bool canSave = mapScene.LocationName == "Overworld" || mapScene.Tilemap.GetTile(mapScene.Party[0].Center).Savepoint;
-
-                        StatusScene.StatusScene statusScene = new StatusScene.StatusScene(mapScene.LocationName, canSave);
+                        StatusScene.StatusScene statusScene = new StatusScene.StatusScene(mapScene.LocationName);
                         statusScene.OnTerminated += new TerminationFollowup(suspendController.Terminate);
                         CrossPlatformGame.StackScene(statusScene);
 
                         return;
+                        */
                     }
-
+                    
                     bool moveResult = true;
                     if (playerInput.CommandDown(Command.Up)) moveResult = Move(Orientation.Up);
                     else if (playerInput.CommandDown(Command.Right)) moveResult = Move(Orientation.Right);
@@ -99,7 +102,10 @@ namespace Sayohime.Scenes.MapScene
                         }
                     }
 
-                    if (!moveResult) foreach (Hero hero in mapScene.Party) hero.OrientedAnimation("Idle");
+                    if (!moveResult)
+                    {
+						foreach (Hero hero in mapScene.Party) hero.OrientedAnimation("Idle");
+                    }
                 }
             }
 
@@ -116,6 +122,8 @@ namespace Sayohime.Scenes.MapScene
             {
                 if (interactable.Activate(mapScene.Party[0]))
                 {
+                    EventTrigger.LastTrigger = interactable as EventTrigger;
+
                     Idle();
                     interactable = null;
                 }
@@ -151,6 +159,12 @@ namespace Sayohime.Scenes.MapScene
                 {
                     // mapScene.GameMap.Weather.ProceedTime((float)gameTime.ElapsedGameTime.TotalSeconds + walkTimeLeft);
 
+                    GameProfile.CurrentSave.Steps.Value = GameProfile.CurrentSave.Steps.Value + 1;
+                    if (GameProfile.CurrentSave.Steps.Value % 4 == 3)
+                    {
+                        // poison steps
+                    }
+
                     foreach (HeroMovement movement in movementList)
                     {
                         movement.hero.CenterOn(movement.destinationTile.Center);
@@ -159,10 +173,12 @@ namespace Sayohime.Scenes.MapScene
 
                     movementList = null;
 
-                    if (mapScene.Tilemap.GetTile(mapScene.Party[0].Center).Savepoint) Audio.PlaySound(GameSound.Savepoint);
-
                     FinishMovement?.Invoke();
                     FinishMovement = null;
+
+					// mapScene.SaveMapPosition();
+					mapScene.LoadNeighborChunks();
+                    mapScene.DetectNewChunk(mapScene.Tilemap.GetTile(mapScene.PartyLeader.Center));
 
                     if (mapScene.BattleImminent) Idle();
                 }
@@ -170,29 +186,54 @@ namespace Sayohime.Scenes.MapScene
             else FindInteractables();
         }
 
+        public bool TrainerEncounters()
+        {
+            Trainer trainer = mapScene.Trainers.FirstOrDefault(x => x.Triggered());
+            if (trainer != null)
+            {
+				mapScene.AddParticle(new EmoteParticle(mapScene, AnimationType.Exclamation, trainer));
+
+				string[] script = new string[] { "Wait 600", "MoveTrainer", "FaceTrainer", $"Conversation {trainer.Name}Fight", "Emote Exclamation Player", "Wait 600", $"Encounter {trainer.Name}" };
+                EventController eventController = new EventController(mapScene, script);
+                eventController.ActorSubject = trainer;
+
+                mapScene.AddController(eventController);
+
+                trainer.Reorient(mapScene.PartyLeader.Center - trainer.Center);
+                trainer.OrientedAnimation("Idle");
+
+                return true;
+            }
+
+            return false;
+        }
+
         private void FindInteractables()
         {
             List<IInteractive> interactableList = new List<IInteractive>();
             interactableList.AddRange(mapScene.NPCs.FindAll(x => x.Interactive));
             interactableList.AddRange(mapScene.EventTriggers.FindAll(x => x.Interactive));
+			interactableList.AddRange(mapScene.Trainers);
 
-            Hero player = mapScene.PartyLeader;
+			Hero player = mapScene.PartyLeader;
             IOrderedEnumerable<IInteractive> sortedInteractableList = interactableList.OrderBy(x => player.Distance(x.Bounds));
             Rectangle interactZone = player.Bounds;
-            int zoneSize = TileMap.TILE_SIZE;
+            int zoneWidth = TileMap.TILE_SIZE;
+            int zoneHeight = TileMap.TILE_SIZE;
+            interactZone = new Rectangle((int)player.HostTile.Center.X - zoneWidth / 2, (int)player.HostTile.Center.Y - zoneHeight / 2, zoneWidth, zoneHeight);
             switch (player.Orientation)
             {
                 case Orientation.Up:
-                    interactZone = player.Bounds; interactZone.Y -= zoneSize;
+                    interactZone.Y -= zoneHeight;
                     break;
                 case Orientation.Right:
-                    interactZone = player.Bounds; interactZone.X += zoneSize;
+                    interactZone.X += zoneHeight;
                     break;
                 case Orientation.Down:
-                    interactZone = player.Bounds; interactZone.Y += zoneSize;
+                    interactZone.Y += zoneHeight;
                     break;
                 case Orientation.Left:
-                    interactZone = player.Bounds; interactZone.X -= zoneSize;
+                    interactZone.X -= zoneHeight;
                     break;
             }
             player.InteractionZone = interactZone;
@@ -221,10 +262,10 @@ namespace Sayohime.Scenes.MapScene
             Tile leaderDestination = mapScene.Tilemap.GetTile(tileX, tileY);
             if (leaderDestination == null) return false;
 
-            Enemy enemy = leaderDestination.Occupants.FirstOrDefault(x => x is Enemy) as Enemy;
+            Trainer enemy = leaderDestination.Occupants.FirstOrDefault(x => x is Trainer) as Trainer;
             if (enemy != null)
             {
-                enemy.Collides();
+                Audio.PlaySound(GameSound.Blip);
                 return false;
             }
 

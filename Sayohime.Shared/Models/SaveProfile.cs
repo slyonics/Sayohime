@@ -99,8 +99,6 @@ namespace Sayohime.Models
         {
             writer.Write(LocationName.Value);
             writer.Write(GameProfile.SaveSlot);
-            writer.Write(Party[0].PortraitSprite.Value);
-            writer.Write(Party.Count < 2 ? Main.GameSprite.Actors_Blank.ToString() : Party[1].PortraitSprite.Value);
 
             writer.Write(Party.Count);
             foreach (var hero in Party) hero.Value.WriteToFile(writer);

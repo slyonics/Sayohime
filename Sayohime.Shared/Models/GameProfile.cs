@@ -24,11 +24,7 @@ namespace Sayohime.Models
             CurrentSave.AddInventory("Ether", 1);
             CurrentSave.Money.Value = 800;
 
-            var sparr = new HeroModel(HeroType.Sparr, ClassType.Scholar, 1);
-            sparr.Equip("Mahogany");
-            sparr.Equip("Talisman");
-            sparr.Equip("Fancy Robes");
-            CurrentSave.Party.Add(sparr);
+            // add default hero here
         }
 
         public static void Autosave()

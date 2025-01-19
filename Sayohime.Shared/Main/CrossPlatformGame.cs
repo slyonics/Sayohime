@@ -13,7 +13,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Sayohime.Scenes.MapScene;
-using Sayohime.Scenes.BattleScene;
 
 namespace Sayohime.Main
 {
@@ -66,7 +65,7 @@ namespace Sayohime.Main
 			if (EnemyRecord.ENEMIES == null) EnemyRecord.ENEMIES = AssetCache.LoadRecords<EnemyRecord>("Data/EnemyData");
             if (ItemRecord.ITEMS == null) ItemRecord.ITEMS = AssetCache.LoadRecords<ItemRecord>("Data/ItemData");
 
-			BattleScene.Initialize();
+			// BattleScene.Initialize();
 		}
 
 		protected override void UnloadContent()

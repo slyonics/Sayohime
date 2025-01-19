@@ -45,6 +45,16 @@ namespace Sayohime.Scenes.ConversationScene
         {
             switch (tokens[0])
             {
+                case "AddPortrait": AddPortrait(tokens); break;
+                case "RemovePortrait": RemovePortrait(tokens); break;
+                case "PortraitSprite": PortraitSprite(tokens); break;
+                case "PortraitPosition": PortraitPosition(tokens); break;
+                case "PortraitColor": PortraitColor(tokens); break;
+				case "PortraitBrightness": PortraitBrightness(tokens); break;
+				case "PortraitScale": PortraitScale(tokens); break;
+                case "PortraitVelocity": PortraitVelocity(tokens); break;
+				case "WaitForPortrait": WaitForPortrait(tokens); return false;
+
 				case "EndGame": EndGame = true; break;
 
                 case "WaitForText": WaitForText(tokens); return false;
@@ -56,23 +66,9 @@ namespace Sayohime.Scenes.ConversationScene
                 case "SetAutoProceed": conversationScene.ConversationViewModel.AutoProceedLength = int.Parse(tokens[1]); break;
                 case "SetSkippable": conversationScene.ConversationViewModel.Skippable = bool.Parse(tokens[1]); break;
 
-                case "ChangeMap": MapScene.EventController.ChangeMap(tokens, MapScene.MapScene.Instance); break;
-                case "SpawnMonster": MapScene.EventController.SpawnMonster(tokens, MapScene.MapScene.Instance); break;
-                case "TurnParty": MapScene.EventController.Turn(tokens, MapScene.MapScene.Instance); break;
-                case "MoveParty": MapScene.EventController.Move(tokens, MapScene.MapScene.Instance); break;
-                case "WaitParty": MapScene.MapScene.Instance.CaterpillarController.FinishMovement = scriptParser.BlockScript(); return false;
-                case "Idle": MapScene.MapScene.Instance.CaterpillarController.Idle(); break;
-                case "AnimateHero": MapScene.MapScene.Instance.Party[int.Parse(tokens[1])].PlayAnimation(tokens[2], new AnimationFollowup(() => { })); break;
-                case "RestoreMP": foreach (var hero in GameProfile.CurrentSave.Party) hero.Value.MP.Value = hero.Value.MaxMP.Value; break;
-                case "ResetTrigger": EventTrigger.LastTrigger.Terminated = false; MapScene.MapScene.Instance.EventTriggers.Add(EventTrigger.LastTrigger); break;
+				case "GiveItem": GiveItem(tokens); break;
 
-                case "StoreParty":
-                    var storedHero = GameProfile.CurrentSave.Party.ModelList.FirstOrDefault(x => x.Value.Name.Value == tokens[1]).Value;
-                    GameProfile.CurrentSave.StoredHero = storedHero;
-                    GameProfile.CurrentSave.Party.ModelList.RemoveAll(x => x.Value.Name.Value == tokens[1]);
-                    break;
-
-                default: return false;
+				default: return false;
             }
 
             return true;
@@ -90,7 +86,133 @@ namespace Sayohime.Scenes.ConversationScene
                 default: return base.ParseParameter(parameter);
             }
         }
-                
+
+        private void AddPortrait(string[] tokens)
+        {
+            string name = tokens[1];
+            string sprite = tokens[2];
+            int positionX = int.Parse(tokens[3]);
+            int positionY = int.Parse(tokens[4]);
+            PaletteHue color1 = Enum.Parse<PaletteHue>(tokens[5]);
+			PaletteHue color2 = Enum.Parse<PaletteHue>(tokens[6]);
+            byte brightness = byte.Parse(tokens[7]);
+
+			Portrait portrait = new Portrait(conversationScene, name, sprite, new Vector2(positionX, positionY), color1, color2, brightness);
+            conversationScene.AddPortrait(portrait);
+        }
+
+        private void RemovePortrait(string[] tokens)
+        {
+            /*
+            if (tokens.Length > 3)
+            {
+                string name = tokens[1];
+                int endX = int.Parse(tokens[2]);
+                int endY = int.Parse(tokens[3]);
+                float transitionLength = (tokens.Length > 4) ? float.Parse(tokens[4]) : 1.0f;
+
+                Portrait portrait = conversationScene.Portraits.Find(x => x.Name == name);
+                portrait.Remove(new Vector2(endX, endY), transitionLength);
+            }
+            else
+            {
+                string name = tokens[1];
+                float transitionLength = (tokens.Length > 2) ? float.Parse(tokens[2]) : 1.0f;
+
+                Portrait portrait = conversationScene.Portraits.Find(x => x.Name == name);
+                portrait?.Remove(transitionLength);
+            }
+            */
+        }
+
+        private void PortraitSprite(string[] tokens)
+        {
+            string name = tokens[1];
+            string sprite = tokens[2];
+
+            Portrait portrait = conversationScene.Portraits.Find(x => x.Name == name);
+            portrait.AnimatedSprite.SpriteTexture = AssetCache.SPRITES[Enum.Parse<GameSprite>($"Portraits_Front_{sprite}")];
+        }
+
+        private void PortraitPosition(string[] tokens)
+        {
+            string name = tokens[1];
+            Vector2 end = new Vector2(int.Parse(tokens[2]), int.Parse(tokens[3]));
+            float transitionLength = (tokens.Length > 4) ? float.Parse(tokens[4]) : 1.0f;
+
+            Portrait portrait = conversationScene.Portraits.Find(x => x.Name == name);
+			Vector2 start = portrait.Position;
+
+			TransitionController transitionController = conversationScene.AddController(new TransitionController(TransitionDirection.In, (int)(transitionLength * 1000), PriorityLevel.CutsceneLevel, false));
+            transitionController.UpdateTransition += new Action<float>(t =>
+            {
+                portrait.Position = Vector2.Lerp(start, end, t);
+            });
+
+			portrait.PortraitControllers.Add(transitionController);
+		}
+
+        private void PortraitColor(string[] tokens)
+        {
+            string name = tokens[1];
+            Portrait portrait = conversationScene.Portraits.Find(x => x.Name == name);
+
+            /*
+            if (tokens[3] == "1") portrait.AnimatedSprite.SetColor1(Enum.Parse<PaletteHue>(tokens[2]));
+            else portrait.AnimatedSprite.SetColor2(Enum.Parse<PaletteHue>(tokens[2]));
+            */
+		}
+
+        private void PortraitBrightness(string[] tokens)
+        {
+			string name = tokens[1];
+			byte end = byte.Parse(tokens[2]);
+			float transitionLength = (tokens.Length > 3) ? float.Parse(tokens[3]) : 1.0f;
+
+			Portrait portrait = conversationScene.Portraits.Find(x => x.Name == name);
+			byte start = portrait.AnimatedSprite.Brightness;
+
+			TransitionController transitionController = conversationScene.AddController(new TransitionController(TransitionDirection.In, (int)(transitionLength * 1000), PriorityLevel.TransitionLevel, false));
+			transitionController.UpdateTransition += new Action<float>(t =>
+			{
+				portrait.AnimatedSprite.SetBrightness((byte)MathHelper.Lerp(start, end, t));
+			});
+
+            portrait.PortraitControllers.Add(transitionController);
+		}
+
+
+		public void PortraitScale(string[] tokens)
+        {
+            string name = tokens[1];
+            float scaleX = float.Parse(tokens[2]);
+            float scaleY = float.Parse(tokens[3]);
+
+            Portrait portrait = conversationScene.Portraits.Find(x => x.Name == name);
+            portrait.AnimatedSprite.Scale = new Vector2(scaleX, scaleY);
+        }
+
+        public void PortraitVelocity(string[] tokens)
+        {
+            string name = tokens[1];
+            float scaleX = float.Parse(tokens[2]);
+            float scaleY = float.Parse(tokens[3]);
+
+            Portrait portrait = conversationScene.Portraits.Find(x => x.Name == name);
+            portrait.Velocity = new Vector2(scaleX, scaleY);
+        }
+
+        public void WaitForPortrait(string[] tokens)
+        {
+			Portrait portrait = conversationScene.Portraits.Find(x => x.Name == tokens[1]);
+            foreach (var controller in portrait.PortraitControllers)
+            {
+                var unblock = scriptParser.BlockScript();
+				controller.OnTerminated += new TerminationFollowup(() => unblock());
+            }
+		}
+
+
 		private void WaitForText(string[] tokens)
         {
             ScriptParser.UnblockFollowup followup = scriptParser.BlockScript();
@@ -129,14 +251,20 @@ namespace Sayohime.Scenes.ConversationScene
         {
             switch (tokens[1])
             {
-                case "Conversation":
-					CrossPlatformGame.Transition(new Task<Scene>(() => new ConversationScene(tokens[2])));
-					break;
+                case "MapScene":
 
-                case "Title":
-					CrossPlatformGame.Transition(new Task<Scene>(() => new TitleScene.TitleScene(tokens[2])));
-					break;
+                    TransitionController transitionController = new TransitionController(TransitionDirection.Out, 600);
+                    transitionController.UpdateTransition += new Action<float>(t => conversationScene.PaletteShader.SetGlobalBrightness(t));
+
+                    CrossPlatformGame.Transition(conversationScene, new Task<Scene>(() => new MapScene.MapScene(Enum.Parse<GameMap>(tokens[2]), tokens[3])), transitionController, conversationScene.PaletteShader);
+                    break;
             }
+        }
+
+        public void GiveItem(string[] tokens)
+        {
+            var name = string.Join(' ', tokens.Skip(1));
+            GameProfile.CurrentSave.AddInventory(name, 1);
         }
 	}
 }

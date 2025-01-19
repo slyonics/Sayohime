@@ -5,9 +5,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 using Sayohime.Main;
-using Sayohime.Models;
 using Sayohime.SceneObjects;
 using Sayohime.SceneObjects.Maps;
+using Sayohime.SceneObjects.Shaders;
 
 namespace Sayohime.Scenes.MapScene
 {
@@ -26,10 +26,10 @@ namespace Sayohime.Scenes.MapScene
             Faint
         }
 
-        public const int HERO_WIDTH = 16;
-        public const int HERO_HEIGHT = 16;
+        public const int HERO_WIDTH = 20;
+        public const int HERO_HEIGHT = 24;
 
-        public static readonly Rectangle HERO_BOUNDS = new Rectangle(-8, -16, 16, 16);
+        public static readonly Rectangle HERO_BOUNDS = new Rectangle(-8, -15, 16, 16);
 
         private static readonly Dictionary<string, Animation> HERO_ANIMATIONS = new Dictionary<string, Animation>()
         {
@@ -49,26 +49,13 @@ namespace Sayohime.Scenes.MapScene
         private SceneObjects.Shaders.Light light;
 
         public bool Hide { get; set; } = false;
-        public HeroModel HeroModel { get; private set; }
 
-        public Hero(MapScene iMapScene, TileMap iTilemap, Vector2 iPosition, HeroModel heroModel, Orientation iOrientation = Orientation.Down)
-            : base(iMapScene, iTilemap, iPosition, AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), heroModel.Sprite.Value.ToString())], HERO_ANIMATIONS, HERO_BOUNDS, iOrientation)
+        public Hero(MapScene iMapScene, TileMap iTilemap, Vector2 iPosition, GameSprite sprite, Orientation iOrientation = Orientation.Down)
+            : base(iMapScene, iTilemap, iPosition, AssetCache.SPRITES[sprite], HERO_ANIMATIONS, HERO_BOUNDS, iOrientation)
         {
             mapScene = iMapScene;
-            HeroModel = heroModel;
 
-            if (HeroModel.FlightHeight.Value > 0)
-            {
-                SetFlight(HeroModel.FlightHeight.Value, AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), HeroModel.ShadowSprite.Value.ToString())]);
-            }
-
-            /*
-            if (mapScene.Tilemap.Name == "TechHomeworld")
-            {
-                animatedSprite.Scale = new Vector2(0.5f, 0.5f);
-                if (shadowSprite != null) shadowSprite.Scale = new Vector2(0.5f, 0.5f);
-            }
-            */
+            Idle();
 
             if (mapScene.SceneShader != null && mapScene.SceneShader is SceneObjects.Shaders.DayNight)
             {
@@ -81,8 +68,6 @@ namespace Sayohime.Scenes.MapScene
 
         public override void Update(GameTime gameTime)
         {
-            if (CrossPlatformGame.CurrentScene is StatusScene.StatusScene) return;
-
             base.Update(gameTime);
 
             if (light != null) light.Position = position - new Vector2(0, 6);
@@ -103,13 +88,6 @@ namespace Sayohime.Scenes.MapScene
 
             if (Settings.GetProgramSetting<bool>("DebugMode"))
                 Debug.DrawBox(spriteBatch, InteractionZone);
-        }
-
-        public void UpdateSprite()
-        {
-            var animation = animatedSprite.AnimationName;
-            animatedSprite = new AnimatedSprite(AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), HeroModel.Sprite.Value.ToString())], HERO_ANIMATIONS);
-            animatedSprite.PlayAnimation(animation);
         }
 
         public Rectangle InteractionZone;

@@ -20,12 +20,45 @@ namespace Sayohime.Main
 
     public enum GameSound
     {
+        Back,
+        BattleStart,
+        Blip,
+        Bonk,
+        Chest,
+        Confirm,
+        Cure,
+        Cursor,
+        Drop,
+        Encounter,
+        EnemyDeath,
+        Error,
+        Eruption,
+        Fire,
+        Fireball,
+        Freeze,
+        GetItem,
+        Heal,
+        Ice,
+        LevelUp,
+        Miss,
+        Pickup,
+        Ready,
+        Savepoint,
+        Screech,
+        Selection,
+        Slash,
+        Talk,
+        Thunder,
 
         None = -1
     }
 
     public enum GameMusic
     {
+        BlastingThroughtheSky,
+        ChoiceEncounter,
+        NewDestinations,
+        Selection,
 
         None = -1
     }
@@ -38,6 +71,12 @@ namespace Sayohime.Main
 
     public enum GameShader
     {
+        ColorFade,
+        Default,
+        Palette,
+        Pinwheel,
+        Portrait,
+        Title,
 
         None = -1
     }

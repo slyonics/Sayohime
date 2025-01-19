@@ -14,43 +14,11 @@ namespace Sayohime.Models
         public int Hit = 100;
     }
 
-    [Serializable]
     public class EnemyRecord
     {
         public EnemyRecord()
         {
 
-        }
-
-        public EnemyRecord(EnemyRecord clone)
-        {
-            Name = clone.Name;
-            Level = clone.Level;
-            Class = clone.Class;
-            Sprite = clone.Sprite;
-            ShadowOffset = clone.ShadowOffset;
-            Exp = clone.Exp;
-            HP = clone.HP;
-            MP = clone.MP;
-            Agility = clone.Agility;
-            Magic = clone.Magic;
-            Attack = clone.Attack;
-            AttackMultiplier = clone.AttackMultiplier;
-            Endurance = clone.Endurance;
-            PhysicalEvade = clone.PhysicalEvade;
-            MagicMultiplier = clone.MagicMultiplier;
-            MagicDefense = clone.MagicDefense;
-            MagicEvade = clone.MagicEvade;
-            Description = clone.Description;
-            Attacks = (AttackData[])clone.Attacks.Clone();
-            if (clone.ElementWeak != null) ElementWeak = (ElementType[])clone.ElementWeak.Clone();
-            if (clone.ElementStrong != null) ElementStrong = (ElementType[])clone.ElementStrong.Clone();
-            if (clone.ElementImmune != null) ElementImmune = (ElementType[])clone.ElementImmune.Clone();
-            if (clone.ElementAbsorb != null) ElementAbsorb = (ElementType[])clone.ElementAbsorb.Clone();
-            if (clone.AilmentImmune != null) AilmentImmune = (AilmentType[])clone.AilmentImmune.Clone();
-            BattleOffsetX = clone.BattleOffsetX;
-            BattleOffsetY = clone.BattleOffsetY;
-            BattleAlignment = clone.BattleAlignment;
         }
 
         public string Name { get; set; }
@@ -62,13 +30,14 @@ namespace Sayohime.Models
 
         public long HP { get; set; }
         public int MP { get; set; }
+        public int Strength { get; set; }
         public int Agility { get; set; }
-        public int Magic { get; set; }
-        public int Attack { get; set; }
-        public int AttackMultiplier { get; set; }
-        public int Endurance { get; set; }
-        public int PhysicalEvade { get; set; }
-        public int MagicMultiplier { get; set; }
+		public int Endurance { get; set; }
+		public int Magic { get; set; }
+        public int Luck { get; set; }
+
+		public int PhysicalDefense { get; set; }
+		public int PhysicalEvade { get; set; }
         public int MagicDefense { get; set; }
         public int MagicEvade { get; set; }
         public string Description { get; set; }

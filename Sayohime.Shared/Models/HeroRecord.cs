@@ -16,7 +16,9 @@ namespace Sayohime.Models
         public HeroType Name { get; set; }
         public Dictionary<string, string> Sprites { get; set; }
 
-        public int BaseStrength { get; set; }
+		public int BaseHP { get; set; }
+		public int BaseMP { get; set; }
+		public int BaseStrength { get; set; }
         public int BaseAgility { get; set; }
         public int BaseEndurance { get; set; }
         public int BaseMagic { get; set; }

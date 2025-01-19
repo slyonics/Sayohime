@@ -11,7 +11,7 @@ namespace Sayohime.Scenes.ConversationScene
 {
     public class SelectionViewModel : ViewModel
     {
-        private GameFont OPTION_FONT = GameFont.Main;
+        private GameFont OPTION_FONT = GameFont.Interface;
 
         private ConversationScene conversationScene;
 
@@ -31,11 +31,11 @@ namespace Sayohime.Scenes.ConversationScene
                 int optionLength = Text.GetStringLength(OPTION_FONT, option);
                 if (optionLength > longestOption) longestOption = optionLength;
             }
-            int width = longestOption + 18;
-            ButtonSize.Value = new Rectangle(0, 0, longestOption + 6, Text.GetStringHeight(OPTION_FONT) - 1);
-            LabelSize.Value = new Rectangle(0, -4, longestOption + 6, ButtonSize.Value.Height);
+            int width = longestOption + 10;
+            ButtonSize.Value = new Rectangle(0, 0, longestOption + 6, Text.GetStringHeight(OPTION_FONT) + 2);
+            LabelSize.Value = new Rectangle(0, -5, longestOption + 6, ButtonSize.Value.Height);
 
-            int height = ButtonSize.Value.Height * options.Count() + 11;
+            int height = ButtonSize.Value.Height * options.Count() + 5;
             WindowSize.Value = new Rectangle(CrossPlatformGame.SCREEN_WIDTH / 2 - width - width - 120, CrossPlatformGame.SCREEN_HEIGHT / 2 - 48 - height, width, height);
 
             LoadView(GameView.Conversation_SelectionView);

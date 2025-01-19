@@ -11,50 +11,51 @@ using Sayohime.SceneObjects.Maps;
 
 namespace Sayohime.Scenes.MapScene
 {
-    public class EnemyController : ScriptController
+    public class TrainerController : ScriptController
     {
         private const float DEFAULT_WALK_LENGTH = 1.0f / 3;
 
         private MapScene mapScene;
-        private Enemy enemy;
+        private Trainer trainer;
 
         private Tile currentTile;
         private Tile destinationTile;
         private float currentWalkLength;
         private float walkTimeLeft;
 
-        public EnemyController(MapScene iScene, Enemy iEnemy)
-            : base(iScene, iEnemy.IdleScript, PriorityLevel.GameLevel)
+
+		public TrainerController(MapScene iScene, Trainer iTrainer)
+            : base(iScene, iTrainer.IdleScript, PriorityLevel.GameLevel)
         {
             mapScene = iScene;
-            enemy = iEnemy;
+            trainer = iTrainer;
 
-            currentTile = mapScene.Tilemap.GetTile(enemy.Center);
-            enemy.EnemyController = this;
+            currentTile = mapScene.Tilemap.GetTile(trainer.Center);
+            trainer.TrainerController = this;
         }
 
         public override void PreUpdate(GameTime gameTime)
         {
             if (Terminated) return;
-            if (enemy.Terminated) { Terminate(); return; }
+            if (trainer.Terminated) { Terminate(); return; }
             if (!scriptParser.Finished) base.PreUpdate(gameTime);
 
-            if (destinationTile == null)
+			if (destinationTile == null)
             {
-                enemy.DesiredVelocity = Vector2.Zero;
-                enemy.OrientedAnimation("Idle");
+                trainer.DesiredVelocity = Vector2.Zero;
+                trainer.OrientedAnimation("Idle");
             }
             else
             {
-                enemy.DesiredVelocity = Vector2.Zero;
-                enemy.Reorient(destinationTile.Center - currentTile.Center);
-                enemy.OrientedAnimation("Walk");
+                trainer.DesiredVelocity = Vector2.Zero;
+                trainer.Reorient(destinationTile.Center - currentTile.Center);
+                trainer.OrientedAnimation("Walk");
             }
         }
 
         public override void PostUpdate(GameTime gameTime)
         {
-            if (mapScene.PriorityLevel > enemy.PriorityLevel || (enemy.PriorityLevel == PriorityLevel.GameLevel && CrossPlatformGame.SceneStack.Count > 0)) return;
+            if (mapScene.PriorityLevel > trainer.PriorityLevel || (trainer.PriorityLevel == PriorityLevel.GameLevel && CrossPlatformGame.SceneStack.Count > 0)) return;
 
             if (destinationTile != null)
             {
@@ -62,15 +63,15 @@ namespace Sayohime.Scenes.MapScene
                 if (walkTimeLeft > 0.0f)
                 {
                     Vector2 npcPosition = Vector2.Lerp(destinationTile.Center, currentTile.Center, walkTimeLeft / currentWalkLength);
-                    enemy.CenterOn(new Vector2((int)npcPosition.X, (int)npcPosition.Y));
+                    trainer.CenterOn(new Vector2((int)npcPosition.X, (int)npcPosition.Y));
                 }
                 else
                 {
-                    enemy.CenterOn(destinationTile.Center);
+                    trainer.CenterOn(destinationTile.Center);
                     currentTile = destinationTile;
                     destinationTile = null;
 
-                    if (mapScene.PriorityLevel > this.PriorityLevel || mapScene.BattleImminent) enemy.Idle();
+                    if (mapScene.PriorityLevel > this.PriorityLevel || mapScene.BattleImminent) trainer.Idle();
                 }
             }
         }
@@ -79,7 +80,7 @@ namespace Sayohime.Scenes.MapScene
         {
             if (mapScene.BattleImminent) return false;
 
-            enemy.Orientation = direction;
+            trainer.Orientation = direction;
 
             int tileX = currentTile.TileX;
             int tileY = currentTile.TileY;
@@ -97,7 +98,6 @@ namespace Sayohime.Scenes.MapScene
             Hero hero = enemyDestination.Occupants.FirstOrDefault(x => x is Hero) as Hero;
             if (hero != null)
             {
-                enemy.Collides();
                 return false;
             }
 
@@ -106,19 +106,38 @@ namespace Sayohime.Scenes.MapScene
             destinationTile = enemyDestination;
             currentWalkLength = walkTimeLeft = walkLength;
 
-            currentTile.Occupants.Remove(enemy);
-            destinationTile.Occupants.Add(enemy);
-            enemy.HostTile = destinationTile;
+            currentTile.Occupants.Remove(trainer);
+            destinationTile.Occupants.Add(trainer);
+            trainer.HostTile = destinationTile;
 
             return true;
+        }
+
+        private void Turn(string[] tokens)
+        {
+            switch (tokens[1])
+            {
+                case "Clockwise":
+                    if (trainer.Orientation == Orientation.Left) trainer.Orientation = Orientation.Up;
+                    else trainer.Orientation++;
+                    break;
+
+                case "CounterClockwise":
+                    if (trainer.Orientation == Orientation.Up) trainer.Orientation = Orientation.Left;
+                    else trainer.Orientation--;
+                    break;
+            }
+
+            trainer.Idle();
         }
 
         public override bool ExecuteCommand(string[] tokens)
         {
             switch (tokens[0])
             {
+                case "Turn": Turn(tokens); break;
                 case "Wander": if (!mapScene.BattleImminent) Move((Orientation)Rng.RandomInt(0, 3), int.Parse(tokens[1]) / 1000.0f); break;
-                case "ChaseParty": ChaseParty(); break;
+				case "ChaseParty": ChaseParty(); break;
                 default: return false;
             }
 
@@ -135,18 +154,18 @@ namespace Sayohime.Scenes.MapScene
             {
                 switch (parameter)
                 {
-                    case "$partyAdjacent": return mapScene.Party.Any(x => Math.Abs(x.TileX - enemy.TileX) + Math.Abs(x.TileY - enemy.TileY) == 1).ToString();
+                    case "$partyAdjacent": return mapScene.Party.Any(x => Math.Abs(x.TileX - trainer.TileX) + Math.Abs(x.TileY - trainer.TileY) == 1).ToString();
                     default: return null;
                 }
             }
             else return null;
-        }
+		}
 
-        private void ChaseParty()
+		private void ChaseParty()
         {
-            Hero closestHero = mapScene.Party.MinBy(x => Math.Abs(x.TileX - enemy.TileX) + Math.Abs(x.TileY - enemy.TileY));
-            int deltaX = closestHero.TileX - enemy.TileX;
-            int deltaY = closestHero.TileY - enemy.TileY;
+            Hero closestHero = mapScene.PartyLeader;
+			int deltaX = closestHero.TileX - trainer.TileX;
+            int deltaY = closestHero.TileY - trainer.TileY;
 
             if (Math.Abs(deltaX) >= Math.Abs(deltaY))
             {

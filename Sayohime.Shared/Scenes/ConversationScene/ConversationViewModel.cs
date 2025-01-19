@@ -47,8 +47,7 @@ namespace Sayohime.Scenes.ConversationScene
 
 			if (currentDialogue.Script != null) conversationScene.RunScript(currentDialogue.Script);
 
-			if (conversationRecord.SkipTransitions) LoadView(GameView.Conversation_FastConversationView);
-			else LoadView(GameView.Conversation_ConversationView);
+			LoadView(GameView.Conversation_ConversationView);
 
             crawlText = GetWidget<CrawlText>("ConversationText");
 
@@ -186,7 +185,7 @@ namespace Sayohime.Scenes.ConversationScene
 
         public ModelProperty<Rectangle> Window { get; set; } = new ModelProperty<Rectangle>(ConversationRecord.DEFAULT_CONVO_BOUNDS);
         public ModelProperty<bool> ReadyToProceed { get; set; } = new ModelProperty<bool>(false);
-        public ModelProperty<GameFont> ConversationFont { get; set; } = new ModelProperty<GameFont>(GameFont.Main);
+        public ModelProperty<GameFont> ConversationFont { get; set; } = new ModelProperty<GameFont>(GameFont.Dialogue);
         public ModelProperty<string> Dialogue { get; set; } = new ModelProperty<string>("");
         public ModelProperty<string> Speaker { get; set; } = new ModelProperty<string>("");
         public ModelProperty<GameSprite> Portrait { get; set; } = new ModelProperty<GameSprite>(GameSprite.Actors_Blank);

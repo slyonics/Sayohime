@@ -1,9 +1,7 @@
-﻿using System;
-using System.Linq;
-
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 
 using Sayohime.Main;
+using Sayohime.Models;
 using Sayohime.SceneObjects;
 using Sayohime.SceneObjects.Controllers;
 using Sayohime.SceneObjects.Maps;

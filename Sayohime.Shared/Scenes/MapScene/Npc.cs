@@ -7,8 +7,11 @@ using Microsoft.Xna.Framework;
 using ldtk;
 
 using Sayohime.Main;
+using Sayohime.Models;
 using Sayohime.SceneObjects;
 using Sayohime.SceneObjects.Maps;
+using Sayohime.SceneObjects.Shaders;
+using System.Xml.Linq;
 
 namespace Sayohime.Scenes.MapScene
 {
@@ -26,8 +29,8 @@ namespace Sayohime.Scenes.MapScene
             WalkUp
         }
 
-        public const int NPC_WIDTH = 16;
-        public const int NPC_HEIGHT = 16;
+        public const int NPC_WIDTH = 20;
+        public const int NPC_HEIGHT = 24;
 
         public static readonly Rectangle NPC_BOUNDS = new Rectangle(-8, -16, 16, 16);
 
@@ -47,7 +50,7 @@ namespace Sayohime.Scenes.MapScene
 
         private string[] interactionScript = null;
 
-        public Npc(MapScene iMapScene, TileMap iTilemap, EntityInstance entityInstance, Orientation iOrientation = Orientation.Down)
+        public Npc(MapScene iMapScene, TileMap iTilemap, Chunk chunk, EntityInstance entityInstance, Orientation iOrientation = Orientation.Down)
             : base(iMapScene, iTilemap, new Vector2(), NPC_BOUNDS, iOrientation)
         {
             mapScene = iMapScene;
@@ -56,30 +59,25 @@ namespace Sayohime.Scenes.MapScene
             {
                 switch (field.Identifier)
                 {
+                    case "Name": Name = (string)field.Value; break;
+
                     case "Sprite":
-                        if (field.Value != null) animatedSprite = new AnimatedSprite(AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Actors_" + field.Value)], NPC_ANIMATIONS);
-                        if (field.Value != null && (field.Value as string).Contains("Crystal")) PriorityLevel = PriorityLevel.CutsceneLevel;
+                        if (field.Value != null) animatedSprite = new AnimatedSprite(AssetCache.SPRITES[Enum.Parse<GameSprite>("Actors_" + (string)field.Value)], NPC_ANIMATIONS);
                         break;
-                    
-                    case "Behavior": if (field.Value != null) Behavior = field.Value.Split('\n'); break;
-                    case "Interact": if (field.Value != null) interactionScript = field.Value.Split('\n'); break;
+
+                    case "Idle": if (field.Value != null) Behavior = field.Value.Split('\n'); break;
+                    case "Script": if (field.Value != null) interactionScript = field.Value.Split('\n'); break;
                     case "Direction": if (field.Value != null) Orientation = (Orientation)Enum.Parse(typeof(Orientation), field.Value); break;
                     case "Label": Label = field.Value; break;
+                    case "Orientation": Orientation = Enum.Parse<Orientation>(field.Value); break;
                 }
             }
 
-            CenterOn(iTilemap.GetTile(new Vector2(entityInstance.Px[0] + entityInstance.Width / 2, entityInstance.Px[1] + entityInstance.Height / 2)).Center);
+            CenterOn(iTilemap.GetTile(new Vector2(entityInstance.Px[0] + entityInstance.Width / 2, entityInstance.Px[1] + entityInstance.Height / 2) + chunk.OffsetPx).Center);
 
-            if (this is Chest)
-            {
-
-            }
-            else
-            {
-                tilemap.GetTile(Center).Occupants.Add(this);
-                HostTile = tilemap.GetTile(Center);
-                Idle();
-            }
+            tilemap.GetTile(Center).Occupants.Add(this);
+            HostTile = tilemap.GetTile(Center);
+            Idle();
         }
 
         public Npc(MapScene iMapScene, TileMap iTilemap, int x, int y, string spriteName, Orientation iOrientation = Orientation.Down)
@@ -120,9 +118,10 @@ namespace Sayohime.Scenes.MapScene
             return true;
         }
 
+        public string Name { get; private set; }
         public string Label { get; protected set; } = "NPC";
         public string[] Behavior { get; protected set; } = null;
-        public Vector2 LabelPosition { get => new Vector2(position.X, position.Y - animatedSprite.SpriteBounds().Height - 8); }
+        public Vector2 LabelPosition { get => new Vector2(position.X, position.Y - animatedSprite.SpriteBounds().Height - 4); }
         public virtual bool Interactive { get => interactionScript != null; }
 
         public int TileX { get => HostTile.TileX; }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -7,12 +6,11 @@ using Microsoft.Xna.Framework.Graphics;
 using Sayohime.Main;
 using Sayohime.SceneObjects;
 
-
 namespace Sayohime.Scenes.MapScene
 {
     public class InteractionPrompt : Overlay
     {
-        private const string PROMPT_FRAME = "DarkFrame";
+        private const string PROMPT_FRAME = "PokeFrame";
         private const GameFont PROMPT_FONT = GameFont.Interface;
 
         private MapScene mapScene;
@@ -20,7 +18,7 @@ namespace Sayohime.Scenes.MapScene
 
         private NinePatch textbox;
 
-        private Color color = new Color(252, 224, 168);
+        private Color color = new Color(89, 54, 26, 255);
 
         public InteractionPrompt(MapScene iMapScene)
         {
@@ -43,7 +41,7 @@ namespace Sayohime.Scenes.MapScene
                 string longestLine = textLines.MaxBy(x => Text.GetStringLength(PROMPT_FONT, x));
                 int width = Text.GetStringLength(PROMPT_FONT, longestLine);
                 int height = Text.GetStringHeight(PROMPT_FONT);
-                textbox.Bounds = new Rectangle(0, 0, width + 10, height * textLines.Count() + 5);
+                textbox.Bounds = new Rectangle(0, 0, width + 9, height * textLines.Count() + 1);
                 Vector2 cameraOffset = new Vector2(mapScene.Camera.CenteringOffsetX, mapScene.Camera.CenteringOffsetY);
 
                 textbox.Draw(spriteBatch, target.LabelPosition - mapScene.Camera.Position - new Vector2(textbox.Bounds.Width / 2, 0) - cameraOffset);
@@ -51,7 +49,7 @@ namespace Sayohime.Scenes.MapScene
                 int row = 0;
                 foreach (string text in textLines)
                 {
-                    Text.DrawCenteredText(spriteBatch, target.LabelPosition + new Vector2(1, 6) - mapScene.Camera.Position - cameraOffset, PROMPT_FONT, text, color, 0.03f, row);
+                    Text.DrawCenteredText(spriteBatch, target.LabelPosition + new Vector2(1, -1) - mapScene.Camera.Position - cameraOffset, PROMPT_FONT, text, color, 0.03f, row);
                     row++;
                 }
             }
@@ -59,9 +57,6 @@ namespace Sayohime.Scenes.MapScene
 
         public void Target(IInteractive newTarget)
         {
-            if (newTarget == null) { target = null; return; }
-            if (string.IsNullOrEmpty(newTarget.Label)) return;
-
             target = newTarget;
         }
     }

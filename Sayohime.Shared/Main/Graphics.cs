@@ -3,30 +3,30 @@ using System.Globalization;
 
 namespace Sayohime.Main
 {
+	public enum PaletteHue
+	{
+		Unused1,
+		DarkGrey,
+		Red,
+		DarkOrange,
+		LightOrange,
+		Yellow,
+		LightGreen,
+		Green,
+		DarkGreen,
+		Teal,
+		LightBlue,
+		DarkBlue,
+		Purple,
+		LightPurple,
+		LightGrey,
+		Unused2
+	}
+
 	public static class Graphics
 	{
 		public static readonly Color PURE_BLACK = new Color(1, 1, 1, 255);
 		public static readonly Color PURE_WHITE = new Color(250, 250, 250, 255);
-
-		public enum PaletteHue
-		{
-			Unused1,
-			DarkGrey,
-			Red,
-			DarkOrange,
-			LightOrange,
-			Yellow,
-			LightGreen,
-			Green,
-			DarkGreen,
-			Teal,
-			LightBlue,
-			DarkBlue,
-			Purple,
-			LightPurple,
-			LightGrey,
-			Unused2
-		}
 
 		public static Color ParseHexcode(string hexCode)
 		{

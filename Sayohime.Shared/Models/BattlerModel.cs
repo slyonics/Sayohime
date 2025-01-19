@@ -49,8 +49,24 @@ namespace Sayohime.Models
 		AutoRevive
 	}
 
+    public enum TargetType
+    {
+        OneEnemy,
+        OneAlly,
+        AllEnemies,
+        AllAllies,
+        Self,
+        All,
+        None
+    }
+
 	public class BattlerModel
     {
+        public BattlerModel()
+        {
+
+        }
+
         public BattlerModel(EnemyRecord enemyRecord)
         {
             Name.Value = enemyRecord.Name;

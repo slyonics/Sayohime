@@ -1,8 +1,8 @@
 ﻿using System;
 
-using ldtk;
-
 using Microsoft.Xna.Framework;
+
+using ldtk;
 
 using Sayohime.SceneObjects.Maps;
 
@@ -20,12 +20,12 @@ namespace Sayohime.Scenes.MapScene
         public bool TravelZone { get; set; }
         public bool DefaultTravelZone { get; set; } = true;
 
-        public EventTrigger(MapScene iMapScene, EntityInstance iEntity)
+        public EventTrigger(MapScene iMapScene, Chunk chunk, EntityInstance iEntity)
         {
             mapScene = iMapScene;
             entity = iEntity;
             
-            Bounds = new Rectangle((int)entity.Px[0], (int)entity.Px[1], (int)entity.Width, (int)entity.Height);
+            Bounds = new Rectangle((int)entity.Px[0] + (int)chunk.OffsetPx.X, (int)entity.Px[1] + (int)chunk.OffsetPx.Y, (int)entity.Width, (int)entity.Height);
 
             foreach (FieldInstance field in entity.FieldInstances)
             {
@@ -35,7 +35,8 @@ namespace Sayohime.Scenes.MapScene
                     case "Script": Script = field.Value.Split('\n'); break;
                     case "Label": Label = field.Value; break;
                     case "Direction": Direction = (Orientation)Enum.Parse(typeof(Orientation), field.Value); break;
-                    case "NoDefault": DefaultTravelZone = false; break;
+					case "Destination": Destination = field.Value; break;
+					case "NoDefault": DefaultTravelZone = false; break;
                 }
             }
 
@@ -46,9 +47,9 @@ namespace Sayohime.Scenes.MapScene
                     break;
 
                 case "Travel":
-                    Interactive = true;
+                    if (!string.IsNullOrEmpty(Label)) Interactive = true;
                     TravelZone = true;
-                    Script = ["ChangeMap " + Name];
+                    Script = [ $"ChangeMap {Destination} {Name}" ];
                     break;
 
                 case "Interactable":
@@ -74,5 +75,7 @@ namespace Sayohime.Scenes.MapScene
 
         public string Label { get; set; } = "Trigger";
         public Vector2 LabelPosition { get => new Vector2(Bounds.Center.X, Bounds.Center.Y - Bounds.Height); }
+
+        public string Destination { get; set; }
     }
 }
