@@ -27,6 +27,7 @@ namespace Sayohime.Models
         public string Sprite { get; set; }
         public int ShadowOffset { get; set; }
         public int Exp { get; set; }
+        public string Description { get; set; }
 
         public long HP { get; set; }
         public int MP { get; set; }
@@ -40,7 +41,6 @@ namespace Sayohime.Models
 		public int PhysicalEvade { get; set; }
         public int MagicDefense { get; set; }
         public int MagicEvade { get; set; }
-        public string Description { get; set; }
 
         public AttackData[] Attacks { get; set; }
 

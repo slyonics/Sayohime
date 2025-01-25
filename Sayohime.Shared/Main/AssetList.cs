@@ -65,6 +65,10 @@ namespace Sayohime.Main
 
     public enum GameData
     {
+        ConversationData,
+        EnemyData,
+        HeroData,
+        ItemData,
 
         None = -1
     }
@@ -150,34 +154,7 @@ namespace Sayohime.Main
         Particles_Thunderbolt,
         Particles_Tornado,
         Particles_Weapons,
-        Tiles_TlDungeonA1,
-        Tiles_TlDungeonA2,
-        Tiles_TlDungeonA4,
-        Tiles_TlDungeonA5,
-        Tiles_TlDungeonB,
-        Tiles_TlDungeonC,
-        Tiles_TlInsideA1,
-        Tiles_TlInsideA2,
-        Tiles_TlInsideA4,
-        Tiles_TlInsideA5,
-        Tiles_TlInsideB,
-        Tiles_TlInsideC,
-        Tiles_TlOutsideA1,
-        Tiles_TlOutsideA2,
-        Tiles_TlOutsideA3,
-        Tiles_TlOutsideA4,
-        Tiles_TlOutsideA5,
-        Tiles_TlOutsideB,
-        Tiles_TlOutsideC,
-        Tiles_TlTable,
-        Tiles_TlVehicleA2,
-        Tiles_TlVehicleA4,
-        Tiles_TlVehicleA5,
-        Tiles_TlVehicleB,
-        Tiles_TlVehicleC,
-        Tiles_TlWorldA1,
-        Tiles_TlWorldA2,
-        Tiles_TlWorldB,
+        Tiles_Overworld,
         Background_Eclipse_Eclipse0,
         Widgets_Gauges_HealthBar,
         Widgets_Gauges_TechGauge,
@@ -223,6 +200,7 @@ namespace Sayohime.Main
 
     public enum GameMap
     {
+        Matsuura,
 
         None = -1
     }

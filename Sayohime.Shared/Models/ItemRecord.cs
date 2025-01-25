@@ -17,7 +17,6 @@ namespace Sayohime.Models
         Plot
     }
 
-    [Serializable]
     public class ItemRecord
     {
         public ItemRecord()

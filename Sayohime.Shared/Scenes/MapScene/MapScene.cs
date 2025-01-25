@@ -103,7 +103,11 @@ namespace Sayohime.Scenes.MapScene
 		{
 			Rectangle nearbyArea = new Rectangle(Camera.View.X / TileMap.TILE_SIZE - 4, Camera.View.Y / TileMap.TILE_SIZE - 4, Camera.View.Width / TileMap.TILE_SIZE + 8, Camera.View.Height / TileMap.TILE_SIZE + 8);
 			List<Chunk> chunksToLoad = Tilemap.FindUnloadedNeighborChunks(nearbyArea);
-			foreach (Chunk chunk in chunksToLoad) Task.Run(() => LoadChunk(chunk));
+
+			if (chunksToLoad != null)
+			{
+				foreach (Chunk chunk in chunksToLoad) Task.Run(() => LoadChunk(chunk));
+			}
 		}
 
 		public void LoadChunk(Chunk chunk)

@@ -1,0 +1,31 @@
+[
+	{
+		"Name": "Banshee",
+		"Class": "Monster",
+		"Level": 13,
+		"Sprite": "Banshee",
+		"Exp": 1,
+		"Description": "Wailing spirit that portends the death of whomever hears its cry. Undead, weak VS holy, strong vs ice.",
+		"HP": 100,
+		"MP": 10,
+		"Strength": 25,
+		"Agility": 10,
+		"Endurance": 25,
+		"Magic": 10,
+		"Luck": 10,
+		"Evade": 0,
+		"PhysicalDefense": 5,
+		"PhysicalEvade": 5,
+		"MagicDefense": 5,
+		"MagicEvade": 5,
+		"ElementWeak": [ "Holy" ],
+		"ElementStrong": [ "Ice" ],
+		"ElementImmune": [ "Dark" ],
+		"Attacks": [
+			{
+				"Script": [ "Attack" ],
+				"Weight": 100
+			}
+		]
+	}
+]

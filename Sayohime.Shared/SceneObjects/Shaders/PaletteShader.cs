@@ -21,7 +21,7 @@ namespace Sayohime.SceneObjects.Shaders
 
 		public void SetGlobalBrightness(float brightness)
 		{
-			Effect.Parameters["global_brightness"].SetValue(brightness);
+			Effect.Parameters["global_gamma"].SetValue(brightness);
 		}
 	}
 }

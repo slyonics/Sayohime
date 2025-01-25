@@ -1,0 +1,110 @@
+[
+	{
+		"Name": "Tonic",
+		"Animation": "Guarding",
+		"Description": "Mild medicine restores 50 HP to a single ally.",
+		"Icon": "Potion",
+		"ItemType": "Medicine",
+		"Targetting": "OneAlly",
+		"Conditions": "$Target.HP > 0 && $Target.HP < $Target.MaxHP",
+		"BattleScript": [
+			"Announce Tonic",
+			"Animate Item",
+			"Wait 500",
+			"Sound Cure",
+			"CenterEffect BlueHeal $targetCenterX $targetCenterY 2",
+			"Flash Teal",
+			"Heal 50"
+		],
+		"FieldScript": [
+			"Sound Cure",
+			"Heal 50",
+			"Effect BlueHeal $targetX $targetY 3"
+		]
+	},
+	{
+		"Name": "Ether",
+		"Animation": "Guarding",
+		"Description": "Magic water restores 20 MP to a single ally.",
+		"Icon": "Potion",
+		"ItemType": "Medicine",
+		"Targetting": "OneAlly",
+		"Conditions": "$Target.MP > 0 && $Target.MP < $Target.MaxMP",
+		"BattleScript": [
+			"Announce Ether",
+			"Animate Item",
+			"Wait 500",
+			"Sound Cure",
+			"CenterEffect GreenHeal $targetCenterX $targetCenterY 2",
+			"Flash Teal",
+			"Replenish 20"
+		],
+		"FieldScript": [
+			"Sound Cure",
+			"Replenish 20",
+			"Effect GreenHeal $targetX $targetY 3"
+		]
+	},
+	{
+		"Name": "Fists",
+		"Animation": "Guarding",
+		"Icon": "Sword",
+		"ItemType": "Weapon",
+		"Targetting": "OneEnemy",
+		"BattleScript": [
+			"Animate Attack Fists",
+			"Sound Slash",
+			"CenterEffect Bash $targetCenterX $targetCenterY 2",
+			"OnHit Fists Blunt",
+			"Flash Red",
+			"Damage Fists Blunt"
+		]
+	},
+	{
+		"Name": "Rusty Sword",
+		"Animation": "Guarding",
+		"Description": "Old, worn, but still usable sword from an earlier time.",
+		"Icon": "Sword",
+		"ItemType": "Weapon",
+		"Targetting": "OneEnemy",
+		"UsableBy": [ "Sayo" ],
+		"Attack": 16,
+		"Hit": 100,
+		"BattleScript": [
+			"Animate Attack Sword",
+			"Sound Slash",
+			"CenterEffect Slash $targetCenterX $targetCenterY 1",
+			"OnHit Swords Sharp",
+			"Flash Red",
+			"Damage Swords Sharp"
+		]
+	},
+	{
+		"Name": "Buckler",
+		"Description": "A small, lightweight shield.",
+		"Icon": "Shield",
+		"ItemType": "Shield",
+		"UsableBy": [ "Sayo" ],
+		"Evade": 10,
+		"MagicEvade": 5,
+		"Weight": 8
+	},
+	{
+		"Name": "Motley",
+		"Description": "Bright, abstract clothing for clowns to wear.",
+		"Icon": "Robe",
+		"ItemType": "Armor",
+		"UsableBy": [ "Sayo" ],
+		"Defense": 20,
+		"MagicDefense": 25,
+		"Weight": 3
+	},
+	{
+		"Name": "Focus Stone",
+		"Description": "Natural mana crystal that slightly boosts magic power.",
+		"Icon": "Ice",
+		"ItemType": "Accessory",
+		"UsableBy": [ "Sayo" ],
+		"MagicModifier": 2
+	}
+]

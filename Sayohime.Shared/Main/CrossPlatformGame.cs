@@ -78,7 +78,7 @@ namespace Sayohime.Main
 		{
 			GameProfile.NewState();
 
-			var mapScene = new MapScene(GameMap.Tower, "Default");
+			var mapScene = new MapScene(GameMap.Matsuura, "Default");
 			CurrentScene = mapScene;
 		}
 

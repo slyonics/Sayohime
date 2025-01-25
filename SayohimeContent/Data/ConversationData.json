@@ -1,0 +1,600 @@
+[
+	{
+		"Name": "GameIntro",
+		"ShowOnStart": false,
+		"StartScript": [ "Music Cutscene1", "AddPortrait portrait Witch 145 110 Gray Purple 0", "PortraitBrightness portrait 4 1.5", "WaitForPortrait portrait" ],
+		"DialogueRecords": [
+			{
+				"Speaker": "Wicked Witch of the East",
+				"Text": "Hi there! Welcome to the world of Oz! This world is home to wonderful creatures that I like to call the marvelous Hokum-mons!"
+			},
+			{
+				"Speaker": "Wicked Witch of the East",
+				"Text": "Some people keep Hokum-mons as pets. For others, they're an intellectual curiosity."
+			},
+			{
+				"Speaker": "Wicked Witch of the East",
+				"Text": "As for me, I'm the Wicked Witch of the East, and I use my Hokum-mons to subjugate the Munchkins! Yee hee hee hee!",
+				"Script": [ "SetSkippable False", "WaitForText", "Wait 1000", "AddPortrait portrait2 House 145 -1 Gray Red 4", "PortraitPosition portrait2 145 113 0.5", "WaitForPortrait portrait2", "ProceedText" ]
+			},
+			{
+				"Text": "Ka-thud!",
+				"Script": [ "ScreenShake 500", "WaitForText", "Wait 2500", "EndConversation", "ChangeScene MapScene Interior Intro" ]
+			}
+		]
+	},
+	{
+		"Name": "BlueGrape",
+		"DialogueRecords": [
+			{
+				"Text": "Got @Medicine Blue Apple!",
+				"Script": [ "GiveItem Blue Apple" ]
+			}
+		]
+	},
+	{
+		"Name": "MunchPickup1",
+		"DialogueRecords": [
+			{
+				"Text": "Got 200 coins!",
+				"Script": [ "AddMoney 200" ]
+			}
+		]
+	},
+	{
+		"Name": "MunchPickup2",
+		"DialogueRecords": [
+			{
+				"Text": "Got @Status Repel!",
+				"Script": [ "GiveItem Repel" ]
+			}
+		]
+	},
+	{
+		"Name": "MunchPickup3",
+		"DialogueRecords": [
+			{
+				"Text": "Got 3 @CardIcon Capture Cards!",
+				"Script": [ "GiveItem Capture Card", "GiveItem Capture Card", "GiveItem Capture Card" ]
+			}
+		]
+	},
+	{
+		"Name": "MunchPickup4",
+		"DialogueRecords": [
+			{
+				"Text": "Got 2 @Medicine Potions!",
+				"Script": [ "GiveItem Potion", "GiveItem Potion" ]
+			}
+		]
+	},
+	{
+		"Name": "MunchPickup5",
+		"DialogueRecords": [
+			{
+				"Text": "Got @Medicine Revive!",
+				"Script": [ "GiveItem Revive" ]
+			}
+		]
+	},
+	{
+		"Name": "MunchPickup6",
+		"DialogueRecords": [
+			{
+				"Text": "Got 3 @CardIcon Capture Cards!",
+				"Script": [ "GiveItem Capture Card", "GiveItem Capture Card", "GiveItem Capture Card" ]
+			}
+		]
+	},
+	{
+		"Name": "Route1Pickup1",
+		"DialogueRecords": [
+			{
+				"Text": "Got TM: Thunder Wave!",
+				"Script": [ "GiveItem TM: Thunder Wave" ]
+			}
+		]
+	},
+	{
+		"Name": "FarmPickup1",
+		"DialogueRecords": [
+			{
+				"Text": "Got TM: Acid!",
+				"Script": [ "GiveItem TM: Acid" ]
+			}
+		]
+	},
+	{
+		"Name": "FarmPickup2",
+		"DialogueRecords": [
+			{
+				"Text": "Got TM: Toxic!",
+				"Script": [ "GiveItem TM: Toxic" ]
+			}
+		]
+	},
+	{
+		"Name": "FarmPickup3",
+		"DialogueRecords": [
+			{
+				"Text": "Got TM: Quick Attack!",
+				"Script": [ "GiveItem TM: Quick Attack" ]
+			}
+		]
+	},
+	{
+		"Name": "FarmPickup4",
+		"DialogueRecords": [
+			{
+				"Text": "Got @Status Lure!",
+				"Script": [ "GiveItem Lure" ]
+			}
+		]
+	},
+	{
+		"Name": "FarmPickup5",
+		"DialogueRecords": [
+			{
+				"Text": "Got 2 @CardIcon Capture Cards!",
+				"Script": [ "GiveItem Capture Card", "GiveItem Capture Card" ]
+			}
+		]
+	},
+	{
+		"Name": "FarmPickup6",
+		"DialogueRecords": [
+			{
+				"Text": "Got 3 @Medicine Potions!",
+				"Script": [ "GiveItem Potion", "GiveItem Potion", "GiveItem Potion" ]
+			}
+		]
+	},
+	{
+		"Name": "BackpackIntro1",
+		"DialogueRecords": [
+			{
+				"Speaker": "Munchkin Referee",
+				"Text": "The Wicked Witch of the East has no more remaining Hokum-mons to battle with and has fainted!"
+			},
+			{
+				"Speaker": "Witch of the North",
+				"Text": "Welcome, my fellow Hokum-mon Elite, to the land of Oz! I am Glenda, Witch of the North. May I ask for your name, most noble trainer?",
+				"Script": [ "SetSkippable False", "WaitForText", "NamePrompt", "ProceedText" ]
+			},
+			{
+				"Speaker": "Witch of the North",
+				"Text": "Splendid! And may I presume that you are the one who defeated the Wicked Witch of the East?",
+				"Script": [ "WaitForText", "SelectionPrompt", "No", "Yes", "End", "SetSkippable True", "Switch $selection", "Case No", "ChangeConversation BackpackIntroNo", "Break", "Case Yes", "ChangeConversation BackpackIntroYes", "Break", "End" ]
+			}
+		]
+	},
+	{
+		"Name": "BackpackIntroNo",
+		"DialogueRecords": [
+			{
+				"Speaker": "$TrainerName",
+				"Text": "You are very kind, but there must be some kind of mistake. I was never given a chance to become a real Hokum-mon trainer. I only have my Toto here.",
+			},
+			{
+				"Speaker": "$TotoName",
+				"Text": "Toto!",
+			},
+			{
+				"Speaker": "Witch of the North",
+				"Text": "Well your house defeated her, so the victory shall be credited to you!",
+			}
+		]
+	},
+	{
+		"Name": "BackpackIntroYes",
+		"DialogueRecords": [
+			{
+				"Speaker": "$TrainerName",
+				"Text": "Why, yes. This is not my first Hokum-mon adventure.",
+			},
+			{
+				"Speaker": "Witch of the North",
+				"Text": "Then let me thank you for defeating the wicked witch and freeing the Munchkins from her exploitation!",
+			}
+		]
+	},
+	{
+		"Name": "BackpackIntro2",
+		"DialogueRecords": [
+			{
+				"Speaker": "Witch of the North",
+				"Text": "Now that you have defeated her, the Wicked Witch of the East has turned to dust leaving only her Silver Badge. Please take it as a token of our esteem and appreciation for saving the Munchkins."
+			},
+			{
+				"Text": "Got @Status Silver Badge! You can now train Hokum-mons up to level 15!",
+				"Script": [ "GiveItem Silver Badge", "GiveBadge" ]
+			},
+			{
+				"Speaker": "$TrainerName",
+				"Text": "Thank you so very much, but I really must return to my aunt and uncle in the Kanto region. Can you help me find my way?"
+			},
+			{
+				"Speaker": "Witch of the North",
+				"Text": "I do not know where Kanto is, for I have never heard that region mentioned before. Only Oz the Great Wizard in the City of Emeralds can help you with this request."
+			},
+			{
+				"Speaker": "$TrainerName",
+				"Text": "Where is this City of Emeralds?"
+			},
+			{
+				"Speaker": "Witch of the North",
+				"Text": "It is exactly in the center of the region. The road to the City of Emeralds is paved with yellow brick, so you cannot miss it."
+			},
+			{
+				"Speaker": "Witch of the North",
+				"Text": "When you get to Oz do not be afraid of him, but tell your story and ask him to help you. Good-bye, my dear."
+			}
+		]
+	},
+	{
+		"Name": "BackpackIntro3",
+		"DialogueRecords": [
+			{
+				"Speaker": "Munchkin Referee",
+				"Text": "Please, madam, follow me this way to Munchkin Town."
+			}
+		]
+	},
+	{
+		"Name": "IntroMunch",
+		"DialogueRecords": [
+			{
+				"Speaker": "Munchkin Referee",
+				"Text": "This trail will lead you to Munchkin Town where you may find supplies and hospitality. The Yellow Brick Road begins just beyond there to the south."
+			}
+		]
+	},
+	{
+		"Name": "MunchCitizen1",
+		"DialogueRecords": [
+			{
+				"Speaker": "Munchkin",
+				"Text": "Local citizens are starting to get excited about Hokum-mon training again. If you spot any trainers out in the field, be prepared to battle!"
+			}
+		]
+	},
+	{
+		"Name": "MunchCitizen2",
+		"DialogueRecords": [
+			{
+				"Speaker": "Munchkin",
+				"Text": "We munchkins used to be bigger until the wicked witch shrank all our consumer products one day."
+			}
+		]
+	},
+	{
+		"Name": "MunchCitizen3",
+		"DialogueRecords": [
+			{
+				"Speaker": "Munchkin",
+				"Text": "You must know how to catch Hokum-mons, right? Lower their health first and inflict a status ailment like paralysis or sleep to make capture easier."
+			},
+			{
+				"Speaker": "Munchkin",
+				"Text": "Buy some @CardIcon Capture Cards from the potion shop on the west side of town if you need them."
+			}
+		]
+	},
+	{
+		"Name": "MunchCitizen4",
+		"DialogueRecords": [
+			{
+				"Speaker": "Munchkin",
+				"Text": "Now that the Wicked Witch of the East is gone, we can finally try some new ideas around here!"
+			}
+		]
+	},
+	{
+		"Name": "ShopIntro",
+		"DialogueRecords": [
+			{
+				"Speaker": "Clerk",
+				"Text": "Thank you for freeing us from the Wicked Witch of the East! Please accept these Capture Cards as a reward."
+			},
+			{
+				"Text": "Got 5 @CardIcon Capture Cards!",
+				"Script": [ "GiveItem Capture Card", "GiveItem Capture Card", "GiveItem Capture Card", "GiveItem Capture Card", "GiveItem Capture Card" ]
+			}
+		]
+	},
+	{
+		"Name": "ClinicRestore",
+		"DialogueRecords": [
+			{
+				"Speaker": "Nurse",
+				"Text": "Let me heal your Hokum-mons for you!"
+			}
+		]
+	},
+	{
+		"Name": "MunchTrainer1Fight",
+		"DialogueRecords": [
+			{
+				"Speaker": "Munchkin Trainer",
+				"Text": "Are you ready to fight something fluffy?"
+			}
+		]
+	},
+	{
+		"Name": "MunchTrainer1Talk",
+		"DialogueRecords": [
+			{
+				"Speaker": "Munchkin Trainer",
+				"Text": "My fluff wasn't enough..."
+			}
+		]
+	},
+	{
+		"Name": "MunchTrainer2Fight",
+		"DialogueRecords": [
+			{
+				"Speaker": "Munchkin Trainer",
+				"Text": "Ratata? Pidgey? Never heard of 'em."
+			}
+		]
+	},
+	{
+		"Name": "MunchTrainer2Talk",
+		"DialogueRecords": [
+			{
+				"Speaker": "Munchkin Trainer",
+				"Text": "Crowvial is closer to a Fearow in terms of statistics, anyways."
+			}
+		]
+	},
+	{
+		"Name": "MunchTrainer3Fight",
+		"DialogueRecords": [
+			{
+				"Speaker": "Munchkin Trainer",
+				"Text": "Do you know how to handle a poison Hokum-mon?"
+			}
+		]
+	},
+	{
+		"Name": "MunchTrainer3Talk",
+		"DialogueRecords": [
+			{
+				"Speaker": "Munchkin Trainer",
+				"Text": "I found this Smudgie in the tall grass near Munchkin Farms. Buy an antidote from the shop if you're going that way."
+			}
+		]
+	},
+	{
+		"Name": "Route1GatekeeperFight",
+		"DialogueRecords": [
+			{
+				"Speaker": "Hokum-mon Certifier",
+				"Text": "Pardon me, I must certify your Hokum-mon roster before you proceed beyond this point."
+			}
+		]
+	},
+	{
+		"Name": "Route1GatekeeperTalk",
+		"DialogueRecords": [
+			{
+				"Speaker": "Hokum-mon Certifier",
+				"Text": "Your Hokum-mons are well-certified, please proceed at your leisure."
+			}
+		]
+	},
+	{
+		"Name": "Route1DetourFight",
+		"DialogueRecords": [
+			{
+				"Speaker": "Munchkin Trainer",
+				"Text": "Let me show you the rare Hokum-mons I found by the two little clearings nearby!"
+			}
+		]
+	},
+	{
+		"Name": "Route1DetourTalk",
+		"DialogueRecords": [
+			{
+				"Speaker": "Munchkin Trainer",
+				"Text": "Those were pretty cool Hokum-mons, huh?"
+			}
+		]
+	},
+	{
+		"Name": "BikeThief1Fight",
+		"DialogueRecords": [
+			{
+				"Speaker": "Bike Thief",
+				"Text": "We're all here to steal a bicycle for ourselves."
+			}
+		]
+	},
+	{
+		"Name": "RosterCheck",
+		"DialogueRecords": [
+			{
+				"Speaker": "Munchkin Gatekeeper",
+				"Text": "Pardon me, madam. Have you to date acquired a roster of at least three or more Hokum-mon?",
+				"Script": [ "SetSkippable False", "WaitForText", "SelectionPrompt", "No", "Yes", "End", "SetSkippable True", "Switch $selection", "Case No", "ChangeConversation RosterNo", "Break", "Case Yes", "ChangeConversation RosterYes", "Break", "End" ]
+			}
+		]
+	},
+	{
+		"Name": "PokeCountPass",
+		"DialogueRecords": [
+			{
+				"Speaker": "Munchkin Farmer",
+				"Text": "Kindly pass this way."
+			}
+		]
+	},
+		{
+		"Name": "PokeCountFail",
+		"DialogueRecords": [
+			{
+				"Speaker": "Munchkin Farmer",
+				"Text": "Well good day to you madam! The going is a little dangerous past this point so try rounding up a full team of Hokum-mons first."
+			}
+		]
+	},
+	{
+		"Name": "BikeThief1Talk",
+		"DialogueRecords": [
+			{
+				"Speaker": "Bike Thief",
+				"Text": "Guess I'm not getting a bicycle today."
+			}
+		]
+	},
+	{
+		"Name": "BikeThief2Fight",
+		"DialogueRecords": [
+			{
+				"Speaker": "Bike Thief",
+				"Text": "Wow, look at all the fast bicycles in this gym!"
+			}
+		]
+	},
+	{
+		"Name": "BikeThief2Talk",
+		"DialogueRecords": [
+			{
+				"Speaker": "Bike Thief",
+				"Text": "Blink and you'll miss it. That's just how these things go sometimes."
+			}
+		]
+	},
+	{
+		"Name": "BikeThief3Fight",
+		"DialogueRecords": [
+			{
+				"Speaker": "Bike Thief",
+				"Text": "There's some really dangerous guys after me. That's why I need a getaway vehicle."
+			}
+		]
+	},
+	{
+		"Name": "BikeThief3Talk",
+		"DialogueRecords": [
+			{
+				"Speaker": "Bike Thief",
+				"Text": "You're pretty dangerous too, huh?"
+			}
+		]
+	},
+	{
+		"Name": "ScarecrowFight",
+		"DialogueRecords": [
+			{
+				"Speaker": "Scarecrow",
+				"Text": "Good day."
+			},
+			{
+				"Speaker": "$TrainerName",
+				"Text": "Did you speak?",
+			},
+			{
+				"Speaker": "Scarecrow",
+				"Text": "Certainly, how do you do?",
+			},
+			{
+				"Speaker": "$TrainerName",
+				"Text": "I'm pretty well, thank you. How do you do?",
+			},
+			{
+				"Speaker": "Scarecrow",
+				"Text": "I'm not feeling well, for it is very tedious being posted up here night and day to scare away bike thieves.",
+			}
+		]
+	},
+	{
+		"Name": "ScarecrowTalk",
+		"DialogueRecords": [
+			{
+				"Speaker": "Scarecrow",
+				"Text": "If you take a bicycle I'm coming with you until you give it back."
+			}
+		]
+	},
+	{
+		"Name": "Outro",
+		"DialogueRecords": [
+			{
+				"Text": "Got @Status Blue Badge! You can now train Hokum-mons up to level 25!",
+				"Script": [ "GiveItem Blue Badge", "GiveBadge" ]
+			},
+			{
+				"Text": "This concludes all game content for now. Thank you for playing!",
+				"Script": [ "Recruit Scarecrow" ]
+			}
+		]
+	},
+	{
+		"Name": "TallGrassSign",
+		"DialogueRecords": [
+			{
+				"Text": "Watch out for wild Hokum-mons lurking in the tall grass! Each step through tall grass has a random chance of a wild Hokum-mon encounter."
+			},
+			{
+				"Text": "Different Hokum-mons can be found hiding in different locations throughout the world. Explore around to find them all!"
+			}
+		]
+	},
+	{
+		"Name": "PotionSign",
+		"DialogueRecords": [
+			{
+				"Text": "Welcome to the Munchkin Town Potion Shop! We also sell @CardIcon Capture Cards!"
+			}
+		]
+	},
+	{
+		"Name": "MunchClinicSign",
+		"DialogueRecords": [
+			{
+				"Text": "Welcome to the Munchkin Town Hokum-mon Clinic! All visitors welcome, no insurance required."
+			}
+		]
+	},
+	{
+		"Name": "FarmClinicSign",
+		"DialogueRecords": [
+			{
+				"Text": "Munchkin Farms Hokum-mon Clinic. No deductibles, copays, or bike thieves."
+			}
+		]
+	},
+	{
+		"Name": "FarmSign",
+		"DialogueRecords": [
+			{
+				"Text": "1st Gym - Grass"
+			}
+		]
+	},
+	{
+		"Name": "EndSign",
+		"DialogueRecords": [
+			{
+				"Text": "No more content beyond this point."
+			}
+		]
+	},
+	{
+		"Name": "UseRepel",
+		"DialogueRecords": [
+			{
+				"Text": "{PlayerName} used Repel! Most wild Hokum-mons should stay away for a while."
+			}
+		]
+	},
+	{
+		"Name": "UseLure",
+		"DialogueRecords": [
+			{
+				"Text": "{PlayerName} used Lure! More Hokum-mons will appear for a little bit."
+			}
+		]
+	}
+]

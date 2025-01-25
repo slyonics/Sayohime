@@ -1,0 +1,13 @@
+[
+	{
+		"Name": "Sayo",
+		"Sprite": "AdvF",
+		"BaseHP": 50,
+		"BaseMP": 10,
+		"BaseStrength": 4,
+		"BaseAgility": 4,
+		"BaseEndurance": 1,
+		"BaseMagic": 1,
+		"BaseLuck": 3
+	}
+]

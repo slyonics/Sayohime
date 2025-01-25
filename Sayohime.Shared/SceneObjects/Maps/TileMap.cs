@@ -106,7 +106,7 @@ namespace Sayohime.SceneObjects.Maps
         {
             foreach (LayerInstance layer in layers.Reverse())
             {
-                if (layer.Type != "Entities" && layer.Type != "AutoLayer") LoadTileLayer(layer, chunk);
+                if (layer.Type != "Entities" && layer.Type != "IntGrid") LoadTileLayer(layer, chunk);
             }
         }
 

@@ -14,7 +14,7 @@ namespace Sayohime.Models
     public class HeroRecord
     {
         public HeroType Name { get; set; }
-        public Dictionary<string, string> Sprites { get; set; }
+        public string Sprite { get; set; }
 
 		public int BaseHP { get; set; }
 		public int BaseMP { get; set; }

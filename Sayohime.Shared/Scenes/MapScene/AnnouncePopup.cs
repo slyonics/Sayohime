@@ -10,7 +10,7 @@ namespace Sayohime.Scenes.MapScene
 {
     public class AnnouncePopup : Overlay
     {
-        private const string PROMPT_FRAME = "PokeFrame";
+        private const string PROMPT_FRAME = "BattleFrame";
         private const GameFont PROMPT_FONT = GameFont.Interface;
 
         private MapScene mapScene;
