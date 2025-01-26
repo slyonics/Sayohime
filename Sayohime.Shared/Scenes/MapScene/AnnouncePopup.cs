@@ -10,7 +10,7 @@ namespace Sayohime.Scenes.MapScene
 {
     public class AnnouncePopup : Overlay
     {
-        private const string PROMPT_FRAME = "BattleFrame";
+        private const string PROMPT_FRAME = "BattleWindow";
         private const GameFont PROMPT_FONT = GameFont.Interface;
 
         private MapScene mapScene;
@@ -47,7 +47,7 @@ namespace Sayohime.Scenes.MapScene
             string longestLine = textLines.MaxBy(x => Text.GetStringLength(PROMPT_FONT, x));
             int width = Text.GetStringLength(PROMPT_FONT, longestLine);
             int height = Text.GetStringHeight(PROMPT_FONT);
-            textbox.Bounds = new Rectangle(0, 0, width + 9, height * textLines.Count() + 1);
+            textbox.Bounds = new Rectangle(0, 0, width + 13, height * textLines.Count() + 12);
             Vector2 centerPoint = new Vector2(CrossPlatformGame.SCREEN_WIDTH / 2, 16);
 
             textbox.Draw(spriteBatch, centerPoint - new Vector2(textbox.Bounds.Width / 2, textbox.Bounds.Height / 2));
@@ -55,7 +55,7 @@ namespace Sayohime.Scenes.MapScene
             int row = 0;
             foreach (string text in textLines)
             {
-                Text.DrawCenteredText(spriteBatch, centerPoint - new Vector2(0, 4 * (textLines.Length - 1) + 5), PROMPT_FONT, text, color, 0.03f, row);
+                Text.DrawCenteredText(spriteBatch, centerPoint - new Vector2(0, 2), PROMPT_FONT, text, color, 0.03f, row);
                 row++;
             }
         }

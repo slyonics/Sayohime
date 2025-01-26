@@ -80,6 +80,7 @@ namespace Sayohime.Main
 
 			var mapScene = new MapScene(GameMap.Matsuura, "Default");
 			CurrentScene = mapScene;
+			CurrentScene.BeginScene();
 		}
 
 		protected override void Update(GameTime gameTime)

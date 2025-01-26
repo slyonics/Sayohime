@@ -26,8 +26,8 @@ namespace Sayohime.Scenes.MapScene
             Faint
         }
 
-        public const int HERO_WIDTH = 20;
-        public const int HERO_HEIGHT = 24;
+        public const int HERO_WIDTH = 32;
+        public const int HERO_HEIGHT = 32;
 
         public static readonly Rectangle HERO_BOUNDS = new Rectangle(-8, -15, 16, 16);
 

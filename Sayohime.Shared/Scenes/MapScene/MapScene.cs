@@ -80,7 +80,7 @@ namespace Sayohime.Scenes.MapScene
                 case Orientation.Left: spawnPosition.X -= TileMap.TILE_SIZE; break;
             }
 
-			var leaderHero = new Hero(this, Tilemap, spawnPosition, GameSprite.Actors_AdvM, spawnOrientation);
+			var leaderHero = new Hero(this, Tilemap, spawnPosition, GameSprite.Actors_Sayo, spawnOrientation);
 			leaderHero.CenterOn(spawnPosition);
 			Tilemap.GetTile(leaderHero.Center).Occupants.Add(leaderHero);
 			leaderHero.HostTile = Tilemap.GetTile(leaderHero.Center);
@@ -183,7 +183,7 @@ namespace Sayohime.Scenes.MapScene
             sceneStarted = true;
 
             TransitionController transitionController = new TransitionController(TransitionDirection.In, 600);
-            transitionController.UpdateTransition += new Action<float>(t => PaletteShader.SetGlobalBrightness(t));
+            transitionController.UpdateTransition += new Action<float>(t => PaletteShader.SetGlobalBrightness(t - 1.0f));
 			transitionController.OnTerminated += new TerminationFollowup(() => AddOverlay(new AnnouncePopup(this, LocationName)));
             AddController(transitionController);
 

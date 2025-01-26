@@ -21,7 +21,7 @@ namespace Sayohime.SceneObjects.Maps
         Shore,
         Grassland,
         Forest,
-        Dirt
+        Mountain
     }
 
     public class Tile
@@ -180,8 +180,8 @@ namespace Sayohime.SceneObjects.Maps
 					case "SnowForest":
 					case "Forest": blockSight = true; break;
 
-					case "SnowMountains":
-					case "Mountains": blockSight = true; Blocked = true; break;
+					case "SnowMountain":
+					case "Mountain": blockSight = true; Blocked = true; break;
 
 					case "Shore":
                         Blocked = true;
@@ -347,6 +347,6 @@ namespace Sayohime.SceneObjects.Maps
                 return obscured;
             }
         }
-        public byte Brightness { get => (byte)(255 * visibilityInterval); }
+        public byte Brightness { get => (byte)(128 * visibilityInterval); }
     }
 }
