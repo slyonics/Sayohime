@@ -1943,9 +1943,9 @@
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
 			"externalRelPath": null,
-			"fieldInstances": [{ "__identifier": "LocationName", "__type": "String", "__value": "Matsuura_Town", "__tile": null, "defUid": 50, "realEditorValues": [{
+			"fieldInstances": [{ "__identifier": "LocationName", "__type": "String", "__value": "Matsuura", "__tile": null, "defUid": 50, "realEditorValues": [{
 				"id": "V_String",
-				"params": ["Matsuura_Town"]
+				"params": ["Matsuura"]
 			}] }],
 			"layerInstances": [
 				{
@@ -2000,6 +2000,150 @@
 							],
 							"__worldX": 288,
 							"__worldY": 160
+						},
+						{
+							"__identifier": "Interactable",
+							"__grid": [28,15],
+							"__pivot": [0,0],
+							"__tags": [],
+							"__tile": null,
+							"__smartColor": "#3E8948",
+							"iid": "2f241c00-c210-11ef-9cfd-8d79288b3e4b",
+							"width": 16,
+							"height": 16,
+							"defUid": 28,
+							"px": [448,240],
+							"fieldInstances": [
+								{ "__identifier": "Script", "__type": "String", "__value": "Conversation MunchClinicSign", "__tile": null, "defUid": 29, "realEditorValues": [{
+									"id": "V_String",
+									"params": ["Conversation MunchClinicSign"]
+								}] },
+								{ "__identifier": "Label", "__type": "String", "__value": "Sign", "__tile": null, "defUid": 30, "realEditorValues": [{
+									"id": "V_String",
+									"params": ["Sign"]
+								}] },
+								{ "__identifier": "EnableIf", "__type": "String", "__value": null, "__tile": null, "defUid": 31, "realEditorValues": [] },
+								{ "__identifier": "DisableIf", "__type": "String", "__value": null, "__tile": null, "defUid": 32, "realEditorValues": [] }
+							],
+							"__worldX": 448,
+							"__worldY": 240
+						},
+						{
+							"__identifier": "Interactable",
+							"__grid": [18,16],
+							"__pivot": [0,0],
+							"__tags": [],
+							"__tile": null,
+							"__smartColor": "#3E8948",
+							"iid": "45221320-c210-11ef-9cfd-990044e8e24c",
+							"width": 16,
+							"height": 16,
+							"defUid": 28,
+							"px": [288,256],
+							"fieldInstances": [
+								{ "__identifier": "Script", "__type": "String", "__value": "Conversation MunchClinicSign", "__tile": null, "defUid": 29, "realEditorValues": [{
+									"id": "V_String",
+									"params": ["Conversation MunchClinicSign"]
+								}] },
+								{ "__identifier": "Label", "__type": "String", "__value": "Sign_Thing", "__tile": null, "defUid": 30, "realEditorValues": [{
+									"id": "V_String",
+									"params": ["Sign_Thing"]
+								}] },
+								{ "__identifier": "EnableIf", "__type": "String", "__value": null, "__tile": null, "defUid": 31, "realEditorValues": [] },
+								{ "__identifier": "DisableIf", "__type": "String", "__value": null, "__tile": null, "defUid": 32, "realEditorValues": [] }
+							],
+							"__worldX": 288,
+							"__worldY": 256
+						},
+						{
+							"__identifier": "Interactable",
+							"__grid": [23,19],
+							"__pivot": [0,0],
+							"__tags": [],
+							"__tile": null,
+							"__smartColor": "#3E8948",
+							"iid": "86ac2e70-c210-11ef-9cfd-4371fdd94dff",
+							"width": 16,
+							"height": 16,
+							"defUid": 28,
+							"px": [368,304],
+							"fieldInstances": [
+								{ "__identifier": "Script", "__type": "String", "__value": "Conversation MunchClinicSign", "__tile": null, "defUid": 29, "realEditorValues": [{
+									"id": "V_String",
+									"params": ["Conversation MunchClinicSign"]
+								}] },
+								{ "__identifier": "Label", "__type": "String", "__value": "Sign_Thing_Three", "__tile": null, "defUid": 30, "realEditorValues": [{
+									"id": "V_String",
+									"params": ["Sign_Thing_Three"]
+								}] },
+								{ "__identifier": "EnableIf", "__type": "String", "__value": null, "__tile": null, "defUid": 31, "realEditorValues": [] },
+								{ "__identifier": "DisableIf", "__type": "String", "__value": null, "__tile": null, "defUid": 32, "realEditorValues": [] }
+							],
+							"__worldX": 368,
+							"__worldY": 304
+						},
+						{
+							"__identifier": "Automatic",
+							"__grid": [21,13],
+							"__pivot": [0,0],
+							"__tags": [],
+							"__tile": null,
+							"__smartColor": "#EAD4AA",
+							"iid": "f69053a0-c210-11ef-9cfd-113aa8f8ab57",
+							"width": 64,
+							"height": 64,
+							"defUid": 33,
+							"px": [336,208],
+							"fieldInstances": [
+								{ "__identifier": "EnableIf", "__type": "String", "__value": null, "__tile": null, "defUid": 34, "realEditorValues": [] },
+								{ "__identifier": "DisableIf", "__type": "String", "__value": null, "__tile": null, "defUid": 35, "realEditorValues": [] },
+								{ "__identifier": "Script", "__type": "String", "__value": "Conversation FarmSign\nDisableEvent", "__tile": null, "defUid": 36, "realEditorValues": [{
+									"id": "V_String",
+									"params": ["Conversation FarmSign\\nDisableEvent"]
+								}] }
+							],
+							"__worldX": 336,
+							"__worldY": 208
+						},
+						{
+							"__identifier": "NPC",
+							"__grid": [23,8],
+							"__pivot": [0,0],
+							"__tags": [],
+							"__tile": null,
+							"__smartColor": "#E4A672",
+							"iid": "15b1fe00-c210-11ef-9cfd-d1de85ea04b5",
+							"width": 16,
+							"height": 16,
+							"defUid": 37,
+							"px": [368,128],
+							"fieldInstances": [
+								{ "__identifier": "Name", "__type": "String", "__value": "Sayo", "__tile": null, "defUid": 38, "realEditorValues": [{
+									"id": "V_String",
+									"params": ["Sayo"]
+								}] },
+								{ "__identifier": "Idle", "__type": "String", "__value": null, "__tile": null, "defUid": 39, "realEditorValues": [] },
+								{ "__identifier": "Sprite", "__type": "String", "__value": "Sayo", "__tile": null, "defUid": 40, "realEditorValues": [{
+									"id": "V_String",
+									"params": ["Sayo"]
+								}] },
+								{ "__identifier": "EnableIf", "__type": "String", "__value": null, "__tile": null, "defUid": 42, "realEditorValues": [] },
+								{ "__identifier": "DisableIf", "__type": "String", "__value": null, "__tile": null, "defUid": 43, "realEditorValues": [] },
+								{ "__identifier": "Label", "__type": "String", "__value": "Your_Clone", "__tile": null, "defUid": 45, "realEditorValues": [{
+									"id": "V_String",
+									"params": ["Your_Clone"]
+								}] },
+								{ "__identifier": "Script", "__type": "String", "__value": "Conversation EndSign", "__tile": null, "defUid": 46, "realEditorValues": [{
+									"id": "V_String",
+									"params": ["Conversation EndSign"]
+								}] },
+								{ "__identifier": "Orientation", "__type": "LocalEnum.Orientation", "__value": "Down", "__tile": null, "defUid": 48, "realEditorValues": [{
+									"id": "V_String",
+									"params": ["Down"]
+								}] }
+							],
+							"__worldX": 368,
+							"__worldY": 128
 						}
 					]
 				},

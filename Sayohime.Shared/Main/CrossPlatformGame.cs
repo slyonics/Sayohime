@@ -1,4 +1,10 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -6,19 +12,13 @@ using Sayohime.Models;
 using Sayohime.SceneObjects;
 using Sayohime.SceneObjects.Controllers;
 using Sayohime.SceneObjects.Shaders;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Sayohime.Scenes.MapScene;
 
 namespace Sayohime.Main
 {
 	public partial class CrossPlatformGame : Game
 	{
-		public const string GAME_NAME = "UnfinishedFantasy";
+		public const string GAME_NAME = "Sayohime";
 		public const int SCREEN_WIDTH = 290;
 		public const int SCREEN_HEIGHT = 180;
 

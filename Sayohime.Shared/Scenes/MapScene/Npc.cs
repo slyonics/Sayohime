@@ -29,8 +29,8 @@ namespace Sayohime.Scenes.MapScene
             WalkUp
         }
 
-        public const int NPC_WIDTH = 20;
-        public const int NPC_HEIGHT = 24;
+        public const int NPC_WIDTH = 32;
+        public const int NPC_HEIGHT = 32;
 
         public static readonly Rectangle NPC_BOUNDS = new Rectangle(-8, -16, 16, 16);
 

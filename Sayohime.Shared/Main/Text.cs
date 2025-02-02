@@ -17,7 +17,7 @@ namespace Sayohime.Main
 
 		public static readonly Dictionary<GameFont, GameFontData> FONT_DATA = new Dictionary<GameFont, GameFontData>()
 		{
-			{ GameFont.Interface, new GameFontData() { fontHeight = 6 } },
+			{ GameFont.Interface, new GameFontData() { fontHeight = 7 } },
 			{ GameFont.Main, new GameFontData() { fontHeight = 11, heightOffset = -2 } }
 		};
 

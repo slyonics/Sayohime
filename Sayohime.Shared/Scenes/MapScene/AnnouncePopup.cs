@@ -16,7 +16,7 @@ namespace Sayohime.Scenes.MapScene
         private MapScene mapScene;
         private NinePatch textbox;
         private string message;
-        private Color color = new Color(127, 61, 63);
+        private Color color = new Color(255, 255, 255);
 
         int timeLeft = 2000;
 
@@ -47,7 +47,7 @@ namespace Sayohime.Scenes.MapScene
             string longestLine = textLines.MaxBy(x => Text.GetStringLength(PROMPT_FONT, x));
             int width = Text.GetStringLength(PROMPT_FONT, longestLine);
             int height = Text.GetStringHeight(PROMPT_FONT);
-            textbox.Bounds = new Rectangle(0, 0, width + 13, height * textLines.Count() + 12);
+            textbox.Bounds = new Rectangle(0, 0, width + 13, height * (textLines.Length - 1) + 18);
             Vector2 centerPoint = new Vector2(CrossPlatformGame.SCREEN_WIDTH / 2, 16);
 
             textbox.Draw(spriteBatch, centerPoint - new Vector2(textbox.Bounds.Width / 2, textbox.Bounds.Height / 2));
@@ -55,7 +55,7 @@ namespace Sayohime.Scenes.MapScene
             int row = 0;
             foreach (string text in textLines)
             {
-                Text.DrawCenteredText(spriteBatch, centerPoint - new Vector2(0, 2), PROMPT_FONT, text, color, 0.03f, row);
+                Text.DrawCenteredText(spriteBatch, centerPoint - new Vector2(0, 3 * (textLines.Length - 1)), PROMPT_FONT, text, color, 0.03f, row);
                 row++;
             }
         }
