@@ -163,6 +163,7 @@ namespace Sayohime.Main
         Particles_Thunderbolt,
         Particles_Tornado,
         Particles_Weapons,
+        Tiles_CrawlerTiles,
         Tiles_Overworld,
         Background_Eclipse_Eclipse0,
         Widgets_Gauges_HealthBar,
@@ -210,6 +211,11 @@ namespace Sayohime.Main
     public enum GameMap
     {
         Matsuura,
+        SandLeft,
+        SandOne,
+        SandRight,
+        SandTwo,
+        SurfaceMap,
 
         None = -1
     }

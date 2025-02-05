@@ -40,6 +40,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)SceneObjects\Controllers\TransitionController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SceneObjects\Controllers\WidgetController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SceneObjects\Entity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SceneObjects\Entity3D.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SceneObjects\Maps\Actor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SceneObjects\Maps\Chunk.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SceneObjects\Maps\LdtkJson.cs" />

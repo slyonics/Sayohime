@@ -1689,3 +1689,40 @@
 /processorParam:DebugMode=Auto
 /build:Shaders/Wall.fx
 
+#begin Sprites/Tiles/CrawlerTiles.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255, 0, 255, 255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Tiles/CrawlerTiles.png
+
+#begin Maps/SandLeft.ldtk
+/importer:SimpleContentImporter
+/processor:SimpleContentProcessor
+/build:Maps/SandLeft.ldtk
+
+#begin Maps/SandOne.ldtk
+/importer:SimpleContentImporter
+/processor:SimpleContentProcessor
+/build:Maps/SandOne.ldtk
+
+#begin Maps/SandRight.ldtk
+/importer:SimpleContentImporter
+/processor:SimpleContentProcessor
+/build:Maps/SandRight.ldtk
+
+#begin Maps/SandTwo.ldtk
+/importer:SimpleContentImporter
+/processor:SimpleContentProcessor
+/build:Maps/SandTwo.ldtk
+
+#begin Maps/SurfaceMap.ldtk
+/importer:SimpleContentImporter
+/processor:SimpleContentProcessor
+/build:Maps/SurfaceMap.ldtk
+

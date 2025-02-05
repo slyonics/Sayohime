@@ -382,7 +382,7 @@ namespace Sayohime.Scenes.CrawlerScene
 
             Matrix matrix = (Camera == null) ? Matrix.Identity : Camera.Matrix;
             Effect shader = (entityShader == null) ? null : entityShader.Effect;
-            foreach (Entity entity in entityList) entity.Draw(spriteBatch, Camera, matrix);
+            //foreach (var entity in entityList) entity.Draw(spriteBatch, Camera, matrix);
             spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise, shader, matrix);
             DrawGame(spriteBatch, shader, matrix);
             spriteBatch.End();
