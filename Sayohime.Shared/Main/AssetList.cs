@@ -14,6 +14,7 @@ namespace Sayohime.Main
         Conversation_FastConversationView,
         Conversation_NameView,
         Conversation_SelectionView,
+        Crawler_MapView,
 
         None = -1
     }
@@ -81,6 +82,7 @@ namespace Sayohime.Main
         Pinwheel,
         Portrait,
         Title,
+        Wall,
 
         None = -1
     }
@@ -88,8 +90,20 @@ namespace Sayohime.Main
     public enum GameSprite
     {
         Ailments,
+        Coral,
         Enter,
+        FoeMarker,
+        FrameNE,
+        FrameNW,
+        FrameSE,
+        FrameSW,
+        GreenPearl,
+        MiniMap,
         Palette,
+        RedPearl,
+        Target,
+        YellowPearl,
+        YouAreHere,
         Actors_Airship,
         Actors_AirshipTitle,
         Actors_BattlerShadow,
@@ -110,6 +124,21 @@ namespace Sayohime.Main
         Background_Splash,
         Background_Title,
         Background_Tower,
+        Enemies_CursedEye,
+        Enemies_Kraken,
+        Enemies_LeftTentacle,
+        Enemies_RightTentacle,
+        Enemies_SandBunny,
+        Enemies_SandEater,
+        Enemies_SandSnake,
+        Enemies_SeaFoam,
+        Enemies_Skulls,
+        NPCs_Chest,
+        NPCs_Coral,
+        NPCs_MiniCleric,
+        NPCs_MiniMage,
+        NPCs_MiniTank,
+        NPCs_MiniWarrior,
         Particles_Bash,
         Particles_BlackHole,
         Particles_BlueHeal,
