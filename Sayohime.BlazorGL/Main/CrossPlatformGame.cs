@@ -12,7 +12,7 @@ namespace Sayohime.Main
 			base.Initialize();
 
 			spriteBatch = new SpriteBatch(GraphicsDevice);
-			gameRender = new RenderTarget2D(graphicsDeviceManager.GraphicsDevice, SCREEN_WIDTH, SCREEN_HEIGHT, false, SurfaceFormat.Color, DepthFormat.Depth16);
+			gameRender = new RenderTarget2D(graphicsDeviceManager.GraphicsDevice, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 			StartGame();
 		}

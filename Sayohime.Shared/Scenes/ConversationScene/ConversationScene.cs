@@ -84,6 +84,9 @@ namespace Sayohime.Scenes.ConversationScene
                 if (safetyShutdown <= 0) EndScene();
                 safetyShutdown -= gameTime.ElapsedGameTime.Milliseconds;
             }
+
+            if (ConversationViewModel.Terminated)
+                EndScene();
         }
 
         public override void DrawBackground(SpriteBatch spriteBatch)

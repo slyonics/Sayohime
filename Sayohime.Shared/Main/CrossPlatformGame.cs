@@ -142,16 +142,22 @@ namespace Sayohime.Main
 
 			lock (SceneStack)
 			{
-				foreach (Scene scene in SceneStack)
+				if (SceneStack.Count > 0)
 				{
-					scene.Draw(GraphicsDevice, spriteBatch, gameRender);
+
+					foreach (Scene scene in SceneStack)
+					{
+						scene.Draw(GraphicsDevice, spriteBatch, gameRender);
+					}
+
+					GraphicsDevice.SetRenderTarget(null);
+					spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise, null, Matrix.CreateScale(0.4f));
+					spriteBatch.Draw(gameRender, ScreenShake, Color.White);
+					spriteBatch.End();
 				}
 			}
 
-			GraphicsDevice.SetRenderTarget(null);
-			spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise, null, Matrix.CreateScale(0.4f));
-			spriteBatch.Draw(gameRender, ScreenShake, Color.White);
-			spriteBatch.End();
+			
 
 			/*
 			int currentWidth = GraphicsDevice.PresentationParameters.BackBufferWidth;

@@ -152,7 +152,7 @@ namespace Sayohime.SceneObjects
 			Matrix cameraMatrix = (Camera == null) ? Matrix.Identity : Camera.Matrix;
 			
 			graphicsDevice.SetRenderTarget(gameRender);
-			if (CrossPlatformGame.SceneStack.Count == 0 || CrossPlatformGame.SceneStack.First() == this)
+			//if (CrossPlatformGame.SceneStack.Count == 0 || CrossPlatformGame.SceneStack.First() == this)
 			{
 				graphicsDevice.Clear(new Color(0));
 			}
