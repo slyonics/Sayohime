@@ -388,16 +388,6 @@ namespace Sayohime.Scenes.CrawlerScene
             DrawOverlay(spriteBatch);
             spriteBatch.End();
 
-            /*
-            graphicsDevice.SetRenderTarget(compositeRender);
-
-            if (!CrossPlatformGame.ClearedCompositeRender)
-            {
-                CrossPlatformGame.ClearedCompositeRender = true;
-                graphicsDevice.Clear(Color.Transparent);
-            }
-            */
-
 			if (OverlayList.Count > 0)
 			{
 				shader = (interfaceShader == null) ? null : interfaceShader.Effect;

@@ -1,5 +1,13 @@
 [
 	{
+		"Name": "MenuIntro",
+		"DialogueRecords": [
+			{
+				"Text": "This is just a basic conversation test"
+			}
+		]
+	},
+	{
 		"Name": "GameIntro",
 		"ShowOnStart": false,
 		"StartScript": [ "Music Cutscene1", "AddPortrait portrait Witch 145 110 Gray Purple 0", "PortraitBrightness portrait 4 1.5", "WaitForPortrait portrait" ],

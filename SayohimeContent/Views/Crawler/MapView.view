@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <View>
 
-	<Panel Name="MiniMapPanel" InnerMargin="2,2,2,2" Bounds="62,20,100,100"/>
+	<Panel Name="MiniMapPanel" InnerMargin="2,2,2,2" Bounds="62,20,356,356"/>
 	
 	
 </View>

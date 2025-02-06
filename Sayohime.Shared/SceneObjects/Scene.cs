@@ -154,9 +154,10 @@ namespace Sayohime.SceneObjects
 			graphicsDevice.SetRenderTarget(gameRender);
 			if (CrossPlatformGame.SceneStack.Count == 0 || CrossPlatformGame.SceneStack.First() == this)
 			{
-				graphicsDevice.Clear(Graphics.PURE_BLACK);
+				graphicsDevice.Clear(new Color(0));
 			}
 
+			
 			shader = (backgroundShader == null) ? null : backgroundShader.Effect;
 			spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise, shader, null);
 			DrawBackground(spriteBatch);
@@ -166,6 +167,9 @@ namespace Sayohime.SceneObjects
 			spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise, shader, cameraMatrix);
 			DrawGame(spriteBatch, shader, cameraMatrix);
 			spriteBatch.End();
+			
+
+
 
 			if (OverlayList.Count > 0)
 			{

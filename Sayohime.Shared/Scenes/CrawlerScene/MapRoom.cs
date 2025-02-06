@@ -94,9 +94,9 @@ namespace Sayohime.Scenes.CrawlerScene
         } };
 
         private static Texture2D minimapSprite = AssetCache.SPRITES[GameSprite.MiniMap];
-        private static readonly Rectangle[] minimapSource = new Rectangle[] { new Rectangle(0, 0, 8, 8), new Rectangle(8, 0, 8, 8), new Rectangle(16, 0, 8, 8), new Rectangle(24, 0, 8, 8) };
+        private static readonly Rectangle[] minimapSource = new Rectangle[] { new Rectangle(0, 0, 32, 32), new Rectangle(32, 0, 32, 32), new Rectangle(64, 0, 32, 32), new Rectangle(96, 0, 32, 32) };
         private static Texture2D enemyIndicator = AssetCache.SPRITES[GameSprite.FoeMarker];
-        private static readonly Rectangle[] enemySource = new Rectangle[] { new Rectangle(0, 0, 8, 8), new Rectangle(8, 0, 8, 8), new Rectangle(16, 0, 8, 8), new Rectangle(24, 0, 8, 8) };
+        private static readonly Rectangle[] enemySource = new Rectangle[] { new Rectangle(0, 0, 32, 32), new Rectangle(32, 0, 32, 32), new Rectangle(64, 0, 32, 32), new Rectangle(96, 0, 32, 32) };
 
         public int RoomX { get; set; }
         public int RoomY { get; set; }
