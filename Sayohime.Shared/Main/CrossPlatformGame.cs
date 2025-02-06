@@ -12,6 +12,7 @@ using Sayohime.Models;
 using Sayohime.SceneObjects;
 using Sayohime.SceneObjects.Controllers;
 using Sayohime.SceneObjects.Shaders;
+using Sayohime.Scenes.CrawlerScene;
 using Sayohime.Scenes.MapScene;
 
 namespace Sayohime.Main
@@ -19,8 +20,8 @@ namespace Sayohime.Main
 	public partial class CrossPlatformGame : Game
 	{
 		public const string GAME_NAME = "Sayohime";
-		public const int SCREEN_WIDTH = 290;
-		public const int SCREEN_HEIGHT = 180;
+		public const int SCREEN_WIDTH = 1336;
+		public const int SCREEN_HEIGHT = 768;
 
 		private static readonly Color CLEAR_COLOR = Main.Graphics.PURE_BLACK;
 
@@ -78,7 +79,7 @@ namespace Sayohime.Main
 		{
 			GameProfile.NewState();
 
-			var mapScene = new MapScene(GameMap.Matsuura, "Default");
+			var mapScene = new CrawlerScene(GameMap.SandOne, 10, 3, Direction.North); //new MapScene(GameMap.Matsuura, "Default");
 			CurrentScene = mapScene;
 			CurrentScene.BeginScene();
 		}
@@ -143,6 +144,7 @@ namespace Sayohime.Main
 
 			CurrentScene.Draw(GraphicsDevice, spriteBatch, gameRender);
 
+			/*
 			int currentWidth = GraphicsDevice.PresentationParameters.BackBufferWidth;
 			int currentHeight = GraphicsDevice.PresentationParameters.BackBufferHeight;
 			int scale = currentHeight / SCREEN_HEIGHT;
@@ -154,6 +156,7 @@ namespace Sayohime.Main
 			spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise, shader, matrix);
 			spriteBatch.Draw(gameRender, ScreenShake, Color.White);
 			spriteBatch.End();
+			*/
 
 			base.Draw(gameTime);
 		}

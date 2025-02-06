@@ -34,8 +34,6 @@ namespace Sayohime.Scenes.CrawlerScene
 
         public string LocationName { get => crawlerScene.Floor.LocationName; }
 
-        public RenderTarget2D MapRender { get => CrawlerScene.mapRender; }
-
         public ModelProperty<Color> MapColor { get; set; } = new ModelProperty<Color>(Color.White);
     }
 }

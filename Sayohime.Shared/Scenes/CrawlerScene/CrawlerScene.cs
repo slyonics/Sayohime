@@ -22,12 +22,11 @@ namespace Sayohime.Scenes.CrawlerScene
 
     public class CrawlerScene : Scene
     {
-        public static CrawlerScene Instance;
+		private const int ROOM_LENGTH = 10;
+
+		public static CrawlerScene Instance;
 
         public string LocationName { get; set; } = "Test Map";
-
-
-        public static RenderTarget2D mapRender;
 
         private MapViewModel mapViewModel;
 
@@ -112,11 +111,6 @@ namespace Sayohime.Scenes.CrawlerScene
             GameProfile.SetSaveData<string>("PlayerLocation", LocationName);
 
             GameProfile.SaveState();
-        }
-
-        public static void Initialize(GraphicsDevice graphicsDevice, int multiSamples)
-        {
-            mapRender = new RenderTarget2D(graphicsDevice, 324, 200, false, SurfaceFormat.Color, DepthFormat.Depth16, multiSamples, RenderTargetUsage.PlatformContents);
         }
 
         public override void BeginScene()
@@ -212,10 +206,10 @@ namespace Sayohime.Scenes.CrawlerScene
 
                 switch (direction)
                 {
-                    case Direction.North: transitionController.UpdateTransition += new Action<float>(t => cameraPosZ = MathHelper.Lerp(0, 10, t)); break;
-                    case Direction.East: transitionController.UpdateTransition += new Action<float>(t => cameraPosX = MathHelper.Lerp(0, 10, t)); break;
-                    case Direction.South: transitionController.UpdateTransition += new Action<float>(t => cameraPosZ = MathHelper.Lerp(-10, 0, t)); break;
-                    case Direction.West: transitionController.UpdateTransition += new Action<float>(t => cameraPosX = MathHelper.Lerp(-10, 0, t)); break;
+                    case Direction.North: transitionController.UpdateTransition += new Action<float>(t => cameraPosZ = MathHelper.Lerp(0, ROOM_LENGTH, t)); break;
+                    case Direction.East: transitionController.UpdateTransition += new Action<float>(t => cameraPosX = MathHelper.Lerp(0, ROOM_LENGTH, t)); break;
+                    case Direction.South: transitionController.UpdateTransition += new Action<float>(t => cameraPosZ = MathHelper.Lerp(-ROOM_LENGTH, 0, t)); break;
+                    case Direction.West: transitionController.UpdateTransition += new Action<float>(t => cameraPosX = MathHelper.Lerp(-ROOM_LENGTH, 0, t)); break;
                 }
 
                 AddController(transitionController);
@@ -261,10 +255,10 @@ namespace Sayohime.Scenes.CrawlerScene
 
                 switch (opposite)
                 {
-                    case Direction.North: transitionController.UpdateTransition += new Action<float>(t => cameraPosZ = MathHelper.Lerp(0, 10, t)); break;
-                    case Direction.East: transitionController.UpdateTransition += new Action<float>(t => cameraPosX = MathHelper.Lerp(0, 10, t)); break;
-                    case Direction.South: transitionController.UpdateTransition += new Action<float>(t => cameraPosZ = MathHelper.Lerp(-10, 0, t)); break;
-                    case Direction.West: transitionController.UpdateTransition += new Action<float>(t => cameraPosX = MathHelper.Lerp(-10, 0, t)); break;
+                    case Direction.North: transitionController.UpdateTransition += new Action<float>(t => cameraPosZ = MathHelper.Lerp(0, ROOM_LENGTH, t)); break;
+                    case Direction.East: transitionController.UpdateTransition += new Action<float>(t => cameraPosX = MathHelper.Lerp(0, ROOM_LENGTH, t)); break;
+                    case Direction.South: transitionController.UpdateTransition += new Action<float>(t => cameraPosZ = MathHelper.Lerp(-ROOM_LENGTH, 0, t)); break;
+                    case Direction.West: transitionController.UpdateTransition += new Action<float>(t => cameraPosX = MathHelper.Lerp(-ROOM_LENGTH, 0, t)); break;
                 }
 
                 AddController(transitionController);
@@ -332,10 +326,10 @@ namespace Sayohime.Scenes.CrawlerScene
 
             switch (direction)
             {
-                case Direction.North: transitionController.UpdateTransition += new Action<float>(t => cameraPosZ = MathHelper.Lerp(2.95f, 10, t)); break;
-                case Direction.East: transitionController.UpdateTransition += new Action<float>(t => cameraPosX = MathHelper.Lerp(2.95f, 10, t)); break;
-                case Direction.South: transitionController.UpdateTransition += new Action<float>(t => cameraPosZ = MathHelper.Lerp(-10, -2.95f, t)); break;
-                case Direction.West: transitionController.UpdateTransition += new Action<float>(t => cameraPosX = MathHelper.Lerp(-10, -2.95f, t)); break;
+                case Direction.North: transitionController.UpdateTransition += new Action<float>(t => cameraPosZ = MathHelper.Lerp(2.95f, ROOM_LENGTH, t)); break;
+                case Direction.East: transitionController.UpdateTransition += new Action<float>(t => cameraPosX = MathHelper.Lerp(2.95f, ROOM_LENGTH, t)); break;
+                case Direction.South: transitionController.UpdateTransition += new Action<float>(t => cameraPosZ = MathHelper.Lerp(-ROOM_LENGTH, -2.95f, t)); break;
+                case Direction.West: transitionController.UpdateTransition += new Action<float>(t => cameraPosX = MathHelper.Lerp(-ROOM_LENGTH, -2.95f, t)); break;
             }
 
             AddController(transitionController);
@@ -359,28 +353,31 @@ namespace Sayohime.Scenes.CrawlerScene
 
         public override void Draw(GraphicsDevice graphicsDevice, SpriteBatch spriteBatch, RenderTarget2D pixelRender)
         {
-            graphicsDevice.SetRenderTarget(mapRender);
-            graphicsDevice.BlendState = BlendState.AlphaBlend;
+			// Messy 1st person 3D dungeon crawler renderer
 
-            Vector3 cameraUp = new Vector3(0, -1, 0);
-            Vector3 cameraPos = new Vector3(cameraPosX + 10 * roomX, 0, cameraPosZ + 10 * (floor.MapHeight - roomY));
-            Matrix viewMatrix = Matrix.CreateLookAt(cameraPos, cameraPos + Vector3.Transform(new Vector3(0, 0, 1), Matrix.CreateRotationY(cameraX)), cameraUp);
-            floor.DrawMap(graphicsDevice, mapViewModel.GetWidget<Panel>("MapPanel"), viewMatrix, cameraPos, cameraX);
+			graphicsDevice.DepthStencilState = new DepthStencilState() { DepthBufferEnable = true };
 
-            List<IBillboard> billboardList = new List<IBillboard>();
-            billboardList.AddRange(FoeList);
-            billboardList.AddRange(ChestList);
-            billboardList.AddRange(NpcList);
-            foreach (IBillboard billboard in billboardList.OrderByDescending(x => Vector2.Distance(new Vector2(cameraPosX + 10 * roomX, cameraPosZ + 10 * (floor.MapHeight - roomY)), x.Position))) billboard.Draw(graphicsDevice, viewMatrix, cameraX);
+			graphicsDevice.SetRenderTarget(null);
+			if (CrossPlatformGame.SceneStack.Count == 0 || CrossPlatformGame.SceneStack.First() == this)
+			{
+				graphicsDevice.Clear(ClearOptions.DepthBuffer, Graphics.PURE_BLACK, 1.0f, 0);
+			}
+			graphicsDevice.BlendState = BlendState.Opaque;
 
-            graphicsDevice.SetRenderTarget(pixelRender);
-            graphicsDevice.Clear(Color.Transparent);
+			Vector3 cameraUp = new Vector3(0, -1, 0);
+			Vector3 cameraPos = new Vector3(cameraPosX + ROOM_LENGTH * roomX, 0, cameraPosZ + ROOM_LENGTH * (floor.MapHeight - roomY));
+			Matrix viewMatrix = Matrix.CreateLookAt(cameraPos, cameraPos + Vector3.Transform(new Vector3(0, 0, 1), Matrix.CreateRotationY(cameraX)), cameraUp);
+			floor.DrawMap(graphicsDevice, mapViewModel.GetWidget<Panel>("MapPanel"), viewMatrix, cameraPos, cameraX);
 
-            spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise, null, null);
-            DrawBackground(spriteBatch);
-            spriteBatch.End();
+			graphicsDevice.BlendState = BlendState.AlphaBlend;
 
-            Matrix matrix = (Camera == null) ? Matrix.Identity : Camera.Matrix;
+			List<IBillboard> billboardList = [.. FoeList, .. ChestList, .. NpcList];
+            foreach (IBillboard billboard in billboardList.OrderByDescending(x => Vector2.Distance(new Vector2(cameraPosX + ROOM_LENGTH * roomX, cameraPosZ + ROOM_LENGTH * (floor.MapHeight - roomY)), x.Position)))
+            {
+                billboard.Draw(graphicsDevice, viewMatrix, cameraX);
+            }
+
+			Matrix matrix = (Camera == null) ? Matrix.Identity : Camera.Matrix;
             Effect shader = (entityShader == null) ? null : entityShader.Effect;
             //foreach (var entity in entityList) entity.Draw(spriteBatch, Camera, matrix);
             spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise, shader, matrix);
@@ -389,13 +386,6 @@ namespace Sayohime.Scenes.CrawlerScene
 
             spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise, null, null);
             DrawOverlay(spriteBatch);
-            spriteBatch.End();
-
-            Rectangle miniMapBounds = MapViewModel.GetWidget<Panel>("MiniMapPanel").InnerBounds;
-            miniMapBounds.X += (int)MapViewModel.GetWidget<Panel>("MiniMapPanel").Position.X;
-            miniMapBounds.Y += (int)MapViewModel.GetWidget<Panel>("MiniMapPanel").Position.Y;
-            spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise, null, null);
-            floor.DrawMiniMap(spriteBatch, miniMapBounds, Color.White, 0.6f, roomX, roomY, direction);
             spriteBatch.End();
 
             /*
@@ -408,13 +398,22 @@ namespace Sayohime.Scenes.CrawlerScene
             }
             */
 
-            shader = (SceneShader == null) ? null : SceneShader.Effect;
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise, shader, Matrix.Identity);
-            spriteBatch.Draw(pixelRender, Vector2.Zero, null, Color.White, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0.0f);
-            spriteBatch.End();
+			if (OverlayList.Count > 0)
+			{
+				shader = (interfaceShader == null) ? null : interfaceShader.Effect;
+				spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise, shader, null);
+				DrawOverlay(spriteBatch);
+				spriteBatch.End();
+			}
 
-
-        }
+			var miniMapPanel = MapViewModel.GetWidget<Panel>("MiniMapPanel");
+			Rectangle miniMapBounds = miniMapPanel.InnerBounds;
+			miniMapBounds.X += (int)miniMapPanel.Position.X;
+			miniMapBounds.Y += (int)miniMapPanel.Position.Y;
+			spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise, null, null);
+			floor.DrawMiniMap(spriteBatch, miniMapBounds, Color.White, 0.6f, roomX, roomY, direction);
+			spriteBatch.End();
+		}
 
         public bool Activate()
         {

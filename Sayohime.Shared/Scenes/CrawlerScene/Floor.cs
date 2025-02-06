@@ -292,10 +292,6 @@ namespace Sayohime.Scenes.CrawlerScene
 
             graphicsDevice.DepthStencilState = DepthStencilState.Default;
 
-            Rectangle mapBounds = mapWindow.InnerBounds;
-            mapBounds.X += (int)mapWindow.Position.X;
-            mapBounds.Y += (int)mapWindow.Position.Y;
-
             for (int x = 0; x < mapRooms.GetLength(0); x++)
             {
                 for (int y = 0; y < mapRooms.GetLength(1); y++)

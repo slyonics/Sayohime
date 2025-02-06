@@ -1,25 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <View>
 
-	<Panel Style="ThinPanel" Anchor="$CenterX,$CenterY" Bounds="-162,20,324,160"/>
+	<Panel Name="MiniMapPanel" InnerMargin="2,2,2,2" Bounds="62,20,100,100"/>
 	
-	<Panel Name="MiniMapPanel" Style="LightFrame" Anchor="$CenterX,$CenterY" InnerMargin="2,2,2,2" Bounds="62,20,100,100"/>
-	
-	<Panel Name="MapPanel" Anchor="$CenterX,$CenterY" Bounds="-162,-180,324,200">
-		<Image Picture="Ref MapRender" Alignment="Stretch" Color="Bind MapColor"/>
-		<Image Picture="FrameNW" Bounds="-4,-3,64,64"/>
-		<Image Picture="FrameNE" Bounds="268,-3,64,64"/>
-		<Image Picture="FrameSW" Bounds="-4,144,64,64"/>
-		<Image Picture="FrameSE" Bounds="268,144,64,64"/>
-	</Panel>
-
-	<Image Picture="Portraits_Tank" Bounds="0,0,128,180" Depth="0.8" Visible="Bind ShowHarlan"/>
-	<Image Picture="Portraits_Warrior" Bounds="452,0,128,180" Depth="0.8" Visible="Bind ShowBruce"/>
-	<Image Picture="Portraits_Mage" Bounds="0,180,128,180" Depth="0.8" Visible="Bind ShowAlicia"/>
-	<Image Picture="Portraits_Cleric" Bounds="452,180,128,180" Depth="0.8" Visible="Bind ShowLop"/>
-
-	<Panel Style="ThinPanel" Anchor="$CenterX,$CenterY" Bounds="62,120,100,60">
-		<Image Picture="Bind DangerPearl" Alignment="Stretch"/>
-	</Panel>
 	
 </View>

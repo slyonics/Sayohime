@@ -1257,7 +1257,7 @@
 			"__cHei": 16,
 			"identifier": "CrawlerTiles",
 			"uid": 633,
-			"relPath": "../Graphics/Tiles/CrawlerTiles.png",
+			"relPath": "Tiles/CrawlerTiles.png",
 			"embedAtlas": null,
 			"pxWid": 176,
 			"pxHei": 256,
@@ -1449,9 +1449,9 @@
 					"id": "V_String",
 					"params": ["Sand Layer B1"]
 				}] },
-				{ "__identifier": "Music", "__type": "String", "__value": "Dungeon_be_Scary", "__tile": null, "defUid": 252, "realEditorValues": [{
+				{ "__identifier": "Music", "__type": "String", "__value": "Dungeon", "__tile": null, "defUid": 252, "realEditorValues": [{
 					"id": "V_String",
-					"params": ["Dungeon_be_Scary"]
+					"params": ["Dungeon"]
 				}] },
 				{ "__identifier": "AmbientLight", "__type": "Float", "__value": 0.9, "__tile": null, "defUid": 1446, "realEditorValues": [{ "id": "V_Float", "params": [0.9] }] },
 				{ "__identifier": "Skybox", "__type": "String", "__value": null, "__tile": null, "defUid": 1454, "realEditorValues": [null] }
@@ -1843,7 +1843,7 @@
 					"__pxTotalOffsetX": 0,
 					"__pxTotalOffsetY": 0,
 					"__tilesetDefUid": 633,
-					"__tilesetRelPath": "../Graphics/Tiles/CrawlerTiles.png",
+					"__tilesetRelPath": "Tiles/CrawlerTiles.png",
 					"iid": "2a844cb0-d7b0-11ee-ac96-b97e30a4b0a6",
 					"levelId": 0,
 					"layerDefUid": 1441,
@@ -1993,7 +1993,7 @@
 					"__pxTotalOffsetX": 0,
 					"__pxTotalOffsetY": 0,
 					"__tilesetDefUid": 633,
-					"__tilesetRelPath": "../Graphics/Tiles/CrawlerTiles.png",
+					"__tilesetRelPath": "Tiles/CrawlerTiles.png",
 					"iid": "4b43c890-d7b0-11ee-ac96-f15f168d8263",
 					"levelId": 0,
 					"layerDefUid": 1442,
@@ -2095,7 +2095,7 @@
 					"__pxTotalOffsetX": 0,
 					"__pxTotalOffsetY": 0,
 					"__tilesetDefUid": 633,
-					"__tilesetRelPath": "../Graphics/Tiles/CrawlerTiles.png",
+					"__tilesetRelPath": "Tiles/CrawlerTiles.png",
 					"iid": "ecb9f880-d7b0-11ee-ac96-6bb821ca3e5a",
 					"levelId": 0,
 					"layerDefUid": 1440,

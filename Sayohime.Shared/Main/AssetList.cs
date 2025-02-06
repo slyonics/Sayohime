@@ -56,6 +56,7 @@ namespace Sayohime.Main
 
     public enum GameMusic
     {
+        Dungeon,
         BlastingThroughtheSky,
         ChoiceEncounter,
         NewDestinations,
@@ -93,10 +94,6 @@ namespace Sayohime.Main
         Coral,
         Enter,
         FoeMarker,
-        FrameNE,
-        FrameNW,
-        FrameSE,
-        FrameSW,
         GreenPearl,
         MiniMap,
         Palette,
@@ -195,15 +192,22 @@ namespace Sayohime.Main
         Widgets_Icons_Sword,
         Widgets_Icons_Tome,
         Widgets_Icons_Vest,
+        Widgets_Images_FrameNE,
+        Widgets_Images_FrameNW,
+        Widgets_Images_FrameSE,
+        Widgets_Images_FrameSW,
         Widgets_Images_Pointer,
         Widgets_Ninepatches_BattleFrame,
         Widgets_Ninepatches_BattleWindow,
         Widgets_Ninepatches_Blank,
+        Widgets_Ninepatches_CoralFrame,
         Widgets_Ninepatches_DarkFrame,
         Widgets_Ninepatches_LabelGlow,
+        Widgets_Ninepatches_LightFrame,
         Widgets_Ninepatches_TechGauge,
         Widgets_Ninepatches_TechGaugeBackground,
         Widgets_Ninepatches_TechGaugeBar,
+        Widgets_Ninepatches_ThinPanel,
 
         None = -1
     }
