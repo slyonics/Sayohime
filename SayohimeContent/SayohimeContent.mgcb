@@ -5,7 +5,7 @@
 /intermediateDir:obj/$(Platform)
 /platform:Windows
 /config:
-/profile:Reach
+/profile:HiDef
 /compress:True
 /compression:Brotli
 

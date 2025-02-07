@@ -42,24 +42,25 @@ namespace Sayohime.Main
 
 		private static int scaledScreenWidth = SCREEN_WIDTH;
 		private static int scaledScreenHeight = SCREEN_HEIGHT;
-		private static int screenScale = 1;
-		private bool fullscreen = false;
-		private Matrix scaleMatrix = Matrix.Identity;
 
 		private static CrossPlatformGame gameInstance;
 
 		public CrossPlatformGame()
 		{
 			gameInstance = this;
-			graphicsDeviceManager = new GraphicsDeviceManager(this);
+			graphicsDeviceManager = new GraphicsDeviceManager(this)
+			{
+				PreferredBackBufferWidth = scaledScreenWidth,
+				PreferredBackBufferHeight = scaledScreenHeight,
+				GraphicsProfile = GraphicsProfile.HiDef
+			};
+
 			Content.RootDirectory = "Content";
 		}
 
 		protected override void LoadContent()
 		{
 			Debug.Initialize(GraphicsDevice);
-
-			AssetCache.LoadAssets(Content);
 
 			if (ConversationRecord.CONVERSATIONS == null) ConversationRecord.CONVERSATIONS = AssetCache.LoadRecords<ConversationRecord>("Data/ConversationData");
 			if (HeroRecord.HEROES == null) HeroRecord.HEROES = AssetCache.LoadRecords<HeroRecord>("Data/HeroData");

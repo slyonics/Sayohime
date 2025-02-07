@@ -38,7 +38,7 @@ namespace Sayohime.Scenes.CrawlerScene
             public Texture2D SpriteAtlas { get; private set; }
         }
 
-        private Texture2D minimapPlayer = AssetCache.SPRITES[GameSprite.YouAreHere];
+        private Texture2D minimapPlayer = null;
         private static readonly Rectangle[] minimapSource = [ new Rectangle(0, 0, 32, 32), new Rectangle(32, 0, 32, 32), new Rectangle(64, 0, 32, 32), new Rectangle(96, 0, 32, 32) ];
 
         public int TileSize { get; set; }
@@ -72,8 +72,9 @@ namespace Sayohime.Scenes.CrawlerScene
         public Floor(CrawlerScene crawlerScene, GameMap gameMap)
         {
             parentScene = crawlerScene;
+            minimapPlayer = AssetCache.SPRITES[GameSprite.YouAreHere];
 
-            LoadMap(gameMap);
+			LoadMap(gameMap);
         }
 
         public void LoadMap(GameMap iGameMap, string spawnName = "Default")

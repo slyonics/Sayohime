@@ -1499,7 +1499,7 @@
 						},
 						{
 							"__identifier": "Automatic",
-							"__grid": [10,3],
+							"__grid": [8,5],
 							"__pivot": [0,0],
 							"__tags": [],
 							"__tile": null,
@@ -1508,7 +1508,7 @@
 							"width": 16,
 							"height": 16,
 							"defUid": 1057,
-							"px": [160,48],
+							"px": [128,80],
 							"fieldInstances": [
 								{ "__identifier": "Script", "__type": "String", "__value": "Conversation MenuIntro\nSetFlag MenuIntro True\nDisableEvent", "__tile": null, "defUid": 1058, "realEditorValues": [{
 									"id": "V_String",
@@ -1520,8 +1520,8 @@
 									"params": ["MenuIntro"]
 								}] }
 							],
-							"__worldX": 160,
-							"__worldY": 48
+							"__worldX": 128,
+							"__worldY": 80
 						},
 						{
 							"__identifier": "Npc",
