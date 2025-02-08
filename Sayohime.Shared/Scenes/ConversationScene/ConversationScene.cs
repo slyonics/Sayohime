@@ -120,10 +120,5 @@ namespace Sayohime.Scenes.ConversationScene
         {
             return ConversationController != null && !ConversationController.Terminated && ConversationController.ScriptCommandsLeft;
         }
-
-		public override void Draw(GraphicsDevice graphicsDevice, SpriteBatch spriteBatch, RenderTarget2D gameRender)
-		{
-			base.Draw(graphicsDevice, spriteBatch, gameRender);
-		}
 	}
 }

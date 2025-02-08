@@ -38,10 +38,13 @@ namespace Sayohime.Scenes.CrawlerScene
             public Texture2D SpriteAtlas { get; private set; }
         }
 
-        private Texture2D minimapPlayer = null;
-        private static readonly Rectangle[] minimapSource = [ new Rectangle(0, 0, 32, 32), new Rectangle(32, 0, 32, 32), new Rectangle(64, 0, 32, 32), new Rectangle(96, 0, 32, 32) ];
+        public const int MINI_CELL_SIZE = 24;
 
-        public int TileSize { get; set; }
+        private Texture2D minimapPlayer = null;
+        private static readonly Rectangle[] minimapSource = [ new Rectangle(0, 0, MINI_CELL_SIZE, MINI_CELL_SIZE), new Rectangle(MINI_CELL_SIZE * 1, 0, MINI_CELL_SIZE, MINI_CELL_SIZE), new Rectangle(MINI_CELL_SIZE * 2, 0, MINI_CELL_SIZE, MINI_CELL_SIZE), new Rectangle(MINI_CELL_SIZE * 3, 0, MINI_CELL_SIZE, MINI_CELL_SIZE) ];
+		
+
+		public int TileSize { get; set; }
         public int MapWidth { get; set; }
         public int MapHeight { get; set; }
 
@@ -305,19 +308,19 @@ namespace Sayohime.Scenes.CrawlerScene
         public void DrawMiniMap(SpriteBatch spriteBatch, Rectangle bounds, Color color, float depth, int roomX, int roomY, Direction direction)
         {
             MinimapStartX = Math.Max(0, roomX - 5);
-            int endX = MinimapStartX + 12;
+            int endX = MinimapStartX + 11;
             if (endX > mapRooms.GetLength(0) - 1)
             {
                 endX = mapRooms.GetLength(0) - 1;
-                MinimapStartX = Math.Max(0, endX - 12);
+                MinimapStartX = Math.Max(0, endX - 11);
             }
 
             MinimapStartY = Math.Max(0, roomY - 5);
-            int endY = MinimapStartY + 12;
+            int endY = MinimapStartY + 11;
             if (endY > mapRooms.GetLength(1) - 1)
             {
                 endY = mapRooms.GetLength(1) - 1;
-                MinimapStartY = Math.Max(0, endY - 12);
+                MinimapStartY = Math.Max(0, endY - 11);
             }
 
             Vector2 offset = new Vector2(bounds.X, bounds.Y);
@@ -326,17 +329,17 @@ namespace Sayohime.Scenes.CrawlerScene
                 for (int y = MinimapStartY; y < endY; y++)
                 {
                     MapRoom mapRoom = mapRooms[x, y];
-                    spriteBatch.Draw(minimapPlayer, offset, new Rectangle(0, 0, 32, 32), Color.Black, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, depth - 0.001f);
+                    spriteBatch.Draw(minimapPlayer, offset, new Rectangle(0, 0, MINI_CELL_SIZE, MINI_CELL_SIZE), Color.Black, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, depth - 0.001f);
                     mapRoom?.DrawMinimap(spriteBatch, offset, depth - 0.002f);
 
-                    offset.Y += 32;
+                    offset.Y += MINI_CELL_SIZE;
                 }
 
                 offset.Y = bounds.Y;
-                offset.X += 32;
+                offset.X += MINI_CELL_SIZE;
             }
 
-            spriteBatch.Draw(minimapPlayer, new Vector2((roomX - MinimapStartX) * 32, (roomY - MinimapStartY) * 32) + new Vector2(bounds.X, bounds.Y), minimapSource[(int)direction], Color.White, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, depth - 0.004f);
+            spriteBatch.Draw(minimapPlayer, new Vector2((roomX - MinimapStartX) * MINI_CELL_SIZE, (roomY - MinimapStartY) * MINI_CELL_SIZE) + new Vector2(bounds.X, bounds.Y), minimapSource[(int)direction], Color.White, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, depth - 0.004f);
         }
 
         public List<MapRoom> GetPath(MapRoom startTile, MapRoom endTile)

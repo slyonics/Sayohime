@@ -135,30 +135,25 @@ namespace Sayohime.Main
 		{
 			if (CurrentScene == null) return;
 
-
-			
-
-
-			CurrentScene.Draw(GraphicsDevice, spriteBatch, gameRender);
-
 			lock (SceneStack)
 			{
 				if (SceneStack.Count > 0)
 				{
-
 					foreach (Scene scene in SceneStack)
 					{
 						scene.Draw(GraphicsDevice, spriteBatch, gameRender);
 					}
-
-					GraphicsDevice.SetRenderTarget(null);
-					spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise, null, null);
-					spriteBatch.Draw(gameRender, ScreenShake, Color.White);
-					spriteBatch.End();
 				}
 			}
 
-			
+			CurrentScene.Draw(GraphicsDevice, spriteBatch, gameRender);
+
+			/*
+			GraphicsDevice.SetRenderTarget(null);
+			spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise, null, null);
+			spriteBatch.Draw(gameRender, ScreenShake, Color.White);
+			spriteBatch.End();
+			*/
 
 			/*
 			int currentWidth = GraphicsDevice.PresentationParameters.BackBufferWidth;

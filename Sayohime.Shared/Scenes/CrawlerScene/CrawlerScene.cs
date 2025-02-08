@@ -354,7 +354,7 @@ namespace Sayohime.Scenes.CrawlerScene
         public override void Draw(GraphicsDevice graphicsDevice, SpriteBatch spriteBatch, RenderTarget2D pixelRender)
         {
 			// Messy 1st person 3D dungeon crawler renderer
-
+			graphicsDevice.Viewport = new Viewport(10, 10, 580, 360);
 			graphicsDevice.DepthStencilState = new DepthStencilState() { DepthBufferEnable = true };
 
 			graphicsDevice.SetRenderTarget(null);
@@ -377,11 +377,13 @@ namespace Sayohime.Scenes.CrawlerScene
                 billboard.Draw(graphicsDevice, viewMatrix, cameraX);
             }
 
-            /*
+			/*
             spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise, null, null);
             DrawOverlay(spriteBatch);
             spriteBatch.End();
             */
+
+			graphicsDevice.Viewport = new Viewport(0, 0, 880, 540);
 
 			var miniMapPanel = MapViewModel.GetWidget<Panel>("MiniMapPanel");
 			Rectangle miniMapBounds = miniMapPanel.InnerBounds;

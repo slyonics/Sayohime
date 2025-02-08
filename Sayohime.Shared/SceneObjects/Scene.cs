@@ -151,13 +151,12 @@ namespace Sayohime.SceneObjects
 			Effect shader;
 			Matrix cameraMatrix = (Camera == null) ? Matrix.Identity : Camera.Matrix;
 			
-			graphicsDevice.SetRenderTarget(gameRender);
-			//if (CrossPlatformGame.SceneStack.Count == 0 || CrossPlatformGame.SceneStack.First() == this)
+			graphicsDevice.SetRenderTarget(null);
+			if (CrossPlatformGame.SceneStack.Count == 0 || CrossPlatformGame.SceneStack.First() == this)
 			{
-				graphicsDevice.Clear(new Color(0));
+				graphicsDevice.Clear(new Color());
 			}
 
-			
 			shader = (backgroundShader == null) ? null : backgroundShader.Effect;
 			spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise, shader, null);
 			DrawBackground(spriteBatch);
@@ -168,9 +167,6 @@ namespace Sayohime.SceneObjects
 			DrawGame(spriteBatch, shader, cameraMatrix);
 			spriteBatch.End();
 			
-
-
-
 			if (OverlayList.Count > 0)
 			{
 				shader = (interfaceShader == null) ? null : interfaceShader.Effect;

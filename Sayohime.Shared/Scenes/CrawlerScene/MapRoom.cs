@@ -98,9 +98,9 @@ namespace Sayohime.Scenes.CrawlerScene
         } };
 
         private static Texture2D minimapSprite = AssetCache.SPRITES[GameSprite.MiniMap];
-        private static readonly Rectangle[] minimapSource = [new Rectangle(0, 0, 32, 32), new Rectangle(32, 0, 32, 32), new Rectangle(64, 0, 32, 32), new Rectangle(96, 0, 32, 32)];
+        private static readonly Rectangle[] minimapSource = [new Rectangle(0, 0, Floor.MINI_CELL_SIZE, Floor.MINI_CELL_SIZE), new Rectangle(Floor.MINI_CELL_SIZE * 1, 0, Floor.MINI_CELL_SIZE, Floor.MINI_CELL_SIZE), new Rectangle(Floor.MINI_CELL_SIZE * 2, 0, Floor.MINI_CELL_SIZE, Floor.MINI_CELL_SIZE), new Rectangle(Floor.MINI_CELL_SIZE * 3, 0, Floor.MINI_CELL_SIZE, Floor.MINI_CELL_SIZE)];
         private static Texture2D enemyIndicator = AssetCache.SPRITES[GameSprite.FoeMarker];
-        private static readonly Rectangle[] enemySource = [new Rectangle(0, 0, 32, 32), new Rectangle(32, 0, 32, 32), new Rectangle(64, 0, 32, 32), new Rectangle(96, 0, 32, 32)];
+        private static readonly Rectangle[] enemySource = [new Rectangle(0, 0, Floor.MINI_CELL_SIZE, Floor.MINI_CELL_SIZE), new Rectangle(Floor.MINI_CELL_SIZE * 1, 0, Floor.MINI_CELL_SIZE, Floor.MINI_CELL_SIZE), new Rectangle(Floor.MINI_CELL_SIZE * 2, 0, Floor.MINI_CELL_SIZE, Floor.MINI_CELL_SIZE), new Rectangle(Floor.MINI_CELL_SIZE * 3, 0, Floor.MINI_CELL_SIZE, Floor.MINI_CELL_SIZE)];
 
         public int RoomX { get; set; }
         public int RoomY { get; set; }
