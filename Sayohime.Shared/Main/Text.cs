@@ -17,8 +17,8 @@ namespace Sayohime.Main
 
 		public static readonly Dictionary<GameFont, GameFontData> FONT_DATA = new Dictionary<GameFont, GameFontData>()
 		{
-			{ GameFont.Interface, new GameFontData() { fontHeight = 7 } },
-			{ GameFont.Main, new GameFontData() { fontHeight = 11, heightOffset = -2 } }
+			{ GameFont.Interface, new GameFontData() { fontHeight = 14 } },
+			{ GameFont.Main, new GameFontData() { fontHeight = 22 } }
 		};
 
 		public static void DrawText(SpriteBatch spriteBatch, Vector2 position, GameFont font, string text, int row = 0)

@@ -7,7 +7,7 @@ namespace Sayohime.Models
     public class ConversationRecord
     {
 		public static List<ConversationRecord> CONVERSATIONS { get; set; }
-		public static readonly Rectangle DEFAULT_CONVO_BOUNDS = new Rectangle(-145, 30, 290, 60);
+		public static readonly Rectangle DEFAULT_CONVO_BOUNDS = new Rectangle(-430, 110, 860, 154);
 
 		public string Name { get; set; }
         public string Background { get; set; }

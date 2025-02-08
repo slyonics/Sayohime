@@ -20,8 +20,8 @@ namespace Sayohime.Main
 	public partial class CrossPlatformGame : Game
 	{
 		public const string GAME_NAME = "Sayohime";
-		public const int SCREEN_WIDTH = 1336;
-		public const int SCREEN_HEIGHT = 768;
+		public const int SCREEN_WIDTH = 880;
+		public const int SCREEN_HEIGHT = 540;
 
 		private static readonly Color CLEAR_COLOR = Main.Graphics.PURE_BLACK;
 
@@ -152,7 +152,7 @@ namespace Sayohime.Main
 					}
 
 					GraphicsDevice.SetRenderTarget(null);
-					spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise, null, Matrix.CreateScale(0.4f));
+					spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise, null, null);
 					spriteBatch.Draw(gameRender, ScreenShake, Color.White);
 					spriteBatch.End();
 				}

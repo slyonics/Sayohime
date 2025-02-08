@@ -29,12 +29,14 @@ namespace Sayohime.Scenes.CrawlerScene
                 Orientation = iOrientation;
                 Texture = iTexture;
 
-                VertexPositionTexture[] quad = new VertexPositionTexture[4];
-                quad[0] = new VertexPositionTexture(VERTICES[Orientation][0], new Vector2(startU, startV));
-                quad[1] = new VertexPositionTexture(VERTICES[Orientation][1], new Vector2(startU, endV));
-                quad[2] = new VertexPositionTexture(VERTICES[Orientation][2], new Vector2(endU, endV));
-                quad[3] = new VertexPositionTexture(VERTICES[Orientation][3], new Vector2(endU, startV));
-                Quad = quad;
+                VertexPositionTexture[] quad =
+				[
+					new VertexPositionTexture(VERTICES[Orientation][0], new Vector2(startU, startV)),
+					new VertexPositionTexture(VERTICES[Orientation][1], new Vector2(startU, endV)),
+					new VertexPositionTexture(VERTICES[Orientation][2], new Vector2(endU, endV)),
+					new VertexPositionTexture(VERTICES[Orientation][3], new Vector2(endU, startV)),
+				];
+				Quad = quad;
             }
 
             public RoomWall(Direction iOrientation, Texture2D iTexture, Dictionary<Direction, Vector3[]> vertices, float startU, float startV, float endU, float endV)
@@ -42,18 +44,20 @@ namespace Sayohime.Scenes.CrawlerScene
                 Orientation = iOrientation;
                 Texture = iTexture;
 
-                VertexPositionTexture[] quad = new VertexPositionTexture[4];
-                quad[0] = new VertexPositionTexture(vertices[Orientation][0], new Vector2(startU, startV));
-                quad[1] = new VertexPositionTexture(vertices[Orientation][1], new Vector2(startU, endV));
-                quad[2] = new VertexPositionTexture(vertices[Orientation][2], new Vector2(endU, endV));
-                quad[3] = new VertexPositionTexture(vertices[Orientation][3], new Vector2(endU, startV));
-                Quad = quad;
+                VertexPositionTexture[] quad =
+				[
+					new VertexPositionTexture(vertices[Orientation][0], new Vector2(startU, startV)),
+					new VertexPositionTexture(vertices[Orientation][1], new Vector2(startU, endV)),
+					new VertexPositionTexture(vertices[Orientation][2], new Vector2(endU, endV)),
+					new VertexPositionTexture(vertices[Orientation][3], new Vector2(endU, startV)),
+				];
+				Quad = quad;
             }
         }
 
         private const int WALL_HALF_LENGTH = 5;
         private const int CAM_HEIGHT = -1;
-        private static readonly short[] INDICES = new short[] { 0, 2, 1, 2, 0, 3 };
+        private static readonly short[] INDICES = [0, 2, 1, 2, 0, 3];
         private static readonly Dictionary<Direction, Vector3[]> VERTICES = new Dictionary<Direction, Vector3[]>()
         {   {
                 Direction.North, new Vector3[] {
@@ -94,9 +98,9 @@ namespace Sayohime.Scenes.CrawlerScene
         } };
 
         private static Texture2D minimapSprite = AssetCache.SPRITES[GameSprite.MiniMap];
-        private static readonly Rectangle[] minimapSource = new Rectangle[] { new Rectangle(0, 0, 32, 32), new Rectangle(32, 0, 32, 32), new Rectangle(64, 0, 32, 32), new Rectangle(96, 0, 32, 32) };
+        private static readonly Rectangle[] minimapSource = [new Rectangle(0, 0, 32, 32), new Rectangle(32, 0, 32, 32), new Rectangle(64, 0, 32, 32), new Rectangle(96, 0, 32, 32)];
         private static Texture2D enemyIndicator = AssetCache.SPRITES[GameSprite.FoeMarker];
-        private static readonly Rectangle[] enemySource = new Rectangle[] { new Rectangle(0, 0, 32, 32), new Rectangle(32, 0, 32, 32), new Rectangle(64, 0, 32, 32), new Rectangle(96, 0, 32, 32) };
+        private static readonly Rectangle[] enemySource = [new Rectangle(0, 0, 32, 32), new Rectangle(32, 0, 32, 32), new Rectangle(64, 0, 32, 32), new Rectangle(96, 0, 32, 32)];
 
         public int RoomX { get; set; }
         public int RoomY { get; set; }
@@ -262,7 +266,7 @@ namespace Sayohime.Scenes.CrawlerScene
 
         public void BlendLighting()
         {
-            lightVertices = new float[] { 0.25f, 0.25f, 0.25f, 0.25f };
+            lightVertices = [0.25f, 0.25f, 0.25f, 0.25f];
 
             int[] neighborBrightness = new int[9];
             int i = 0;

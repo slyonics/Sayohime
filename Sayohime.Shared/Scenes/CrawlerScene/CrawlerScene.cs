@@ -377,24 +377,11 @@ namespace Sayohime.Scenes.CrawlerScene
                 billboard.Draw(graphicsDevice, viewMatrix, cameraX);
             }
 
-			Matrix matrix = (Camera == null) ? Matrix.Identity : Camera.Matrix;
-            Effect shader = (entityShader == null) ? null : entityShader.Effect;
-            //foreach (var entity in entityList) entity.Draw(spriteBatch, Camera, matrix);
-            spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise, shader, matrix);
-            DrawGame(spriteBatch, shader, matrix);
-            spriteBatch.End();
-
+            /*
             spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise, null, null);
             DrawOverlay(spriteBatch);
             spriteBatch.End();
-
-			if (OverlayList.Count > 0)
-			{
-				shader = (interfaceShader == null) ? null : interfaceShader.Effect;
-				spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise, shader, null);
-				DrawOverlay(spriteBatch);
-				spriteBatch.End();
-			}
+            */
 
 			var miniMapPanel = MapViewModel.GetWidget<Panel>("MiniMapPanel");
 			Rectangle miniMapBounds = miniMapPanel.InnerBounds;
