@@ -108,6 +108,8 @@ namespace Sayohime.Scenes.CrawlerScene
 
         public bool Blocked { get; set; }
         public bool Occluding { get; set; }
+        public bool HasFloor { get; set; }
+        public bool HasCeiling { get; set; }
 
         public bool Obscured { get; set; } = true;
 
@@ -189,19 +191,19 @@ namespace Sayohime.Scenes.CrawlerScene
 						float endV = startV + parentFloor.TileSize / (float)SpriteAtlas.Height;
 
 						var westWall = this[Direction.West];
-						if (RoomX > 0 && westWall != null && !westWall.Occluding)
+						if (RoomX > 0 && westWall != null && !westWall.HasCeiling)
 							westWall.ApplyUpperWall(Direction.East, SpriteAtlas, startU, startV, endU, endV, 10.0f);
 
 						var eastWall = this[Direction.East];
-						if (RoomX < parentFloor.MapWidth - 1 && eastWall != null && !eastWall.Occluding)
+						if (RoomX < parentFloor.MapWidth - 1 && eastWall != null && !eastWall.HasCeiling)
 							eastWall.ApplyUpperWall(Direction.West, SpriteAtlas, startU, startV, endU, endV, 10.0f);
 
 						var northWall = this[Direction.North];
-						if (RoomY > 0 && northWall != null && !northWall.Occluding)
+						if (RoomY > 0 && northWall != null && !northWall.HasCeiling)
 							northWall.ApplyUpperWall(Direction.South, SpriteAtlas, startU, startV, endU, endV, 10.0f);
 
 						var southWall = this[Direction.South];
-						if (RoomY < parentFloor.MapHeight - 1 && southWall != null && !southWall.Occluding)
+						if (RoomY < parentFloor.MapHeight - 1 && southWall != null && !southWall.HasCeiling)
 							southWall.ApplyUpperWall(Direction.North, SpriteAtlas, startU, startV, endU, endV, 10.0f);
 					}
 
@@ -209,6 +211,8 @@ namespace Sayohime.Scenes.CrawlerScene
 
                 case "Ceiling":
                     {
+                        HasCeiling = true;
+
                         string tilesetName = tileset.RelPath.Replace("../Graphics/", "").Replace(".png", "").Replace('/', '_');
                         var SpriteAtlas = AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), tilesetName)];
                         float startU = tile.Src[0] / (float)SpriteAtlas.Width;
@@ -221,6 +225,8 @@ namespace Sayohime.Scenes.CrawlerScene
 
                 case "Floor":
                     {
+                        HasFloor = true;
+
                         string tilesetName = tileset.RelPath.Replace("../Graphics/", "").Replace(".png", "").Replace('/', '_');
                         var SpriteAtlas = AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), tilesetName)];
                         float startU = tile.Src[0] / (float)SpriteAtlas.Width;
