@@ -116,6 +116,7 @@ namespace Sayohime.Main
         Actors_Sword,
         Actors_Twinkle,
         Background_Blank,
+        Background_BlueSky,
         Background_Cave,
         Background_Eclipse,
         Background_Splash,
@@ -219,6 +220,7 @@ namespace Sayohime.Main
         SandOne,
         SandRight,
         SandTwo,
+        School,
         SurfaceMap,
 
         None = -1
