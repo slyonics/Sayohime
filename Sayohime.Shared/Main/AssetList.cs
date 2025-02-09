@@ -137,6 +137,7 @@ namespace Sayohime.Main
         NPCs_MiniMage,
         NPCs_MiniTank,
         NPCs_MiniWarrior,
+        NPCs_SecondStory,
         Particles_Bash,
         Particles_BlackHole,
         Particles_BlueHeal,

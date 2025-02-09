@@ -33,6 +33,7 @@ namespace Sayohime.Scenes.CrawlerScene
             string sprite = "";
             string[] script = null;
             int size = 5;
+            int heightOffset = 0;
             foreach (FieldInstance field in entity.FieldInstances)
             {
                 switch (field.Identifier)
@@ -41,7 +42,8 @@ namespace Sayohime.Scenes.CrawlerScene
                     case "Sprite": sprite = field.Value; break;
                     case "Script": if (!string.IsNullOrEmpty(field.Value)) script = field.Value.Split('\n'); break;
                     case "Size": size = (int)field.Value; break;
-                }
+                    case "Height": heightOffset = (int)field.Value; break;
+				}
             }
 
             int TileSize = iFloor.TileSize;
@@ -55,7 +57,7 @@ namespace Sayohime.Scenes.CrawlerScene
             var texture = AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "NPCs_" + sprite)];
             float sizeX = texture.Width / 24.0f * size;
             float sizeY = texture.Height / 24.0f * size;
-            Billboard = new Billboard(crawlerScene, iFloor, texture, sizeX, sizeY);
+            Billboard = new Billboard(crawlerScene, iFloor, texture, sizeX, sizeY, heightOffset);
         }
 
         public void Draw(GraphicsDevice graphicsDevice, Matrix viewMatrix, float cameraX)

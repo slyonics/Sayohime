@@ -19,18 +19,18 @@ namespace Sayohime.Scenes.CrawlerScene
         public Texture2D Texture { get; set; }
         public WallShader Shader { get; set; }
 
-        private float height = -2;
+		private float height = -2;
         private static readonly short[] INDICES = new short[] { 0, 2, 1, 2, 0, 3 };
 
         private GraphicsDevice graphicsDevice = CrossPlatformGame.GameInstance.GraphicsDevice;
 
         private CrawlerScene parentScene;
 
-        public Billboard(CrawlerScene mapScene, Floor iFloor, Texture2D sprite, float sizeWidth, float sizeHeight)
+        public Billboard(CrawlerScene mapScene, Floor iFloor, Texture2D sprite, float sizeWidth, float sizeHeight, float heightOffset = 0)
         {
             parentScene = mapScene;
 
-            height = 4.0f - sizeHeight;
+            height = 4.0f - sizeHeight - heightOffset;
 
             Shader = new WallShader(Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 2f, 320 / 200.0f, 0.7f, 10000.0f));
             Shader.WallTexture = Texture = sprite;
