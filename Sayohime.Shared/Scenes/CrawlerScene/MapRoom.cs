@@ -24,17 +24,17 @@ namespace Sayohime.Scenes.CrawlerScene
             public Texture2D Texture { get; set; }
             public WallShader Shader { get; set; }
 
-            public RoomWall(Direction iOrientation, Texture2D iTexture, float startU, float startV, float endU, float endV)
+            public RoomWall(Direction iOrientation, Texture2D iTexture, float startU, float startV, float endU, float endV, float heightOffset = 0.0f)
             {
                 Orientation = iOrientation;
                 Texture = iTexture;
 
                 VertexPositionTexture[] quad =
 				[
-					new VertexPositionTexture(VERTICES[Orientation][0], new Vector2(startU, startV)),
-					new VertexPositionTexture(VERTICES[Orientation][1], new Vector2(startU, endV)),
-					new VertexPositionTexture(VERTICES[Orientation][2], new Vector2(endU, endV)),
-					new VertexPositionTexture(VERTICES[Orientation][3], new Vector2(endU, startV)),
+					new VertexPositionTexture(VERTICES[Orientation][0] - new Vector3(0, heightOffset, 0), new Vector2(startU, startV)),
+					new VertexPositionTexture(VERTICES[Orientation][1] - new Vector3(0, heightOffset, 0), new Vector2(startU, endV)),
+					new VertexPositionTexture(VERTICES[Orientation][2] - new Vector3(0, heightOffset, 0), new Vector2(endU, endV)),
+					new VertexPositionTexture(VERTICES[Orientation][3] - new Vector3(0, heightOffset, 0), new Vector2(endU, startV)),
 				];
 				Quad = quad;
             }
@@ -125,9 +125,10 @@ namespace Sayohime.Scenes.CrawlerScene
         private bool door = false;
         int waypointTile;
 
-        private Dictionary<Direction, RoomWall> wallList = new Dictionary<Direction, RoomWall>();
+        private Dictionary<Direction, RoomWall> wallList = [];
+		private Dictionary<Direction, RoomWall> upperWallList = [];
 
-        public int brightnessLevel = 0;
+		public int brightnessLevel = 0;
         private float[] lightVertices;
 
         public Foe Foe { get; set; }
@@ -176,6 +177,34 @@ namespace Sayohime.Scenes.CrawlerScene
                         if (RoomY < parentFloor.MapHeight - 1 && southWall != null && !southWall.Occluding)
                             southWall.ApplyWall(Direction.North, SpriteAtlas, startU, startV, endU, endV);
                     }
+                    break;
+
+                case "UpperWalls":
+                    {
+						string tilesetName = tileset.RelPath.Replace("../Graphics/", "").Replace(".png", "").Replace('/', '_');
+						var SpriteAtlas = AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), tilesetName)];
+						float startU = tile.Src[0] / (float)SpriteAtlas.Width;
+						float startV = tile.Src[1] / (float)SpriteAtlas.Height;
+						float endU = startU + parentFloor.TileSize / (float)SpriteAtlas.Width;
+						float endV = startV + parentFloor.TileSize / (float)SpriteAtlas.Height;
+
+						var westWall = this[Direction.West];
+						if (RoomX > 0 && westWall != null && !westWall.Occluding)
+							westWall.ApplyUpperWall(Direction.East, SpriteAtlas, startU, startV, endU, endV, 10.0f);
+
+						var eastWall = this[Direction.East];
+						if (RoomX < parentFloor.MapWidth - 1 && eastWall != null && !eastWall.Occluding)
+							eastWall.ApplyUpperWall(Direction.West, SpriteAtlas, startU, startV, endU, endV, 10.0f);
+
+						var northWall = this[Direction.North];
+						if (RoomY > 0 && northWall != null && !northWall.Occluding)
+							northWall.ApplyUpperWall(Direction.South, SpriteAtlas, startU, startV, endU, endV, 10.0f);
+
+						var southWall = this[Direction.South];
+						if (RoomY < parentFloor.MapHeight - 1 && southWall != null && !southWall.Occluding)
+							southWall.ApplyUpperWall(Direction.North, SpriteAtlas, startU, startV, endU, endV, 10.0f);
+					}
+
                     break;
 
                 case "Ceiling":
@@ -231,10 +260,22 @@ namespace Sayohime.Scenes.CrawlerScene
             }
         }
 
-        public void SetVertices(int x, int y)
+		public void ApplyUpperWall(Direction direction, Texture2D texture2D, float startU, float startV, float endU, float endV, float heightOffset)
+		{
+			if (upperWallList.TryGetValue(direction, out var wall))
+			{
+				wall.Texture = texture2D;
+				throw new Exception();
+			}
+			else
+			{
+				upperWallList.Add(direction, new RoomWall(direction, texture2D, startU, startV, endU, endV, heightOffset));
+			}
+		}
+
+		public void SetVertices(int x, int y)
         {
             translationMatrix = Matrix.CreateTranslation(new Vector3(10 * x, 0, 10 * (parentFloor.MapHeight - y)));
-
 
             BuildShader();
         }
@@ -260,7 +301,27 @@ namespace Sayohime.Scenes.CrawlerScene
 
                 wall.Value.Shader.Brightness = brightness;
             }
-        }
+
+			foreach (KeyValuePair<Direction, RoomWall> wall in upperWallList)
+			{
+				wall.Value.Shader = new WallShader(Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 2f, 472 / 332.0f, 0.7f, 10000.0f));
+				wall.Value.Shader.World = translationMatrix;
+				wall.Value.Shader.WallTexture = wall.Value.Texture;
+
+				Vector4 brightness;
+
+				switch (wall.Value.Orientation)
+				{
+					case Direction.Up: brightness = new Vector4(Brightness(lightVertices[2]), Brightness(lightVertices[3]), Brightness(lightVertices[0]), Brightness(lightVertices[1])); break;
+					case Direction.North: brightness = new Vector4(Brightness(lightVertices[1]), Brightness(lightVertices[0]), Brightness(lightVertices[3]), Brightness(lightVertices[2])); break;
+					case Direction.East: brightness = new Vector4(Brightness(lightVertices[3]), Brightness(lightVertices[1]), Brightness(lightVertices[2]), Brightness(lightVertices[0])); break;
+					case Direction.West: brightness = new Vector4(Brightness(lightVertices[0]), Brightness(lightVertices[2]), Brightness(lightVertices[1]), Brightness(lightVertices[3])); break;
+					default: brightness = new Vector4(Brightness(lightVertices[0]), Brightness(lightVertices[1]), Brightness(lightVertices[2]), Brightness(lightVertices[3])); break;
+				}
+
+				wall.Value.Shader.Brightness = brightness;
+			}
+		}
 
         public float Brightness(float x)
         {
@@ -316,7 +377,12 @@ namespace Sayohime.Scenes.CrawlerScene
             {
                 DrawWall(wall.Value, viewMatrix);
             }
-        }
+
+			foreach (KeyValuePair<Direction, RoomWall> wall in upperWallList)
+			{
+				DrawWall(wall.Value, viewMatrix);
+			}
+		}
 
         public void DrawWall(RoomWall wall, Matrix viewMatrix)
         {
