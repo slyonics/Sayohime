@@ -233,7 +233,7 @@ namespace Sayohime.Scenes.CrawlerScene
 
         public void SetVertices(int x, int y)
         {
-            translationMatrix = Matrix.CreateTranslation(new Vector3(10 * (x), 0, 10 * (parentFloor.MapHeight - y)));
+            translationMatrix = Matrix.CreateTranslation(new Vector3(10 * x, 0, 10 * (parentFloor.MapHeight - y)));
 
 
             BuildShader();
@@ -262,7 +262,10 @@ namespace Sayohime.Scenes.CrawlerScene
             }
         }
 
-        public float Brightness(float x) { return Math.Min(1.0f, Math.Max(x / 4.0f, parentFloor.AmbientLight)); }
+        public float Brightness(float x)
+        {
+            return Math.Min(1.0f, Math.Max(x / 4.0f, parentFloor.AmbientLight));
+        }
 
         public void BlendLighting()
         {

@@ -144,7 +144,7 @@ namespace Sayohime.Scenes.CrawlerScene
                     case "Music": if (!string.IsNullOrEmpty(field.Value)) Audio.PlayMusic((GameMusic)Enum.Parse(typeof(GameMusic), field.Value)); break;
                     case "LocationName": if (!string.IsNullOrEmpty(field.Value)) LocationName = (string)field.Value; else LocationName = Level.Identifier; break;
                     case "AmbientLight": AmbientLight = (float)field.Value; break;
-                    case "Skybox": if (!string.IsNullOrEmpty(field.Value)) Skybox = new Skybox(AssetCache.SPRITES[(GameSprite)Enum.Parse(typeof(GameSprite), "Background_" + field.Value)]); break;
+                    case "Skybox": if (!string.IsNullOrEmpty(field.Value)) Skybox = new Skybox(field.Value); break;
                 }
             }
 

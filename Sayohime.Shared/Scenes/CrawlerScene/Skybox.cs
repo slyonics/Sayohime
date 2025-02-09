@@ -8,71 +8,94 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static Sayohime.Scenes.CrawlerScene.MapRoom;
+using Sayohime.Main;
 
 namespace Sayohime.Scenes.CrawlerScene
 {
     public class Skybox
     {
-        private const float WALL_HALF_LENGTH = 5000;
-        private static readonly short[] SKYBOX_INDICES = new short[] { 0, 2, 1, 2, 0, 3 };
+        private const float SKYBOX_LENGTH = 5000;
+        private static readonly short[] SKYBOX_INDICES = [ 0, 2, 1, 2, 0, 3 ];
         private static readonly Dictionary<Direction, Vector3[]> VERTICES = new Dictionary<Direction, Vector3[]>()
-        {   {
-                Direction.North, new Vector3[] {
-                    new Vector3(-WALL_HALF_LENGTH, -WALL_HALF_LENGTH, WALL_HALF_LENGTH),
-                    new Vector3(-WALL_HALF_LENGTH, WALL_HALF_LENGTH, WALL_HALF_LENGTH),
-                    new Vector3(WALL_HALF_LENGTH, WALL_HALF_LENGTH, WALL_HALF_LENGTH),
-                    new Vector3(WALL_HALF_LENGTH, -WALL_HALF_LENGTH, WALL_HALF_LENGTH) }
-            }, {
-                Direction.West, new Vector3[] {
-                    new Vector3(-WALL_HALF_LENGTH, -WALL_HALF_LENGTH, -WALL_HALF_LENGTH),
-                    new Vector3(-WALL_HALF_LENGTH, WALL_HALF_LENGTH, -WALL_HALF_LENGTH),
-                    new Vector3(-WALL_HALF_LENGTH, WALL_HALF_LENGTH, WALL_HALF_LENGTH),
-                    new Vector3(-WALL_HALF_LENGTH, -WALL_HALF_LENGTH, WALL_HALF_LENGTH) }
-            }, {
-                Direction.East, new Vector3[] {
-                    new Vector3(WALL_HALF_LENGTH, -WALL_HALF_LENGTH, WALL_HALF_LENGTH),
-                    new Vector3(WALL_HALF_LENGTH, WALL_HALF_LENGTH, WALL_HALF_LENGTH),
-                    new Vector3(WALL_HALF_LENGTH, WALL_HALF_LENGTH, -WALL_HALF_LENGTH),
-                    new Vector3(WALL_HALF_LENGTH, -WALL_HALF_LENGTH, -WALL_HALF_LENGTH) }
-            }, {
-                Direction.South, new Vector3[] {
-                    new Vector3(WALL_HALF_LENGTH, -WALL_HALF_LENGTH, -WALL_HALF_LENGTH),
-                    new Vector3(WALL_HALF_LENGTH, WALL_HALF_LENGTH, -WALL_HALF_LENGTH),
-                    new Vector3(-WALL_HALF_LENGTH, WALL_HALF_LENGTH, -WALL_HALF_LENGTH),
-                    new Vector3(-WALL_HALF_LENGTH, -WALL_HALF_LENGTH, -WALL_HALF_LENGTH) }
-            }, {
-                Direction.Up, new Vector3[] {
-                    new Vector3(WALL_HALF_LENGTH, -WALL_HALF_LENGTH, WALL_HALF_LENGTH),
-                    new Vector3(WALL_HALF_LENGTH, -WALL_HALF_LENGTH, -WALL_HALF_LENGTH),
-                    new Vector3(-WALL_HALF_LENGTH, -WALL_HALF_LENGTH, -WALL_HALF_LENGTH),
-                    new Vector3(-WALL_HALF_LENGTH, -WALL_HALF_LENGTH, WALL_HALF_LENGTH) }
-            }, {
-                Direction.Down, new Vector3[] {
-                    new Vector3(WALL_HALF_LENGTH, WALL_HALF_LENGTH, -WALL_HALF_LENGTH),
-                    new Vector3(WALL_HALF_LENGTH, WALL_HALF_LENGTH, WALL_HALF_LENGTH),
-                    new Vector3(-WALL_HALF_LENGTH, WALL_HALF_LENGTH, WALL_HALF_LENGTH),
-                    new Vector3(-WALL_HALF_LENGTH, WALL_HALF_LENGTH, -WALL_HALF_LENGTH) }
-        } };
-
-        private List<MapRoom.RoomWall> wallList = new List<MapRoom.RoomWall>();
-
-
-        public Skybox(Texture2D skyboxTexture)
-        {
-            for (int i = 0; i < 6; i++)
+        {   
             {
-                MapRoom.RoomWall roomWall = new RoomWall((Direction)i, skyboxTexture, VERTICES, 0.0f, 0.0f, 1.0f, 1.0f)
+                Direction.North, new Vector3[]
                 {
-                    Lighting = new Vector4[] { new Vector4(1.0f), new Vector4(1.0f), new Vector4(1.0f), new Vector4(1.0f) },
-                    Shader = new WallShader(Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 2f, 472 / 332.0f, 0.7f, 10000.0f))
-                    {
-                        WallTexture = skyboxTexture,
-                        Brightness = new Vector4(1.0f)
-                    }
-                };
+                    new (-SKYBOX_LENGTH, -SKYBOX_LENGTH, SKYBOX_LENGTH),
+                    new (-SKYBOX_LENGTH, SKYBOX_LENGTH, SKYBOX_LENGTH),
+                    new (SKYBOX_LENGTH, SKYBOX_LENGTH, SKYBOX_LENGTH),
+                    new (SKYBOX_LENGTH, -SKYBOX_LENGTH, SKYBOX_LENGTH)
+                }
+            },
+            {
+                Direction.West, new Vector3[]
+                {
+                    new (-SKYBOX_LENGTH, -SKYBOX_LENGTH, -SKYBOX_LENGTH),
+                    new (-SKYBOX_LENGTH, SKYBOX_LENGTH, -SKYBOX_LENGTH),
+                    new (-SKYBOX_LENGTH, SKYBOX_LENGTH, SKYBOX_LENGTH),
+                    new (-SKYBOX_LENGTH, -SKYBOX_LENGTH, SKYBOX_LENGTH)
+                }
+            },
+            {
+                Direction.East, new Vector3[]
+                {
+                    new (SKYBOX_LENGTH, -SKYBOX_LENGTH, SKYBOX_LENGTH),
+                    new (SKYBOX_LENGTH, SKYBOX_LENGTH, SKYBOX_LENGTH),
+                    new (SKYBOX_LENGTH, SKYBOX_LENGTH, -SKYBOX_LENGTH),
+                    new (SKYBOX_LENGTH, -SKYBOX_LENGTH, -SKYBOX_LENGTH)
+                }
+            },
+            {
+                Direction.South, new Vector3[]
+                {
+                    new (SKYBOX_LENGTH, -SKYBOX_LENGTH, -SKYBOX_LENGTH),
+                    new (SKYBOX_LENGTH, SKYBOX_LENGTH, -SKYBOX_LENGTH),
+                    new (-SKYBOX_LENGTH, SKYBOX_LENGTH, -SKYBOX_LENGTH),
+                    new (-SKYBOX_LENGTH, -SKYBOX_LENGTH, -SKYBOX_LENGTH)
+                }
+            },
+            {
+                Direction.Up, new Vector3[]
+                {
+                    new (SKYBOX_LENGTH, -SKYBOX_LENGTH, SKYBOX_LENGTH),
+                    new (SKYBOX_LENGTH, -SKYBOX_LENGTH, -SKYBOX_LENGTH),
+                    new (-SKYBOX_LENGTH, -SKYBOX_LENGTH, -SKYBOX_LENGTH),
+                    new (-SKYBOX_LENGTH, -SKYBOX_LENGTH, SKYBOX_LENGTH)
+                }
+            },
+            {
+                Direction.Down, new Vector3[]
+                {
+                    new (SKYBOX_LENGTH, SKYBOX_LENGTH, -SKYBOX_LENGTH),
+                    new (SKYBOX_LENGTH, SKYBOX_LENGTH, SKYBOX_LENGTH),
+                    new (-SKYBOX_LENGTH, SKYBOX_LENGTH, SKYBOX_LENGTH),
+                    new (-SKYBOX_LENGTH, SKYBOX_LENGTH, -SKYBOX_LENGTH)
+                }
+            } 
+        };
 
-                wallList.Add(roomWall);
-            }
+        private List<RoomWall> wallList = new List<RoomWall>();
+
+        public Skybox(string skyboxName)
+        {
+            var directionList = Enum.GetValuesAsUnderlyingType(typeof(Direction));
+            foreach (Direction direction in directionList)
+            {
+				if (!Enum.TryParse($"Background_{skyboxName}_{skyboxName}{direction}", out GameSprite sprite)) continue;
+
+                Texture2D skyboxTexture = AssetCache.SPRITES[sprite];
+				RoomWall roomWall = new RoomWall(direction, skyboxTexture, VERTICES, 0.0f, 0.0f, 1.0f, 1.0f)
+				{
+					Lighting = [new Vector4(1.0f), new Vector4(1.0f), new Vector4(1.0f), new Vector4(1.0f)],
+					Shader = new WallShader(Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 2f, 472 / 332.0f, 0.7f, 10000.0f))
+					{
+						WallTexture = skyboxTexture,
+						Brightness = new Vector4(1.0f)
+					}
+				};
+
+				wallList.Add(roomWall);
+			}
         }
 
         public void Draw(GraphicsDevice graphicsDevice, Matrix viewMatrix, Vector3 offset)
