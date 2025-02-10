@@ -354,19 +354,17 @@ namespace Sayohime.Scenes.CrawlerScene
         public override void Draw(GraphicsDevice graphicsDevice, SpriteBatch spriteBatch, RenderTarget2D pixelRender)
         {
 			// Messy 1st person 3D dungeon crawler renderer
-			graphicsDevice.Viewport = new Viewport(10, 10, 580, 360);
-			graphicsDevice.DepthStencilState = new DepthStencilState() { DepthBufferEnable = true };
-
-			graphicsDevice.SetRenderTarget(null);
-			if (CrossPlatformGame.SceneStack.Count == 0 || CrossPlatformGame.SceneStack.First() == this)
-			{
-				graphicsDevice.Clear(ClearOptions.DepthBuffer, Graphics.PURE_BLACK, 1.0f, 0);
-			}
-			graphicsDevice.BlendState = BlendState.Opaque;
 
 			Vector3 cameraUp = new Vector3(0, -1, 0);
 			Vector3 cameraPos = new Vector3(cameraPosX + ROOM_LENGTH * roomX, 0, cameraPosZ + ROOM_LENGTH * (floor.MapHeight - roomY));
 			Matrix viewMatrix = Matrix.CreateLookAt(cameraPos, cameraPos + Vector3.Transform(new Vector3(0, 0, 1), Matrix.CreateRotationY(cameraX)), cameraUp);
+
+			graphicsDevice.SetRenderTarget(null);
+			graphicsDevice.BlendState = BlendState.Opaque;
+			graphicsDevice.Clear(new Color(0.0f, 1.0f, 0.5f, 0.0f));
+			graphicsDevice.Viewport = new Viewport(10, 10, 580, 360);
+
+			floor.Skybox?.Draw(graphicsDevice, viewMatrix, cameraPos);
 			floor.DrawMap(graphicsDevice, mapViewModel.GetWidget<Panel>("MapPanel"), viewMatrix, cameraPos, cameraX);
 
 			graphicsDevice.BlendState = BlendState.AlphaBlend;

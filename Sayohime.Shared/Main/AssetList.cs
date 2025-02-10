@@ -227,6 +227,7 @@ namespace Sayohime.Main
         SandTwo,
         School,
         SurfaceMap,
+        TestDream0,
 
         None = -1
     }

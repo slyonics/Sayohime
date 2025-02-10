@@ -1845,3 +1845,8 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Background/BlueSky/BlueSkyWest.png
 
+#begin Maps/TestDream0.ldtk
+/importer:SimpleContentImporter
+/processor:SimpleContentProcessor
+/build:Maps/TestDream0.ldtk
+

@@ -68,14 +68,9 @@ namespace Sayohime.Scenes.CrawlerScene
 
         private void ChangeMap(string[] tokens)
         {
-            /*
-            Type sceneType = Type.GetType(tokens[1]);
-            if (tokens.Length == 6) CrossPlatformGame.Transition(sceneType, tokens[2], int.Parse(tokens[3]), int.Parse(tokens[4]), (Direction)Enum.Parse(typeof(Direction), tokens[5]));
-            else if (tokens.Length == 3) CrossPlatformGame.Transition(typeof(CrawlerScene), tokens[1], tokens[2]);
-            else if (tokens.Length == 2) CrossPlatformGame.Transition(sceneType);
-            else CrossPlatformGame.Transition(sceneType, tokens[2]);
-            */
-        }
+            var sceneTask = new Task<Scene>(() => new CrawlerScene(tokens[1], crawlerScene.MapFileName.ToString()));
+			CrossPlatformGame.Transition(sceneTask);
+		}
 
         private void Conversation(string[] tokens)
         {

@@ -100,7 +100,9 @@ namespace Sayohime.Scenes.CrawlerScene
 
         public void Draw(GraphicsDevice graphicsDevice, Matrix viewMatrix, Vector3 offset)
         {
-            foreach (MapRoom.RoomWall wall in wallList)
+			graphicsDevice.DepthStencilState = DepthStencilState.None;
+
+			foreach (RoomWall wall in wallList)
             {
                 wall.Shader.World = Matrix.CreateTranslation(offset);
                 wall.Shader.View = viewMatrix;

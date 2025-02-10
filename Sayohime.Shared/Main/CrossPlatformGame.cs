@@ -80,7 +80,7 @@ namespace Sayohime.Main
 		{
 			GameProfile.NewState();
 
-			var mapScene = new CrawlerScene(GameMap.School, 10, 8, Direction.North); //new MapScene(GameMap.Matsuura, "Default");
+			var mapScene = new CrawlerScene(GameMap.TestDream0, 9, 13, Direction.North); //new MapScene(GameMap.Matsuura, "Default");
 			CurrentScene = mapScene;
 			CurrentScene.BeginScene();
 		}

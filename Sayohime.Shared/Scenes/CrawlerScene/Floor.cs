@@ -290,10 +290,6 @@ namespace Sayohime.Scenes.CrawlerScene
 
         public void DrawMap(GraphicsDevice graphicsDevice, Panel mapWindow, Matrix viewMatrix, Vector3 cameraPos, float cameraX)
         {
-            graphicsDevice.Clear(new Color(0.0f, 1.0f, 0.5f, 0.0f));
-            graphicsDevice.DepthStencilState = DepthStencilState.None;
-            Skybox?.Draw(graphicsDevice, viewMatrix, cameraPos);
-
             graphicsDevice.DepthStencilState = DepthStencilState.Default;
 
             for (int x = 0; x < mapRooms.GetLength(0); x++)
