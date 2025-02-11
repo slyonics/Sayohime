@@ -80,7 +80,7 @@ namespace Sayohime.Scenes.CrawlerScene
             }
         }
 
-        public Vector2 Position
+        public Vector3 Position
         {
             get
             {
@@ -91,11 +91,11 @@ namespace Sayohime.Scenes.CrawlerScene
                 {
                     float destX = 10 * DestinationRoom.RoomX;
                     float destZ = 10 * (crawlerScene.Floor.MapHeight - DestinationRoom.RoomY);
-                    return new Vector2(MathHelper.Lerp(x, destX, MoveInterval), MathHelper.Lerp(z, destZ, MoveInterval));
+                    return new Vector3(MathHelper.Lerp(x, destX, MoveInterval), 0, MathHelper.Lerp(z, destZ, MoveInterval));
                 }
                 else
                 {
-                    return new Vector2(x, z);
+                    return new Vector3(x, 0, z);
                 }
             }
         }

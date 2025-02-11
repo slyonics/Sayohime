@@ -63,13 +63,13 @@ namespace Sayohime.Scenes.CrawlerScene
             Billboard.Draw(viewMatrix, x, z, cameraX, brightness);
         }
 
-        public Vector2 Position
+        public Vector3 Position
         {
             get
             {
                 float x = 10 * CurrentRoom.RoomX;
                 float z = 10 * (crawlerScene.Floor.MapHeight - CurrentRoom.RoomY);
-                return new Vector2(x, z);
+                return new Vector3(x, 0, z);
             }
         }
 

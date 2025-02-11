@@ -88,9 +88,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\CrawlerScene\Floor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\CrawlerScene\Foe.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\CrawlerScene\FoeController.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scenes\CrawlerScene\InteractionPrompt.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\CrawlerScene\MapRoom.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\CrawlerScene\MapViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Scenes\CrawlerScene\MovementController.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scenes\CrawlerScene\PartyController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\CrawlerScene\Npc.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\CrawlerScene\Skybox.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\CrawlerScene\WallShader.cs" />

@@ -288,7 +288,7 @@ namespace Sayohime.Scenes.CrawlerScene
         }
 
 
-        public void DrawMap(GraphicsDevice graphicsDevice, Panel mapWindow, Matrix viewMatrix, Vector3 cameraPos, float cameraX)
+        public void DrawMap(GraphicsDevice graphicsDevice, Panel mapWindow, Matrix viewMatrix, Vector3 cameraPos)
         {
             graphicsDevice.DepthStencilState = DepthStencilState.Default;
 

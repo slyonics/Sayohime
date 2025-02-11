@@ -11,7 +11,7 @@
 	"iid": "5c1d34d0-3b70-11ee-9d66-d3a28cc7a2b6",
 	"jsonVersion": "1.5.3",
 	"appBuildId": 473703,
-	"nextUid": 1470,
+	"nextUid": 1471,
 	"identifierStyle": "Capitalize",
 	"toc": [],
 	"worldLayout": "Free",
@@ -1494,6 +1494,43 @@
 			"allowedRefsEntityUid": null,
 			"allowedRefTags": [],
 			"tilesetUid": null
+		},
+		{
+			"identifier": "ProcgenScript",
+			"doc": null,
+			"__type": "String",
+			"uid": 1470,
+			"type": "F_Text",
+			"isArray": false,
+			"canBeNull": true,
+			"arrayMinLength": null,
+			"arrayMaxLength": null,
+			"editorDisplayMode": "Hidden",
+			"editorDisplayScale": 1,
+			"editorDisplayPos": "Above",
+			"editorLinkStyle": "StraightArrow",
+			"editorDisplayColor": null,
+			"editorAlwaysShow": false,
+			"editorShowInWorld": true,
+			"editorCutLongValues": true,
+			"editorTextSuffix": null,
+			"editorTextPrefix": null,
+			"useForSmartColor": false,
+			"exportToToc": false,
+			"searchable": false,
+			"min": null,
+			"max": null,
+			"regex": null,
+			"acceptFileTypes": null,
+			"defaultOverride": null,
+			"textLanguageMode": null,
+			"symmetricalRef": false,
+			"autoChainRef": true,
+			"allowOutOfLevelRef": true,
+			"allowedRefs": "OnlySame",
+			"allowedRefsEntityUid": null,
+			"allowedRefTags": [],
+			"tilesetUid": null
 		}
 	] },
 	"levels": [
@@ -1526,7 +1563,13 @@
 					"params": ["Dungeon"]
 				}] },
 				{ "__identifier": "AmbientLight", "__type": "Float", "__value": 0.7, "__tile": null, "defUid": 1446, "realEditorValues": [{ "id": "V_Float", "params": [0.7] }] },
-				{ "__identifier": "Skybox", "__type": "String", "__value": null, "__tile": null, "defUid": 1454, "realEditorValues": [null] }
+				{ "__identifier": "Skybox", "__type": "String", "__value": null, "__tile": null, "defUid": 1454, "realEditorValues": [null] },
+				{ "__identifier": "ProcgenScript", "__type": "String", "__value": "RecursiveLines Start=9,13 Length=5-9 ReplicateChance=0.6\nRecursiveLines Start=9,13 Length=5-9 ReplicateChance=0.6\nRecursiveLines Start=9,13 Length=5-9 ReplicateChance=0.6\nRecursiveLines Start=9,13 Length=5-9 ReplicateChance=0.6", "__tile": null, "defUid": 1470, "realEditorValues": [{
+					"id": "V_String",
+					"params": [
+						"RecursiveLines Start=9,13 Length=5-9 ReplicateChance=0.6\\nRecursiveLines Start=9,13 Length=5-9 ReplicateChance=0.6\\nRecursiveLines Start=9,13 Length=5-9 ReplicateChance=0.6\\nRecursiveLines Start=9,13 Length=5-9 ReplicateChance=0.6"
+					]
+				}] }
 			],
 			"layerInstances": [
 				{

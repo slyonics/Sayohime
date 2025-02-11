@@ -16,7 +16,7 @@ namespace Sayohime.Scenes.CrawlerScene
 {
     public interface IBillboard
     {
-        public Vector2 Position { get; }
+        public Vector3 Position { get; }
         public void Draw(GraphicsDevice graphicsDevice, Matrix viewMatrix, float cameraX);
     }
 
@@ -142,7 +142,7 @@ namespace Sayohime.Scenes.CrawlerScene
             CurrentRoom.Foe = null;
         }
 
-        public Vector2 Position
+        public Vector3 Position
         {
             get
             {
@@ -153,11 +153,11 @@ namespace Sayohime.Scenes.CrawlerScene
                 {
                     float destX = 10 * DestinationRoom.RoomX;
                     float destZ = 10 * (crawlerScene.Floor.MapHeight - DestinationRoom.RoomY);
-                    return new Vector2(MathHelper.Lerp(x, destX, MoveInterval), MathHelper.Lerp(z, destZ, MoveInterval));
+                    return new Vector3(MathHelper.Lerp(x, destX, MoveInterval), 0, MathHelper.Lerp(z, destZ, MoveInterval));
                 }
                 else
                 {
-                    return new Vector2(x, z);
+                    return new Vector3(x, 0, z);
                 }
             }
         }

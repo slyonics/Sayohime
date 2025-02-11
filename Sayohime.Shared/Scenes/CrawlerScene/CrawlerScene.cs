@@ -22,7 +22,7 @@ namespace Sayohime.Scenes.CrawlerScene
 
     public class CrawlerScene : Scene
     {
-		private const int ROOM_LENGTH = 10;
+		public const int ROOM_LENGTH = 10;
 
 		public static CrawlerScene Instance;
 
@@ -30,26 +30,19 @@ namespace Sayohime.Scenes.CrawlerScene
 
         private MapViewModel mapViewModel;
 
-        private MovementController movementController;
+        public PartyController PartyController { get; private set; }
 
-        private float cameraX = 0.0f;
-        private float cameraPosX = 0.0f;
-        private float cameraPosZ = 0.0f;
 
         private Floor floor;
         public List<Foe> FoeList { get; set; } = new List<Foe>();
         public List<Chest> ChestList { get; set; } = new List<Chest>();
         public List<Npc> NpcList { get; set; } = new List<Npc>();
 
-        public int roomX = -1;
-        public int roomY = -1;
-        private Direction direction;
+
 
         public Panel MapPanel { get; set; }
 
         private int bumpCooldown;
-
-        public float BillboardRotation { get; private set; }
 
         public CrawlerScene()
         {
@@ -64,14 +57,9 @@ namespace Sayohime.Scenes.CrawlerScene
             LocationName = floor.LocationName;
             MapFileName = gamemap;
 
-            roomX = x;
-            roomY = y;
-            direction = dir;
-            cameraX = (float)(Math.PI * (int)direction / 2.0f);
+            PartyController = AddController(new PartyController(this, x, y, dir));
 
-            floor.GetRoom(roomX, roomY).EnterRoom(false);
-
-            movementController = AddController(new MovementController(this));
+            floor.GetRoom(PartyController.RoomX, PartyController.RoomY).EnterRoom(false);
 
             mapViewModel = AddView(new MapViewModel(this, GameView.Crawler_MapView));
             MapPanel = mapViewModel.GetWidget<Panel>("MapPanel");
@@ -84,14 +72,10 @@ namespace Sayohime.Scenes.CrawlerScene
             floor = new Floor(this, MapFileName);
             LocationName = floor.LocationName;
             Spawn spawn = floor.Spawns[spawnName];
-            roomX = spawn.RoomX;
-            roomY = spawn.RoomY;
-            direction = spawn.Direction;
-            cameraX = (float)(Math.PI * (int)direction / 2.0f);
 
-            floor.GetRoom(roomX, roomY).EnterRoom(false);
+			PartyController = AddController(new PartyController(this, spawn.RoomX, spawn.RoomY, spawn.Direction));
 
-            movementController = AddController(new MovementController(this));
+			floor.GetRoom(PartyController.RoomX, PartyController.RoomY).EnterRoom(false);
 
             mapViewModel = AddView(new MapViewModel(this, GameView.Crawler_MapView));
             MapPanel = mapViewModel.GetWidget<Panel>("MapPanel");
@@ -99,15 +83,15 @@ namespace Sayohime.Scenes.CrawlerScene
 
         public void ResetPathfinding()
         {
-            movementController?.Path.Clear();
+            PartyController?.Path.Clear();
         }
 
         public void SaveData()
         {
             GameProfile.SetSaveData<GameMap>("LastMap", MapFileName);
-            GameProfile.SetSaveData<int>("LastRoomX", roomX);
-            GameProfile.SetSaveData<int>("LastRoomY", roomY);
-            GameProfile.SetSaveData<Direction>("LastDirection", direction);
+            GameProfile.SetSaveData<int>("LastRoomX", PartyController.RoomX);
+            GameProfile.SetSaveData<int>("LastRoomY", PartyController.RoomY);
+            GameProfile.SetSaveData<Direction>("LastDirection", PartyController.Direction);
             GameProfile.SetSaveData<string>("PlayerLocation", LocationName);
 
             GameProfile.SaveState();
@@ -133,145 +117,7 @@ namespace Sayohime.Scenes.CrawlerScene
             if (bumpCooldown > 0) bumpCooldown -= gameTime.ElapsedGameTime.Milliseconds;
         }
 
-        public void TurnLeft()
-        {
-            TransitionController transitionController = new TransitionController(TransitionDirection.Out, 300, PriorityLevel.TransitionLevel);
-            AddController(transitionController);
-
-            transitionController.UpdateTransition += new Action<float>(t =>
-            {
-                cameraX = MathHelper.Lerp(((float)(Math.PI * ((int)direction - 1) / 2.0f)), (float)(Math.PI * (int)direction / 2.0f), t);
-                if (t <= 0.5f)
-                {
-                    var dir = (direction == Direction.North) ? Direction.West : direction - 1;
-                    BillboardRotation = (float)(Math.PI * (int)dir / 2.0f);
-                }
-            });
-
-            transitionController.FinishTransition += new Action<TransitionDirection>(t =>
-            {
-                if (direction == Direction.North) direction = Direction.West; else direction--;
-                cameraX = (float)(Math.PI * (int)direction / 2.0f);
-            });
-        }
-
-        public void TurnRight()
-        {
-            TransitionController transitionController = new TransitionController(TransitionDirection.In, 300, PriorityLevel.TransitionLevel);
-            AddController(transitionController);
-
-            transitionController.UpdateTransition += new Action<float>(t =>
-            {
-                cameraX = MathHelper.Lerp(((float)(Math.PI * (int)direction / 2.0f)), (float)(Math.PI * ((int)direction + 1) / 2.0f), t);
-                if (t >= 0.5f)
-                {
-                    var dir = (direction == Direction.West) ? Direction.North : direction + 1;
-                    BillboardRotation = (float)(Math.PI * (int)dir / 2.0f);
-                }
-            });
-
-            transitionController.FinishTransition += new Action<TransitionDirection>(t =>
-            {
-                if (direction == Direction.West) direction = Direction.North; else direction++;
-                cameraX = (float)(Math.PI * (int)direction / 2.0f);
-            });
-        }
-
-        public void MoveForward()
-        {
-            var currentRoom = floor.GetRoom(roomX, roomY);
-            var destinationRoom = currentRoom[direction];
-            if (destinationRoom == null || destinationRoom.Blocked)
-            {
-                if (!Activate()) WallBump();
-                return;
-            }
-
-            if (destinationRoom.PreEnterScript != null)
-            {
-                destinationRoom.ActivatePreScript();
-                return;
-            }
-
-            if (destinationRoom.Foe != null)
-            {
-                InitiateBattle(currentRoom, destinationRoom);
-            }
-            else
-            {
-                TransitionDirection transitionDirection = (direction == Direction.North || direction == Direction.East) ? TransitionDirection.In : TransitionDirection.Out;
-                TransitionController transitionController = new TransitionController(transitionDirection, 300, PriorityLevel.CutsceneLevel);
-
-                MoveFoes(destinationRoom);
-
-                switch (direction)
-                {
-                    case Direction.North: transitionController.UpdateTransition += new Action<float>(t => cameraPosZ = MathHelper.Lerp(0, ROOM_LENGTH, t)); break;
-                    case Direction.East: transitionController.UpdateTransition += new Action<float>(t => cameraPosX = MathHelper.Lerp(0, ROOM_LENGTH, t)); break;
-                    case Direction.South: transitionController.UpdateTransition += new Action<float>(t => cameraPosZ = MathHelper.Lerp(-ROOM_LENGTH, 0, t)); break;
-                    case Direction.West: transitionController.UpdateTransition += new Action<float>(t => cameraPosX = MathHelper.Lerp(-ROOM_LENGTH, 0, t)); break;
-                }
-
-                AddController(transitionController);
-                transitionController.FinishTransition += new Action<TransitionDirection>(t =>
-                {
-                    cameraPosX = cameraPosZ = 0;
-                    roomX = destinationRoom.RoomX;
-                    roomY = destinationRoom.RoomY;
-                    destinationRoom.EnterRoom();
-                });
-            }
-        }
-
-        public void MoveBackward()
-        {
-            Direction opposite = direction + 2;
-            if (opposite > Direction.West) opposite -= 4;
-
-            var currentRoom = floor.GetRoom(roomX, roomY);
-            var destinationRoom = currentRoom[opposite];
-            if (destinationRoom == null || destinationRoom.Blocked)
-            {
-                if (!Activate()) WallBump();
-                return;
-            }
-
-            if (destinationRoom.PreEnterScript != null)
-            {
-                destinationRoom.ActivatePreScript();
-                return;
-            }
-
-            if (destinationRoom.Foe != null)
-            {
-                InitiateBattle(currentRoom, destinationRoom);
-            }
-            else
-            {
-                TransitionDirection transitionDirection = (opposite == Direction.North || opposite == Direction.East) ? TransitionDirection.In : TransitionDirection.Out;
-                TransitionController transitionController = new TransitionController(transitionDirection, 300, PriorityLevel.CutsceneLevel);
-
-                MoveFoes(destinationRoom);
-
-                switch (opposite)
-                {
-                    case Direction.North: transitionController.UpdateTransition += new Action<float>(t => cameraPosZ = MathHelper.Lerp(0, ROOM_LENGTH, t)); break;
-                    case Direction.East: transitionController.UpdateTransition += new Action<float>(t => cameraPosX = MathHelper.Lerp(0, ROOM_LENGTH, t)); break;
-                    case Direction.South: transitionController.UpdateTransition += new Action<float>(t => cameraPosZ = MathHelper.Lerp(-ROOM_LENGTH, 0, t)); break;
-                    case Direction.West: transitionController.UpdateTransition += new Action<float>(t => cameraPosX = MathHelper.Lerp(-ROOM_LENGTH, 0, t)); break;
-                }
-
-                AddController(transitionController);
-                transitionController.FinishTransition += new Action<TransitionDirection>(t =>
-                {
-                    cameraPosX = cameraPosZ = 0;
-                    roomX = destinationRoom.RoomX;
-                    roomY = destinationRoom.RoomY;
-                    destinationRoom.EnterRoom();
-                });
-            }
-        }
-
+        /*
         private void InitiateBattle(MapRoom currentRoom, MapRoom destinationRoom)
         {
             TransitionDirection transitionDirection = (direction == Direction.North || direction == Direction.East) ? TransitionDirection.In : TransitionDirection.Out;
@@ -299,49 +145,36 @@ namespace Sayohime.Scenes.CrawlerScene
                 destinationRoom.Foe.Threaten(direction);
             });
         }
+        */
 
-        public void MoveTo(MapRoom destinationRoom)
+        public MapRoom AttemptMoveForward()
         {
-            Direction requiredDirection;
-            if (destinationRoom.RoomX > roomX) requiredDirection = Direction.East;
-            else if (destinationRoom.RoomX < roomX) requiredDirection = Direction.West;
-            else if (destinationRoom.RoomY > roomY) requiredDirection = Direction.South;
-            else requiredDirection = Direction.North;
+			var currentRoom = floor.GetRoom(PartyController.RoomX, PartyController.RoomY);
+			var destinationRoom = currentRoom[PartyController.Direction];
+			if (destinationRoom == null || destinationRoom.Blocked)
+			{
+				if (!Activate(destinationRoom)) WallBump();
+				return null;
+			}
 
-            if (requiredDirection == direction) MoveForward();
-            else
-            {
-                if (requiredDirection == direction + 1 || (requiredDirection == Direction.North && direction == Direction.West)) TurnRight();
-                else TurnLeft();
-            }
-        }
+			if (destinationRoom.PreEnterScript != null)
+			{
+				destinationRoom.ActivatePreScript();
+				return null;
+			}
 
-        public void FinishMovement()
-        {
-            var currentRoom = floor.GetRoom(roomX, roomY);
-            var destinationRoom = currentRoom[direction];
+			if (destinationRoom.Foe != null)
+			{
+				// InitiateBattle(currentRoom, destinationRoom);
+			}
+			else
+			{
+				MoveFoes(destinationRoom);
+			}
 
-            TransitionDirection transitionDirection = (direction == Direction.North || direction == Direction.East) ? TransitionDirection.In : TransitionDirection.Out;
-            var transitionController = new TransitionController(transitionDirection, 300, PriorityLevel.TransitionLevel);
-
-            switch (direction)
-            {
-                case Direction.North: transitionController.UpdateTransition += new Action<float>(t => cameraPosZ = MathHelper.Lerp(2.95f, ROOM_LENGTH, t)); break;
-                case Direction.East: transitionController.UpdateTransition += new Action<float>(t => cameraPosX = MathHelper.Lerp(2.95f, ROOM_LENGTH, t)); break;
-                case Direction.South: transitionController.UpdateTransition += new Action<float>(t => cameraPosZ = MathHelper.Lerp(-ROOM_LENGTH, -2.95f, t)); break;
-                case Direction.West: transitionController.UpdateTransition += new Action<float>(t => cameraPosX = MathHelper.Lerp(-ROOM_LENGTH, -2.95f, t)); break;
-            }
-
-            AddController(transitionController);
-            transitionController.FinishTransition += new Action<TransitionDirection>(t =>
-            {
-                cameraPosX = cameraPosZ = 0;
-                roomX = destinationRoom.RoomX;
-                roomY = destinationRoom.RoomY;
-                destinationRoom.EnterRoom();
-            });
-        }
-
+            return destinationRoom;
+		}
+                
         private void WallBump()
         {
             if (bumpCooldown <= 0)
@@ -353,10 +186,11 @@ namespace Sayohime.Scenes.CrawlerScene
 
         public override void Draw(GraphicsDevice graphicsDevice, SpriteBatch spriteBatch, RenderTarget2D pixelRender)
         {
-			// Messy 1st person 3D dungeon crawler renderer
+            // Messy 1st person 3D dungeon crawler renderer
 
+            float cameraX = PartyController.CameraX;
 			Vector3 cameraUp = new Vector3(0, -1, 0);
-			Vector3 cameraPos = new Vector3(cameraPosX + ROOM_LENGTH * roomX, 0, cameraPosZ + ROOM_LENGTH * (floor.MapHeight - roomY));
+			Vector3 cameraPos = new Vector3(PartyController.CameraPosX + ROOM_LENGTH * PartyController.RoomX, 0, PartyController.CameraPosZ + ROOM_LENGTH * (floor.MapHeight - PartyController.RoomY));
 			Matrix viewMatrix = Matrix.CreateLookAt(cameraPos, cameraPos + Vector3.Transform(new Vector3(0, 0, 1), Matrix.CreateRotationY(cameraX)), cameraUp);
 
 			graphicsDevice.SetRenderTarget(null);
@@ -365,12 +199,12 @@ namespace Sayohime.Scenes.CrawlerScene
 			graphicsDevice.Viewport = new Viewport(10, 10, 580, 360);
 
 			floor.Skybox?.Draw(graphicsDevice, viewMatrix, cameraPos);
-			floor.DrawMap(graphicsDevice, mapViewModel.GetWidget<Panel>("MapPanel"), viewMatrix, cameraPos, cameraX);
+			floor.DrawMap(graphicsDevice, mapViewModel.GetWidget<Panel>("MapPanel"), viewMatrix, cameraPos);
 
 			graphicsDevice.BlendState = BlendState.AlphaBlend;
 
 			List<IBillboard> billboardList = [.. FoeList, .. ChestList, .. NpcList];
-            foreach (IBillboard billboard in billboardList.OrderByDescending(x => Vector2.Distance(new Vector2(cameraPosX + ROOM_LENGTH * roomX, cameraPosZ + ROOM_LENGTH * (floor.MapHeight - roomY)), x.Position)))
+            foreach (IBillboard billboard in billboardList.OrderByDescending(x => Vector3.Distance(cameraPos, x.Position)))
             {
                 billboard.Draw(graphicsDevice, viewMatrix, cameraX);
             }
@@ -388,16 +222,15 @@ namespace Sayohime.Scenes.CrawlerScene
 			miniMapBounds.X += (int)miniMapPanel.Position.X;
 			miniMapBounds.Y += (int)miniMapPanel.Position.Y;
 			spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise, null, null);
-			floor.DrawMiniMap(spriteBatch, miniMapBounds, Color.White, 0.6f, roomX, roomY, direction);
+			floor.DrawMiniMap(spriteBatch, miniMapBounds, Color.White, 0.6f, PartyController.RoomX, PartyController.RoomY, PartyController.Direction);
 			spriteBatch.End();
 		}
 
-        public bool Activate()
+        public bool Activate(MapRoom roomAhead)
         {
-            var roomAhead = floor.GetRoom(roomX, roomY)[direction];
             if (roomAhead == null) return false;
 
-            return roomAhead.Activate(direction);
+            return roomAhead.Activate(PartyController.Direction);
         }
 
         public void MoveFoes(MapRoom playerDestination)

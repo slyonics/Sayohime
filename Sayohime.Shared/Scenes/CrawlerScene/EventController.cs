@@ -42,7 +42,7 @@ namespace Sayohime.Scenes.CrawlerScene
                 case "RemoveChest": RemoveChest(tokens); break;
                 case "RemoveNpc": RemoveNpc(tokens); break;
                 case "ShowPortrait": ShowPortrait(tokens); break;
-                case "MoveBackward": crawlerScene.MoveBackward(); break;
+                // case "MoveBackward": crawlerScene.MoveBackward(); break;
                 default: return false;
             }
 
@@ -69,7 +69,14 @@ namespace Sayohime.Scenes.CrawlerScene
         private void ChangeMap(string[] tokens)
         {
             var sceneTask = new Task<Scene>(() => new CrawlerScene(tokens[1], crawlerScene.MapFileName.ToString()));
-			CrossPlatformGame.Transition(sceneTask);
+
+            TransitionController transitionController = new TransitionController(TransitionDirection.Out, 1200);
+            transitionController.UpdateTransition += new Action<float>(t =>
+            {
+
+			});
+
+			CrossPlatformGame.Transition(crawlerScene, sceneTask, transitionController, null);
 		}
 
         private void Conversation(string[] tokens)
