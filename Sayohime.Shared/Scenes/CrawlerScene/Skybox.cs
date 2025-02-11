@@ -84,19 +84,17 @@ namespace Sayohime.Scenes.CrawlerScene
 				if (!Enum.TryParse($"Background_{skyboxName}_{skyboxName}{direction}", out GameSprite sprite)) continue;
 
                 Texture2D skyboxTexture = AssetCache.SPRITES[sprite];
-				RoomWall roomWall = new RoomWall(direction, skyboxTexture, VERTICES, 0.0f, 0.0f, 1.0f, 1.0f)
-				{
-					Lighting = [new Vector4(1.0f), new Vector4(1.0f), new Vector4(1.0f), new Vector4(1.0f)],
+                RoomWall roomWall = new RoomWall(direction, skyboxTexture, VERTICES, 0.0f, 0.0f, 1.0f, 1.0f)
+                {
 					Shader = new WallShader(Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 2f, 472 / 332.0f, 0.7f, 10000.0f))
 					{
-						WallTexture = skyboxTexture,
-						Brightness = new Vector4(1.0f)
+						WallTexture = skyboxTexture
 					}
 				};
 
 				wallList.Add(roomWall);
 			}
-        }
+		}
 
         public void Draw(GraphicsDevice graphicsDevice, Matrix viewMatrix, Vector3 offset)
         {
@@ -104,8 +102,8 @@ namespace Sayohime.Scenes.CrawlerScene
 
 			foreach (RoomWall wall in wallList)
             {
-                wall.Shader.World = Matrix.CreateTranslation(offset);
-                wall.Shader.View = viewMatrix;
+				wall.Shader.World = Matrix.CreateTranslation(offset);
+				wall.Shader.View = viewMatrix;
                 foreach (EffectPass pass in wall.Shader.Effect.CurrentTechnique.Passes)
                 {
                     pass.Apply();

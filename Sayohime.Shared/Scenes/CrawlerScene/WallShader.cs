@@ -37,6 +37,5 @@ namespace Sayohime.Scenes.MapScene
 
         public Matrix View { set => shaderEffect.Parameters["View"].SetValue(value); }
         public Texture2D WallTexture { set => shaderEffect.Parameters["WallTexture"].SetValue(value); }
-        public Vector4 Brightness { set => shaderEffect.Parameters["Brightness"].SetValue(value); }
     }
 }

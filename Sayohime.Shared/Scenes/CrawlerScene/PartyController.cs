@@ -156,6 +156,7 @@ namespace Sayohime.Scenes.CrawlerScene
 		public void MoveForward()
 		{
 			var destinationRoom = crawlerScene.AttemptMoveForward();
+			if (destinationRoom == null) return;
 
 			TransitionDirection transitionDirection = (Direction == Direction.North || Direction == Direction.East) ? TransitionDirection.In : TransitionDirection.Out;
 			TransitionController transitionController = new TransitionController(transitionDirection, 300, PriorityLevel.CutsceneLevel);

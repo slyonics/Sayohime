@@ -77,6 +77,10 @@ namespace Sayohime.Scenes.CrawlerScene
             parentScene = crawlerScene;
             minimapPlayer = AssetCache.SPRITES[GameSprite.YouAreHere];
 
+            MapRoom.Shader = new WallShader(Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 2f, 472 / 332.0f, 0.7f, 10000.0f));
+			MapRoom.Shader.World = Matrix.Identity;
+			MapRoom.Shader.WallTexture = AssetCache.SPRITES[GameSprite.Tiles_CrawlerTiles];
+
 			LoadMap(gameMap);
         }
 
@@ -292,11 +296,17 @@ namespace Sayohime.Scenes.CrawlerScene
         {
             graphicsDevice.DepthStencilState = DepthStencilState.Default;
 
-            for (int x = 0; x < mapRooms.GetLength(0); x++)
+			MapRoom.Shader.View = viewMatrix;
+            foreach (EffectPass pass in MapRoom.Shader.Effect.CurrentTechnique.Passes)
             {
-                for (int y = 0; y < mapRooms.GetLength(1); y++)
+                pass.Apply();
+
+                for (int x = 0; x < mapRooms.GetLength(0); x++)
                 {
-                    mapRooms[x, y]?.Draw(viewMatrix);
+                    for (int y = 0; y < mapRooms.GetLength(1); y++)
+                    {
+                        mapRooms[x, y]?.Draw(viewMatrix);
+                    }
                 }
             }
         }

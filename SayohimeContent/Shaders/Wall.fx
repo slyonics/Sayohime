@@ -18,8 +18,6 @@ float Shininess = 200;
 float4 SpecularColor = float4(1, 1, 1, 1);
 float SpecularIntensity = 1;
 float3 ViewVector = float3(1, 0, 0);
-
-float4 Brightness;
  
 texture ModelTexture;
 sampler2D textureSampler = sampler_state {
@@ -33,6 +31,7 @@ sampler2D textureSampler = sampler_state {
 struct VertexShaderInput
 {
     float4 Position : POSITION0;
+	float4 Color : COLOR0;
     float4 Normal : NORMAL0;
     float2 TextureCoordinate : TEXCOORD0;
 };
@@ -55,7 +54,8 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
  
     float4 normal = normalize(mul(input.Normal, WorldInverseTranspose));
     float lightIntensity = dot(normal, DiffuseLightDirection);
-    output.Color = saturate(DiffuseColor * DiffuseIntensity * lightIntensity);
+    //output.Color = saturate(DiffuseColor * DiffuseIntensity * lightIntensity);
+	output.Color = input.Color;
  
     output.Normal = normal;
  
@@ -76,8 +76,8 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
     int lightTexU = round(input.TextureCoordinate.x * 4);
     int lightTexV = round(input.TextureCoordinate.y * 4);
 
-    float xBright1 = lerp(Brightness.r, Brightness.g, 1 - (lightTexU / 4.0));
-    float xBright2 = lerp(Brightness.b, Brightness.a, 1 - (lightTexU / 4.0));
+    float xBright1 = lerp(input.Color.r, input.Color.g, 1 - (lightTexU / 4.0));
+    float xBright2 = lerp(input.Color.b, input.Color.a, 1 - (lightTexU / 4.0));
     float realBright = lerp(xBright1, xBright2, 1 - (lightTexV / 4.0));
  
     float4 rawTextureColor = tex2D(textureSampler, input.TextureCoordinate);    

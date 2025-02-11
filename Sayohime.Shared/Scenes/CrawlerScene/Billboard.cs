@@ -15,7 +15,7 @@ namespace Sayohime.Scenes.CrawlerScene
 {
     public class Billboard
     {
-        public VertexPositionTexture[] Quad { get; set; }
+        public VertexPositionColorTexture[] Quad { get; set; }
         public Texture2D Texture { get; set; }
         public WallShader Shader { get; set; }
 
@@ -39,19 +39,21 @@ namespace Sayohime.Scenes.CrawlerScene
             float startV = 0.0f;
             float endU = 1.0f;
             float endV = 1.0f;
-            Vector3[] VERTICES = new Vector3[]
-            {
-                    new Vector3(-sizeWidth / 2, 0, 0),
+            Vector3[] VERTICES =
+			[
+					new Vector3(-sizeWidth / 2, 0, 0),
                     new Vector3(-sizeWidth / 2, sizeHeight, 0),
                     new Vector3(sizeWidth / 2, sizeHeight, 0),
                     new Vector3(sizeWidth / 2, 0, 0)
-            };
-            VertexPositionTexture[] quad = new VertexPositionTexture[4];
-            quad[0] = new VertexPositionTexture(VERTICES[0], new Vector2(startU, startV));
-            quad[1] = new VertexPositionTexture(VERTICES[1], new Vector2(startU, endV));
-            quad[2] = new VertexPositionTexture(VERTICES[2], new Vector2(endU, endV));
-            quad[3] = new VertexPositionTexture(VERTICES[3], new Vector2(endU, startV));
-            Quad = quad;
+            ];
+			VertexPositionColorTexture[] quad =
+			[
+				new VertexPositionColorTexture(VERTICES[0], Color.White, new Vector2(startU, startV)),
+				new VertexPositionColorTexture(VERTICES[1], Color.White, new Vector2(startU, endV)),
+				new VertexPositionColorTexture(VERTICES[2], Color.White, new Vector2(endU, endV)),
+				new VertexPositionColorTexture(VERTICES[3], Color.White, new Vector2(endU, startV)),
+			];
+			Quad = quad;
         }
 
         public float Brightness(float x) { return Math.Min(1.0f, Math.Max(x / 4.0f, parentScene.Floor.AmbientLight)); }
@@ -60,7 +62,6 @@ namespace Sayohime.Scenes.CrawlerScene
         {
             Shader.World = Matrix.CreateRotationY(rotation) * Matrix.CreateTranslation(new Vector3(x, height, z));
             Shader.View = viewMatrix;
-            Shader.Brightness = new Vector4(brightness);
 
             foreach (EffectPass pass in Shader.Effect.CurrentTechnique.Passes)
             {

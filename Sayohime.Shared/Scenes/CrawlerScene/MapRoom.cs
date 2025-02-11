@@ -19,9 +19,9 @@ namespace Sayohime.Scenes.CrawlerScene
         public class RoomWall
         {
             public Direction Orientation { get; set; }
-            public VertexPositionTexture[] Quad { get; set; }
-            public Vector4[] Lighting { get; set; } = [ new Vector4(1.0f), new Vector4(1.0f), new Vector4(1.0f), new Vector4(1.0f) ];
+            public VertexPositionColorTexture[] Quad { get; set; }
             public Texture2D Texture { get; set; }
+
             public WallShader Shader { get; set; }
 
             public RoomWall(Direction iOrientation, Texture2D iTexture, float startU, float startV, float endU, float endV, float heightOffset = 0.0f)
@@ -29,12 +29,12 @@ namespace Sayohime.Scenes.CrawlerScene
                 Orientation = iOrientation;
                 Texture = iTexture;
 
-                VertexPositionTexture[] quad =
+                VertexPositionColorTexture[] quad =
 				[
-					new VertexPositionTexture(VERTICES[Orientation][0] - new Vector3(0, heightOffset, 0), new Vector2(startU, startV)),
-					new VertexPositionTexture(VERTICES[Orientation][1] - new Vector3(0, heightOffset, 0), new Vector2(startU, endV)),
-					new VertexPositionTexture(VERTICES[Orientation][2] - new Vector3(0, heightOffset, 0), new Vector2(endU, endV)),
-					new VertexPositionTexture(VERTICES[Orientation][3] - new Vector3(0, heightOffset, 0), new Vector2(endU, startV)),
+					new VertexPositionColorTexture(VERTICES[Orientation][0] - new Vector3(0, heightOffset, 0), Color.White, new Vector2(startU, startV)),
+					new VertexPositionColorTexture(VERTICES[Orientation][1] - new Vector3(0, heightOffset, 0), Color.White, new Vector2(startU, endV)),
+					new VertexPositionColorTexture(VERTICES[Orientation][2] - new Vector3(0, heightOffset, 0), Color.White, new Vector2(endU, endV)),
+					new VertexPositionColorTexture(VERTICES[Orientation][3] - new Vector3(0, heightOffset, 0), Color.White, new Vector2(endU, startV)),
 				];
 				Quad = quad;
             }
@@ -44,12 +44,12 @@ namespace Sayohime.Scenes.CrawlerScene
                 Orientation = iOrientation;
                 Texture = iTexture;
 
-                VertexPositionTexture[] quad =
+				VertexPositionColorTexture[] quad =
 				[
-					new VertexPositionTexture(vertices[Orientation][0], new Vector2(startU, startV)),
-					new VertexPositionTexture(vertices[Orientation][1], new Vector2(startU, endV)),
-					new VertexPositionTexture(vertices[Orientation][2], new Vector2(endU, endV)),
-					new VertexPositionTexture(vertices[Orientation][3], new Vector2(endU, startV)),
+					new VertexPositionColorTexture(vertices[Orientation][0], Color.White, new Vector2(startU, startV)),
+					new VertexPositionColorTexture(vertices[Orientation][1], Color.White, new Vector2(startU, endV)),
+					new VertexPositionColorTexture(vertices[Orientation][2], Color.White, new Vector2(endU, endV)),
+					new VertexPositionColorTexture(vertices[Orientation][3], Color.White, new Vector2(endU, startV)),
 				];
 				Quad = quad;
             }
@@ -59,50 +59,71 @@ namespace Sayohime.Scenes.CrawlerScene
         private const int CAM_HEIGHT = -1;
         private static readonly short[] INDICES = [0, 2, 1, 2, 0, 3];
         private static readonly Dictionary<Direction, Vector3[]> VERTICES = new Dictionary<Direction, Vector3[]>()
-        {   {
-                Direction.North, new Vector3[] {
-                    new Vector3(-WALL_HALF_LENGTH, -WALL_HALF_LENGTH + CAM_HEIGHT, WALL_HALF_LENGTH),
-                    new Vector3(-WALL_HALF_LENGTH, WALL_HALF_LENGTH + CAM_HEIGHT, WALL_HALF_LENGTH),
-                    new Vector3(WALL_HALF_LENGTH, WALL_HALF_LENGTH + CAM_HEIGHT, WALL_HALF_LENGTH),
-                    new Vector3(WALL_HALF_LENGTH, -WALL_HALF_LENGTH + CAM_HEIGHT, WALL_HALF_LENGTH) }
-            }, {
-                Direction.West, new Vector3[] {
-                    new Vector3(-WALL_HALF_LENGTH, -WALL_HALF_LENGTH + CAM_HEIGHT, -WALL_HALF_LENGTH),
-                    new Vector3(-WALL_HALF_LENGTH, WALL_HALF_LENGTH + CAM_HEIGHT, -WALL_HALF_LENGTH),
-                    new Vector3(-WALL_HALF_LENGTH, WALL_HALF_LENGTH + CAM_HEIGHT, WALL_HALF_LENGTH),
-                    new Vector3(-WALL_HALF_LENGTH, -WALL_HALF_LENGTH + CAM_HEIGHT, WALL_HALF_LENGTH) }
-            }, {
-                Direction.East, new Vector3[] {
-                    new Vector3(WALL_HALF_LENGTH, -WALL_HALF_LENGTH + CAM_HEIGHT, WALL_HALF_LENGTH),
-                    new Vector3(WALL_HALF_LENGTH, WALL_HALF_LENGTH + CAM_HEIGHT, WALL_HALF_LENGTH),
-                    new Vector3(WALL_HALF_LENGTH, WALL_HALF_LENGTH + CAM_HEIGHT, -WALL_HALF_LENGTH),
-                    new Vector3(WALL_HALF_LENGTH, -WALL_HALF_LENGTH + CAM_HEIGHT, -WALL_HALF_LENGTH) }
-            }, {
-                Direction.South, new Vector3[] {
-                    new Vector3(WALL_HALF_LENGTH, -WALL_HALF_LENGTH + CAM_HEIGHT, -WALL_HALF_LENGTH),
-                    new Vector3(WALL_HALF_LENGTH, WALL_HALF_LENGTH + CAM_HEIGHT, -WALL_HALF_LENGTH),
-                    new Vector3(-WALL_HALF_LENGTH, WALL_HALF_LENGTH + CAM_HEIGHT, -WALL_HALF_LENGTH),
-                    new Vector3(-WALL_HALF_LENGTH, -WALL_HALF_LENGTH + CAM_HEIGHT, -WALL_HALF_LENGTH) }
-            }, {
-                Direction.Up, new Vector3[] {
-                    new Vector3(WALL_HALF_LENGTH, -WALL_HALF_LENGTH + CAM_HEIGHT, WALL_HALF_LENGTH),
-                    new Vector3(WALL_HALF_LENGTH, -WALL_HALF_LENGTH + CAM_HEIGHT, -WALL_HALF_LENGTH),
-                    new Vector3(-WALL_HALF_LENGTH, -WALL_HALF_LENGTH + CAM_HEIGHT, -WALL_HALF_LENGTH),
-                    new Vector3(-WALL_HALF_LENGTH, -WALL_HALF_LENGTH + CAM_HEIGHT, WALL_HALF_LENGTH) }
-            }, {
-                Direction.Down, new Vector3[] {
-                    new Vector3(WALL_HALF_LENGTH, WALL_HALF_LENGTH + CAM_HEIGHT, -WALL_HALF_LENGTH),
-                    new Vector3(WALL_HALF_LENGTH, WALL_HALF_LENGTH + CAM_HEIGHT, WALL_HALF_LENGTH),
-                    new Vector3(-WALL_HALF_LENGTH, WALL_HALF_LENGTH + CAM_HEIGHT, WALL_HALF_LENGTH),
-                    new Vector3(-WALL_HALF_LENGTH, WALL_HALF_LENGTH + CAM_HEIGHT, -WALL_HALF_LENGTH) }
-        } };
+        {   
+            {
+                Direction.North, new Vector3[]
+                {
+                    new (-WALL_HALF_LENGTH, -WALL_HALF_LENGTH + CAM_HEIGHT, WALL_HALF_LENGTH),
+					new (-WALL_HALF_LENGTH, WALL_HALF_LENGTH + CAM_HEIGHT, WALL_HALF_LENGTH),
+                    new (WALL_HALF_LENGTH, WALL_HALF_LENGTH + CAM_HEIGHT, WALL_HALF_LENGTH),
+                    new (WALL_HALF_LENGTH, -WALL_HALF_LENGTH + CAM_HEIGHT, WALL_HALF_LENGTH)
+                }
+            },
+            {
+                Direction.West, new Vector3[]
+                {
+                    new (-WALL_HALF_LENGTH, -WALL_HALF_LENGTH + CAM_HEIGHT, -WALL_HALF_LENGTH),
+                    new (-WALL_HALF_LENGTH, WALL_HALF_LENGTH + CAM_HEIGHT, -WALL_HALF_LENGTH),
+                    new (-WALL_HALF_LENGTH, WALL_HALF_LENGTH + CAM_HEIGHT, WALL_HALF_LENGTH),
+                    new (-WALL_HALF_LENGTH, -WALL_HALF_LENGTH + CAM_HEIGHT, WALL_HALF_LENGTH)
+                }
+            },
+            {
+                Direction.East, new Vector3[]
+                {
+                    new (WALL_HALF_LENGTH, -WALL_HALF_LENGTH + CAM_HEIGHT, WALL_HALF_LENGTH),
+                    new (WALL_HALF_LENGTH, WALL_HALF_LENGTH + CAM_HEIGHT, WALL_HALF_LENGTH),
+                    new (WALL_HALF_LENGTH, WALL_HALF_LENGTH + CAM_HEIGHT, -WALL_HALF_LENGTH),
+                    new (WALL_HALF_LENGTH, -WALL_HALF_LENGTH + CAM_HEIGHT, -WALL_HALF_LENGTH)
+                }
+            },
+            {
+                Direction.South, new Vector3[]
+                {
+                    new (WALL_HALF_LENGTH, -WALL_HALF_LENGTH + CAM_HEIGHT, -WALL_HALF_LENGTH),
+                    new (WALL_HALF_LENGTH, WALL_HALF_LENGTH + CAM_HEIGHT, -WALL_HALF_LENGTH),
+                    new (-WALL_HALF_LENGTH, WALL_HALF_LENGTH + CAM_HEIGHT, -WALL_HALF_LENGTH),
+                    new (-WALL_HALF_LENGTH, -WALL_HALF_LENGTH + CAM_HEIGHT, -WALL_HALF_LENGTH)
+                }
+            },
+            {
+                Direction.Up, new Vector3[]
+                {
+                    new (WALL_HALF_LENGTH, -WALL_HALF_LENGTH + CAM_HEIGHT, WALL_HALF_LENGTH),
+                    new (WALL_HALF_LENGTH, -WALL_HALF_LENGTH + CAM_HEIGHT, -WALL_HALF_LENGTH),
+                    new (-WALL_HALF_LENGTH, -WALL_HALF_LENGTH + CAM_HEIGHT, -WALL_HALF_LENGTH),
+                    new (-WALL_HALF_LENGTH, -WALL_HALF_LENGTH + CAM_HEIGHT, WALL_HALF_LENGTH)
+                }
+            },
+            {
+                Direction.Down, new Vector3[]
+                {
+                    new (WALL_HALF_LENGTH, WALL_HALF_LENGTH + CAM_HEIGHT, -WALL_HALF_LENGTH),
+                    new (WALL_HALF_LENGTH, WALL_HALF_LENGTH + CAM_HEIGHT, WALL_HALF_LENGTH),
+                    new (-WALL_HALF_LENGTH, WALL_HALF_LENGTH + CAM_HEIGHT, WALL_HALF_LENGTH),
+                    new (-WALL_HALF_LENGTH, WALL_HALF_LENGTH + CAM_HEIGHT, -WALL_HALF_LENGTH)
+                }
+            }
+        };
 
         private static Texture2D minimapSprite = AssetCache.SPRITES[GameSprite.MiniMap];
         private static readonly Rectangle[] minimapSource = [new Rectangle(0, 0, Floor.MINI_CELL_SIZE, Floor.MINI_CELL_SIZE), new Rectangle(Floor.MINI_CELL_SIZE * 1, 0, Floor.MINI_CELL_SIZE, Floor.MINI_CELL_SIZE), new Rectangle(Floor.MINI_CELL_SIZE * 2, 0, Floor.MINI_CELL_SIZE, Floor.MINI_CELL_SIZE), new Rectangle(Floor.MINI_CELL_SIZE * 3, 0, Floor.MINI_CELL_SIZE, Floor.MINI_CELL_SIZE)];
         private static Texture2D enemyIndicator = AssetCache.SPRITES[GameSprite.FoeMarker];
         private static readonly Rectangle[] enemySource = [new Rectangle(0, 0, Floor.MINI_CELL_SIZE, Floor.MINI_CELL_SIZE), new Rectangle(Floor.MINI_CELL_SIZE * 1, 0, Floor.MINI_CELL_SIZE, Floor.MINI_CELL_SIZE), new Rectangle(Floor.MINI_CELL_SIZE * 2, 0, Floor.MINI_CELL_SIZE, Floor.MINI_CELL_SIZE), new Rectangle(Floor.MINI_CELL_SIZE * 3, 0, Floor.MINI_CELL_SIZE, Floor.MINI_CELL_SIZE)];
 
-        public int RoomX { get; set; }
+		public static WallShader Shader { get; set; }
+
+		public int RoomX { get; set; }
         public int RoomY { get; set; }
 
 
@@ -122,7 +143,6 @@ namespace Sayohime.Scenes.CrawlerScene
 
         private CrawlerScene parentScene;
         private Floor parentFloor;
-        private Matrix translationMatrix;
 
         private bool door = false;
         int waypointTile;
@@ -279,23 +299,16 @@ namespace Sayohime.Scenes.CrawlerScene
 			}
 		}
 
-		public void SetVertices(int x, int y)
+		public void SetVertices(int x, int z)
         {
-            translationMatrix = Matrix.CreateTranslation(new Vector3(10 * x, 0, 10 * (parentFloor.MapHeight - y)));
-
-            BuildShader();
+            BuildShader(x, z);
         }
 
-        private void BuildShader()
+        private void BuildShader(int x, int z)
         {
             foreach (KeyValuePair<Direction, RoomWall> wall in wallList)
             {
-                wall.Value.Shader = new WallShader(Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 2f, 472 / 332.0f, 0.7f, 10000.0f));
-                wall.Value.Shader.World = translationMatrix;
-                wall.Value.Shader.WallTexture = wall.Value.Texture;
-
                 Vector4 brightness;
-
                 switch (wall.Value.Orientation)
                 {
                     case Direction.Up: brightness = new Vector4(Brightness(lightVertices[2]), Brightness(lightVertices[3]), Brightness(lightVertices[0]), Brightness(lightVertices[1])); break;
@@ -305,17 +318,16 @@ namespace Sayohime.Scenes.CrawlerScene
                     default: brightness = new Vector4(Brightness(lightVertices[0]), Brightness(lightVertices[1]), Brightness(lightVertices[2]), Brightness(lightVertices[3])); break;
                 }
 
-                wall.Value.Shader.Brightness = brightness;
+                for (int i = 0; i < wall.Value.Quad.Length; i++)
+                {
+					wall.Value.Quad[i].Position += new Vector3(10 * x, 0, 10 * (parentFloor.MapHeight - z));
+                    wall.Value.Quad[i].Color = new Color(brightness);
+				}
             }
 
 			foreach (KeyValuePair<Direction, RoomWall> wall in upperWallList)
 			{
-				wall.Value.Shader = new WallShader(Matrix.CreatePerspectiveFieldOfView((float)Math.PI / 2f, 472 / 332.0f, 0.7f, 10000.0f));
-				wall.Value.Shader.World = translationMatrix;
-				wall.Value.Shader.WallTexture = wall.Value.Texture;
-
 				Vector4 brightness;
-
 				switch (wall.Value.Orientation)
 				{
 					case Direction.Up: brightness = new Vector4(Brightness(lightVertices[2]), Brightness(lightVertices[3]), Brightness(lightVertices[0]), Brightness(lightVertices[1])); break;
@@ -325,7 +337,11 @@ namespace Sayohime.Scenes.CrawlerScene
 					default: brightness = new Vector4(Brightness(lightVertices[0]), Brightness(lightVertices[1]), Brightness(lightVertices[2]), Brightness(lightVertices[3])); break;
 				}
 
-				wall.Value.Shader.Brightness = brightness;
+				for (int i = 0; i < wall.Value.Quad.Length; i++)
+				{
+					wall.Value.Quad[i].Position += new Vector3(10 * x, 0, 10 * (parentFloor.MapHeight - z));
+					wall.Value.Quad[i].Color = new Color(brightness);
+				}
 			}
 		}
 
@@ -392,12 +408,7 @@ namespace Sayohime.Scenes.CrawlerScene
 
         public void DrawWall(RoomWall wall, Matrix viewMatrix)
         {
-            wall.Shader.View = viewMatrix;
-            foreach (EffectPass pass in wall.Shader.Effect.CurrentTechnique.Passes)
-            {
-                pass.Apply();
-                graphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, wall.Quad, 0, 4, INDICES, 0, 2);
-            }
+            graphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, wall.Quad, 0, 4, INDICES, 0, 2);
         }
 
         public void DrawMinimap(SpriteBatch spriteBatch, Vector2 offset, float depth)

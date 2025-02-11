@@ -1665,6 +1665,33 @@
 							],
 							"__worldX": 240,
 							"__worldY": 208
+						},
+						{
+							"__identifier": "Npc",
+							"__grid": [6,9],
+							"__pivot": [0,0],
+							"__tags": [],
+							"__tile": null,
+							"__smartColor": "#63C74D",
+							"iid": "6c5b1b90-c210-11ef-ab9b-2bfb69485b1a",
+							"width": 16,
+							"height": 16,
+							"defUid": 1455,
+							"px": [96,144],
+							"fieldInstances": [
+								{ "__identifier": "Name", "__type": "String", "__value": null, "__tile": null, "defUid": 1456, "realEditorValues": [] },
+								{ "__identifier": "Sprite", "__type": "String", "__value": "Coral", "__tile": null, "defUid": 1457, "realEditorValues": [{
+									"id": "V_String",
+									"params": ["Coral"]
+								}] },
+								{ "__identifier": "Script", "__type": "String", "__value": null, "__tile": null, "defUid": 1458, "realEditorValues": [] },
+								{ "__identifier": "EnableIf", "__type": "String", "__value": null, "__tile": null, "defUid": 1459, "realEditorValues": [] },
+								{ "__identifier": "DisableIf", "__type": "String", "__value": null, "__tile": null, "defUid": 1460, "realEditorValues": [] },
+								{ "__identifier": "Size", "__type": "Int", "__value": 5, "__tile": null, "defUid": 1461, "realEditorValues": [] },
+								{ "__identifier": "Height", "__type": "Int", "__value": 0, "__tile": null, "defUid": 1468, "realEditorValues": [] }
+							],
+							"__worldX": 96,
+							"__worldY": 144
 						}
 					]
 				},
