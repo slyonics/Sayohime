@@ -31,7 +31,6 @@ namespace Sayohime.Scenes.MapScene
             set
             {
                 shaderEffect.Parameters["World"].SetValue(value);
-                shaderEffect.Parameters["WorldInverseTranspose"].SetValue(Matrix.Transpose(Matrix.Invert(value)));
             }
         }
 

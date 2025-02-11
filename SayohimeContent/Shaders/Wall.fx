@@ -7,18 +7,6 @@ float4x4 View;
 float4x4 Projection;
 float4x4 WorldInverseTranspose;
  
-float4 AmbientColor = float4(1, 1, 1, 1);
-float AmbientIntensity = 1.0;
- 
-float3 DiffuseLightDirection = float3(1, 0, 0);
-float4 DiffuseColor = float4(1, 1, 1, 1);
-float DiffuseIntensity = 1.0;
- 
-float Shininess = 200;
-float4 SpecularColor = float4(1, 1, 1, 1);
-float SpecularIntensity = 1;
-float3 ViewVector = float3(1, 0, 0);
- 
 texture ModelTexture;
 sampler2D textureSampler = sampler_state {
     Texture = (WallTexture);
@@ -46,33 +34,20 @@ struct VertexShaderOutput
  
 VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 {
-    VertexShaderOutput output;
- 
     float4 worldPosition = mul(input.Position, World);
     float4 viewPosition = mul(worldPosition, View);
+	
+	VertexShaderOutput output;
     output.Position = mul(viewPosition, Projection);
- 
-    float4 normal = normalize(mul(input.Normal, WorldInverseTranspose));
-    float lightIntensity = dot(normal, DiffuseLightDirection);
-    //output.Color = saturate(DiffuseColor * DiffuseIntensity * lightIntensity);
 	output.Color = input.Color;
- 
-    output.Normal = normal;
- 
+    output.Normal = normalize(input.Normal);
     output.TextureCoordinate = input.TextureCoordinate;
+	
     return output;
 }
  
 float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
-    //float3 light = normalize(DiffuseLightDirection);
-    float3 normal = normalize(input.Normal);
-    //float3 r = normalize(2 * dot(light, normal) * normal - light);
-    //float3 v = normalize(mul(normalize(ViewVector), World));
-    //float dotProduct = dot(r, v);
- 
-    //float4 specular = SpecularIntensity * SpecularColor * max(pow(dotProduct, Shininess), 0) * length(input.Color);
-
     int lightTexU = round(input.TextureCoordinate.x * 4);
     int lightTexV = round(input.TextureCoordinate.y * 4);
 
@@ -83,8 +58,6 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
     float4 rawTextureColor = tex2D(textureSampler, input.TextureCoordinate);    
     float4 litTextureColor = float4(rawTextureColor.x * realBright, rawTextureColor.y * realBright, rawTextureColor.z * realBright, rawTextureColor.w);
     return litTextureColor;
-
-    //return saturate(textureColor * (input.Color) + AmbientColor * AmbientIntensity + specular);
 }
  
 technique Textured
