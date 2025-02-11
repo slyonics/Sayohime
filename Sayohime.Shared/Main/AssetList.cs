@@ -56,11 +56,8 @@ namespace Sayohime.Main
 
     public enum GameMusic
     {
-        Dungeon,
-        BlastingThroughtheSky,
-        ChoiceEncounter,
-        NewDestinations,
-        Selection,
+        Dream,
+        Overworld,
 
         None = -1
     }

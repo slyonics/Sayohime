@@ -1558,16 +1558,16 @@
 					"id": "V_String",
 					"params": ["Test Dream F1"]
 				}] },
-				{ "__identifier": "Music", "__type": "String", "__value": "Dungeon", "__tile": null, "defUid": 252, "realEditorValues": [{
+				{ "__identifier": "Music", "__type": "String", "__value": "Dream", "__tile": null, "defUid": 252, "realEditorValues": [{
 					"id": "V_String",
-					"params": ["Dungeon"]
+					"params": ["Dream"]
 				}] },
 				{ "__identifier": "AmbientLight", "__type": "Float", "__value": 0.7, "__tile": null, "defUid": 1446, "realEditorValues": [{ "id": "V_Float", "params": [0.7] }] },
 				{ "__identifier": "Skybox", "__type": "String", "__value": null, "__tile": null, "defUid": 1454, "realEditorValues": [null] },
-				{ "__identifier": "ProcgenScript", "__type": "String", "__value": "RecursiveLines Start=9,13 Length=5-9 ReplicateChance=0.6\nRecursiveLines Start=9,13 Length=5-9 ReplicateChance=0.6\nRecursiveLines Start=9,13 Length=5-9 ReplicateChance=0.6\nRecursiveLines Start=9,13 Length=5-9 ReplicateChance=0.6", "__tile": null, "defUid": 1470, "realEditorValues": [{
+				{ "__identifier": "ProcgenScript", "__type": "String", "__value": "RecursiveLines Start=9,13 Length=$rand(5,9) ReplicateChance=0.6\nRecursiveLines Start=9,13 Length=$rand(5,9) ReplicateChance=0.6\nRecursiveLines Start=9,13 Length=$rand(5,9) ReplicateChance=0.6\nRecursiveLines Start=9,13 Length=$rand(5,9) ReplicateChance=0.6", "__tile": null, "defUid": 1470, "realEditorValues": [{
 					"id": "V_String",
 					"params": [
-						"RecursiveLines Start=9,13 Length=5-9 ReplicateChance=0.6\\nRecursiveLines Start=9,13 Length=5-9 ReplicateChance=0.6\\nRecursiveLines Start=9,13 Length=5-9 ReplicateChance=0.6\\nRecursiveLines Start=9,13 Length=5-9 ReplicateChance=0.6"
+						"RecursiveLines Start=9,13 Length=$rand(5,9) ReplicateChance=0.6\\nRecursiveLines Start=9,13 Length=$rand(5,9) ReplicateChance=0.6\\nRecursiveLines Start=9,13 Length=$rand(5,9) ReplicateChance=0.6\\nRecursiveLines Start=9,13 Length=$rand(5,9) ReplicateChance=0.6"
 					]
 				}] }
 			],
