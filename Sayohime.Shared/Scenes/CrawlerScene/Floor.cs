@@ -54,7 +54,7 @@ namespace Sayohime.Scenes.CrawlerScene
 
         private Dictionary<long, Tileset> tilesets = new Dictionary<long, Tileset>();
 
-        private MapRoom[,] mapRooms = new MapRoom[8, 8];
+        private MapRoom[,] mapRooms;
 
         private List<MapRoom> visibleTiles = new List<MapRoom>();
         private bool revealAll;

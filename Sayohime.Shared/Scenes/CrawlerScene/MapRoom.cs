@@ -138,7 +138,6 @@ namespace Sayohime.Scenes.CrawlerScene
         public string[] PreEnterScript { get; set; }
         public string[] InteractScript { get; set; }
 
-        //public WallShader WallEffect { get; private set; }
         private GraphicsDevice graphicsDevice = CrossPlatformGame.GameInstance.GraphicsDevice;
 
         private CrawlerScene parentScene;
@@ -308,29 +307,63 @@ namespace Sayohime.Scenes.CrawlerScene
         {
             foreach (KeyValuePair<Direction, RoomWall> wall in wallList)
             {
-                Vector4 brightness;
-                switch (wall.Value.Orientation)
-                {
-                    case Direction.Up: brightness = new Vector4(Brightness(lightVertices[2]), Brightness(lightVertices[3]), Brightness(lightVertices[0]), Brightness(lightVertices[1])); break;
-                    case Direction.North: brightness = new Vector4(Brightness(lightVertices[1]), Brightness(lightVertices[0]), Brightness(lightVertices[3]), Brightness(lightVertices[2])); break;
-                    case Direction.East: brightness = new Vector4(Brightness(lightVertices[3]), Brightness(lightVertices[1]), Brightness(lightVertices[2]), Brightness(lightVertices[0])); break;
-                    case Direction.West: brightness = new Vector4(Brightness(lightVertices[0]), Brightness(lightVertices[2]), Brightness(lightVertices[1]), Brightness(lightVertices[3])); break;
-                    default: brightness = new Vector4(Brightness(lightVertices[0]), Brightness(lightVertices[1]), Brightness(lightVertices[2]), Brightness(lightVertices[3])); break;
-                }
-
                 for (int i = 0; i < wall.Value.Quad.Length; i++)
                 {
-					wall.Value.Quad[i].Position += new Vector3(10 * x, 0, 10 * (parentFloor.MapHeight - z));
-                    wall.Value.Quad[i].Color = new Color(brightness);
+					wall.Value.Quad[i].Position += new Vector3(CrawlerScene.ROOM_LENGTH * x, 0, CrawlerScene.ROOM_LENGTH * (parentFloor.MapHeight - z));
 				}
-            }
+
+				switch (wall.Value.Orientation)
+				{
+					case Direction.Down:
+                        wall.Value.Quad[0].Color = new Color(Brightness(lightVertices[3]), Brightness(lightVertices[3]), Brightness(lightVertices[3]), 1.0f);
+						wall.Value.Quad[1].Color = new Color(Brightness(lightVertices[1]), Brightness(lightVertices[1]), Brightness(lightVertices[1]), 1.0f);
+						wall.Value.Quad[2].Color = new Color(Brightness(lightVertices[0]), Brightness(lightVertices[0]), Brightness(lightVertices[0]), 1.0f);
+						wall.Value.Quad[3].Color = new Color(Brightness(lightVertices[2]), Brightness(lightVertices[2]), Brightness(lightVertices[2]), 1.0f);
+						break;
+
+					case Direction.North:
+						wall.Value.Quad[0].Color = new Color(Brightness(lightVertices[0]), Brightness(lightVertices[0]), Brightness(lightVertices[0]), 1.0f);
+						wall.Value.Quad[1].Color = new Color(Brightness(lightVertices[0]), Brightness(lightVertices[0]), Brightness(lightVertices[0]), 1.0f);
+						wall.Value.Quad[2].Color = new Color(Brightness(lightVertices[1]), Brightness(lightVertices[1]), Brightness(lightVertices[1]), 1.0f);
+						wall.Value.Quad[3].Color = new Color(Brightness(lightVertices[1]), Brightness(lightVertices[1]), Brightness(lightVertices[1]), 1.0f);
+						break;
+
+					case Direction.East:
+						wall.Value.Quad[0].Color = new Color(Brightness(lightVertices[1]), Brightness(lightVertices[1]), Brightness(lightVertices[1]), 1.0f);
+						wall.Value.Quad[1].Color = new Color(Brightness(lightVertices[1]), Brightness(lightVertices[1]), Brightness(lightVertices[1]), 1.0f);
+						wall.Value.Quad[2].Color = new Color(Brightness(lightVertices[3]), Brightness(lightVertices[3]), Brightness(lightVertices[3]), 1.0f);
+						wall.Value.Quad[3].Color = new Color(Brightness(lightVertices[3]), Brightness(lightVertices[3]), Brightness(lightVertices[3]), 1.0f);
+						break;
+
+					case Direction.South:
+						wall.Value.Quad[0].Color = new Color(Brightness(lightVertices[3]), Brightness(lightVertices[3]), Brightness(lightVertices[3]), 1.0f);
+						wall.Value.Quad[1].Color = new Color(Brightness(lightVertices[3]), Brightness(lightVertices[3]), Brightness(lightVertices[3]), 1.0f);
+						wall.Value.Quad[2].Color = new Color(Brightness(lightVertices[2]), Brightness(lightVertices[2]), Brightness(lightVertices[2]), 1.0f);
+						wall.Value.Quad[3].Color = new Color(Brightness(lightVertices[2]), Brightness(lightVertices[2]), Brightness(lightVertices[2]), 1.0f);
+						break;
+
+					case Direction.West:
+						wall.Value.Quad[0].Color = new Color(Brightness(lightVertices[2]), Brightness(lightVertices[2]), Brightness(lightVertices[2]), 1.0f);
+						wall.Value.Quad[1].Color = new Color(Brightness(lightVertices[2]), Brightness(lightVertices[2]), Brightness(lightVertices[2]), 1.0f);
+						wall.Value.Quad[2].Color = new Color(Brightness(lightVertices[0]), Brightness(lightVertices[0]), Brightness(lightVertices[0]), 1.0f);
+						wall.Value.Quad[3].Color = new Color(Brightness(lightVertices[0]), Brightness(lightVertices[0]), Brightness(lightVertices[0]), 1.0f);
+						break;
+
+					case Direction.Up:
+						wall.Value.Quad[0].Color = new Color(Brightness(lightVertices[1]), Brightness(lightVertices[1]), Brightness(lightVertices[1]), 1.0f);
+						wall.Value.Quad[1].Color = new Color(Brightness(lightVertices[3]), Brightness(lightVertices[3]), Brightness(lightVertices[3]), 1.0f);
+						wall.Value.Quad[2].Color = new Color(Brightness(lightVertices[2]), Brightness(lightVertices[2]), Brightness(lightVertices[2]), 1.0f);
+						wall.Value.Quad[3].Color = new Color(Brightness(lightVertices[0]), Brightness(lightVertices[0]), Brightness(lightVertices[0]), 1.0f);
+						break;
+				}
+			}
 
 			foreach (KeyValuePair<Direction, RoomWall> wall in upperWallList)
 			{
 				Vector4 brightness;
 				switch (wall.Value.Orientation)
 				{
-					case Direction.Up: brightness = new Vector4(Brightness(lightVertices[2]), Brightness(lightVertices[3]), Brightness(lightVertices[0]), Brightness(lightVertices[1])); break;
+					case Direction.South: brightness = new Vector4(Brightness(lightVertices[2]), Brightness(lightVertices[3]), Brightness(lightVertices[0]), Brightness(lightVertices[1])); break;
 					case Direction.North: brightness = new Vector4(Brightness(lightVertices[1]), Brightness(lightVertices[0]), Brightness(lightVertices[3]), Brightness(lightVertices[2])); break;
 					case Direction.East: brightness = new Vector4(Brightness(lightVertices[3]), Brightness(lightVertices[1]), Brightness(lightVertices[2]), Brightness(lightVertices[0])); break;
 					case Direction.West: brightness = new Vector4(Brightness(lightVertices[0]), Brightness(lightVertices[2]), Brightness(lightVertices[1]), Brightness(lightVertices[3])); break;
@@ -339,7 +372,7 @@ namespace Sayohime.Scenes.CrawlerScene
 
 				for (int i = 0; i < wall.Value.Quad.Length; i++)
 				{
-					wall.Value.Quad[i].Position += new Vector3(10 * x, 0, 10 * (parentFloor.MapHeight - z));
+					wall.Value.Quad[i].Position += new Vector3(CrawlerScene.ROOM_LENGTH * x, 0, CrawlerScene.ROOM_LENGTH * (parentFloor.MapHeight - z));
 					wall.Value.Quad[i].Color = new Color(brightness);
 				}
 			}
@@ -370,24 +403,62 @@ namespace Sayohime.Scenes.CrawlerScene
                 }
             }
 
-            List<MapRoom> nw = new List<MapRoom>() { this };
-            if (Neighbors.Contains(this[Direction.North])) { nw.Add(this[Direction.North]); if (this[Direction.North].Neighbors.Contains(this[Direction.North][Direction.West])) nw.Add(this[Direction.North][Direction.West]); }
-            if (Neighbors.Contains(this[Direction.West])) { nw.Add(this[Direction.West]); nw.Add(this[Direction.West]); if (this[Direction.West].Neighbors.Contains(this[Direction.West][Direction.North])) nw.Add(this[Direction.West][Direction.North]); }
+            List<MapRoom> nw = [this];
+            if (Neighbors.Contains(this[Direction.North]))
+            {
+                nw.Add(this[Direction.North]);
+                if (this[Direction.North].Neighbors.Contains(this[Direction.North][Direction.West]))
+                    nw.Add(this[Direction.North][Direction.West]);
+            }
+            if (Neighbors.Contains(this[Direction.West]))
+            {
+				nw.Add(this[Direction.West]);
+                if (this[Direction.West].Neighbors.Contains(this[Direction.West][Direction.North]))
+                    nw.Add(this[Direction.West][Direction.North]);
+			}
             lightVertices[0] = (float)nw.Distinct().Average(x => x.brightnessLevel);
 
-            List<MapRoom> ne = new List<MapRoom>() { this };
-            if (Neighbors.Contains(this[Direction.North])) { ne.Add(this[Direction.North]); if (this[Direction.North].Neighbors.Contains(this[Direction.North][Direction.East])) ne.Add(this[Direction.North][Direction.East]); }
-            if (Neighbors.Contains(this[Direction.East])) { ne.Add(this[Direction.East]); ne.Add(this[Direction.East]); if (this[Direction.East].Neighbors.Contains(this[Direction.East][Direction.North])) ne.Add(this[Direction.East][Direction.North]); }
+            List<MapRoom> ne = [this];
+            if (Neighbors.Contains(this[Direction.North]))
+            {
+                ne.Add(this[Direction.North]);
+                if (this[Direction.North].Neighbors.Contains(this[Direction.North][Direction.East]))
+                    ne.Add(this[Direction.North][Direction.East]); }
+            if (Neighbors.Contains(this[Direction.East]))
+            {
+                ne.Add(this[Direction.East]);
+                if (this[Direction.East].Neighbors.Contains(this[Direction.East][Direction.North]))
+                    ne.Add(this[Direction.East][Direction.North]);
+            }
             lightVertices[1] = (float)ne.Distinct().Average(x => x.brightnessLevel);
 
-            List<MapRoom> sw = new List<MapRoom>() { this };
-            if (Neighbors.Contains(this[Direction.South])) { sw.Add(this[Direction.South]); if (this[Direction.South].Neighbors.Contains(this[Direction.South][Direction.West])) sw.Add(this[Direction.South][Direction.West]); }
-            if (Neighbors.Contains(this[Direction.West])) { sw.Add(this[Direction.West]); sw.Add(this[Direction.West]); if (this[Direction.West].Neighbors.Contains(this[Direction.West][Direction.South])) sw.Add(this[Direction.West][Direction.South]); }
+            List<MapRoom> sw = [this];
+            if (Neighbors.Contains(this[Direction.South]))
+            {
+                sw.Add(this[Direction.South]);
+                if (this[Direction.South].Neighbors.Contains(this[Direction.South][Direction.West]))
+                    sw.Add(this[Direction.South][Direction.West]);
+            }
+            if (Neighbors.Contains(this[Direction.West]))
+            {
+                sw.Add(this[Direction.West]);
+                if (this[Direction.West].Neighbors.Contains(this[Direction.West][Direction.South]))
+                    sw.Add(this[Direction.West][Direction.South]);
+            }
             lightVertices[2] = (float)sw.Distinct().Average(x => x.brightnessLevel);
 
-            List<MapRoom> se = new List<MapRoom>() { this };
-            if (Neighbors.Contains(this[Direction.South])) { se.Add(this[Direction.South]); if (this[Direction.South].Neighbors.Contains(this[Direction.South][Direction.East])) se.Add(this[Direction.South][Direction.East]); }
-            if (Neighbors.Contains(this[Direction.East])) { se.Add(this[Direction.East]); se.Add(this[Direction.East]); if (this[Direction.East].Neighbors.Contains(this[Direction.East][Direction.South])) se.Add(this[Direction.East][Direction.South]); }
+            List<MapRoom> se = [this];
+            if (Neighbors.Contains(this[Direction.South]))
+            {
+                se.Add(this[Direction.South]);
+                if (this[Direction.South].Neighbors.Contains(this[Direction.South][Direction.East]))
+                    se.Add(this[Direction.South][Direction.East]);
+            }
+            if (Neighbors.Contains(this[Direction.East]))
+            {
+                se.Add(this[Direction.East]);
+                if (this[Direction.East].Neighbors.Contains(this[Direction.East][Direction.South]))
+                    se.Add(this[Direction.East][Direction.South]); }
             lightVertices[3] = (float)se.Distinct().Average(x => x.brightnessLevel);
         }
 

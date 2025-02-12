@@ -51,8 +51,6 @@ namespace Sayohime.Scenes.CrawlerScene
 
         public CrawlerScene(GameMap gamemap, int x, int y, Direction dir) : this()
         {
-
-
             floor = new Floor(this, gamemap);
             LocationName = floor.LocationName;
             MapFileName = gamemap;

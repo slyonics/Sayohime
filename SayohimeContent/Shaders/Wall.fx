@@ -5,7 +5,6 @@
 float4x4 World;
 float4x4 View;
 float4x4 Projection;
-float4x4 WorldInverseTranspose;
  
 texture ModelTexture;
 sampler2D textureSampler = sampler_state {
@@ -19,7 +18,7 @@ sampler2D textureSampler = sampler_state {
 struct VertexShaderInput
 {
     float4 Position : POSITION0;
-	float4 Color : COLOR0;
+	centroid float4 Color : COLOR0;
     float4 Normal : NORMAL0;
     float2 TextureCoordinate : TEXCOORD0;
 };
@@ -27,7 +26,7 @@ struct VertexShaderInput
 struct VertexShaderOutput
 {
     float4 Position : POSITION0;
-    float4 Color : COLOR0;
+    centroid float4 Color : COLOR0;
     float3 Normal : TEXCOORD0;
     float2 TextureCoordinate : TEXCOORD1;
 };
@@ -48,16 +47,18 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
  
 float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
-    int lightTexU = round(input.TextureCoordinate.x * 4);
-    int lightTexV = round(input.TextureCoordinate.y * 4);
+    //int lightTexU = round(input.TextureCoordinate.x * 4);
+    //int lightTexV = round(input.TextureCoordinate.y * 4);
 
-    float xBright1 = lerp(input.Color.r, input.Color.g, 1 - (lightTexU / 4.0));
-    float xBright2 = lerp(input.Color.b, input.Color.a, 1 - (lightTexU / 4.0));
-    float realBright = lerp(xBright1, xBright2, 1 - (lightTexV / 4.0));
+    //float xBright1 = lerp(input.Color.r, input.Color.g, 1 - (lightTexU / 4.0));
+    //float xBright2 = lerp(input.Color.b, input.Color.a, 1 - (lightTexU / 4.0));
+    //float realBright = lerp(xBright1, xBright2, 1 - (lightTexV / 4.0));
  
-    float4 rawTextureColor = tex2D(textureSampler, input.TextureCoordinate);    
-    float4 litTextureColor = float4(rawTextureColor.x * realBright, rawTextureColor.y * realBright, rawTextureColor.z * realBright, rawTextureColor.w);
-    return litTextureColor;
+    //float4 rawTextureColor = tex2D(textureSampler, input.TextureCoordinate);
+    //float4 litTextureColor = float4(rawTextureColor.x * realBright, rawTextureColor.y * realBright, rawTextureColor.z * realBright, rawTextureColor.w);
+    //return litTextureColor;
+	
+	return tex2D(textureSampler, input.TextureCoordinate) * input.Color;
 }
  
 technique Textured
