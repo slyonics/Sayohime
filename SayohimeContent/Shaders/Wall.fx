@@ -18,7 +18,7 @@ sampler2D textureSampler = sampler_state {
 struct VertexShaderInput
 {
     float4 Position : POSITION0;
-	centroid float4 Color : COLOR0;
+	float4 Color : COLOR0;
     float4 Normal : NORMAL0;
     float2 TextureCoordinate : TEXCOORD0;
 };
@@ -26,7 +26,7 @@ struct VertexShaderInput
 struct VertexShaderOutput
 {
     float4 Position : POSITION0;
-    centroid float4 Color : COLOR0;
+    float4 Color : COLOR0;
     float3 Normal : TEXCOORD0;
     float2 TextureCoordinate : TEXCOORD1;
 };

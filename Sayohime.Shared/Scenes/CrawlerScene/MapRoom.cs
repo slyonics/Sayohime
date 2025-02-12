@@ -360,20 +360,54 @@ namespace Sayohime.Scenes.CrawlerScene
 
 			foreach (KeyValuePair<Direction, RoomWall> wall in upperWallList)
 			{
-				Vector4 brightness;
-				switch (wall.Value.Orientation)
-				{
-					case Direction.South: brightness = new Vector4(Brightness(lightVertices[2]), Brightness(lightVertices[3]), Brightness(lightVertices[0]), Brightness(lightVertices[1])); break;
-					case Direction.North: brightness = new Vector4(Brightness(lightVertices[1]), Brightness(lightVertices[0]), Brightness(lightVertices[3]), Brightness(lightVertices[2])); break;
-					case Direction.East: brightness = new Vector4(Brightness(lightVertices[3]), Brightness(lightVertices[1]), Brightness(lightVertices[2]), Brightness(lightVertices[0])); break;
-					case Direction.West: brightness = new Vector4(Brightness(lightVertices[0]), Brightness(lightVertices[2]), Brightness(lightVertices[1]), Brightness(lightVertices[3])); break;
-					default: brightness = new Vector4(Brightness(lightVertices[0]), Brightness(lightVertices[1]), Brightness(lightVertices[2]), Brightness(lightVertices[3])); break;
-				}
-
 				for (int i = 0; i < wall.Value.Quad.Length; i++)
 				{
 					wall.Value.Quad[i].Position += new Vector3(CrawlerScene.ROOM_LENGTH * x, 0, CrawlerScene.ROOM_LENGTH * (parentFloor.MapHeight - z));
-					wall.Value.Quad[i].Color = new Color(brightness);
+				}
+
+				switch (wall.Value.Orientation)
+				{
+					case Direction.Down:
+						wall.Value.Quad[0].Color = new Color(Brightness(lightVertices[3]), Brightness(lightVertices[3]), Brightness(lightVertices[3]), 1.0f);
+						wall.Value.Quad[1].Color = new Color(Brightness(lightVertices[1]), Brightness(lightVertices[1]), Brightness(lightVertices[1]), 1.0f);
+						wall.Value.Quad[2].Color = new Color(Brightness(lightVertices[0]), Brightness(lightVertices[0]), Brightness(lightVertices[0]), 1.0f);
+						wall.Value.Quad[3].Color = new Color(Brightness(lightVertices[2]), Brightness(lightVertices[2]), Brightness(lightVertices[2]), 1.0f);
+						break;
+
+					case Direction.North:
+						wall.Value.Quad[0].Color = new Color(Brightness(lightVertices[0]), Brightness(lightVertices[0]), Brightness(lightVertices[0]), 1.0f);
+						wall.Value.Quad[1].Color = new Color(Brightness(lightVertices[0]), Brightness(lightVertices[0]), Brightness(lightVertices[0]), 1.0f);
+						wall.Value.Quad[2].Color = new Color(Brightness(lightVertices[1]), Brightness(lightVertices[1]), Brightness(lightVertices[1]), 1.0f);
+						wall.Value.Quad[3].Color = new Color(Brightness(lightVertices[1]), Brightness(lightVertices[1]), Brightness(lightVertices[1]), 1.0f);
+						break;
+
+					case Direction.East:
+						wall.Value.Quad[0].Color = new Color(Brightness(lightVertices[1]), Brightness(lightVertices[1]), Brightness(lightVertices[1]), 1.0f);
+						wall.Value.Quad[1].Color = new Color(Brightness(lightVertices[1]), Brightness(lightVertices[1]), Brightness(lightVertices[1]), 1.0f);
+						wall.Value.Quad[2].Color = new Color(Brightness(lightVertices[3]), Brightness(lightVertices[3]), Brightness(lightVertices[3]), 1.0f);
+						wall.Value.Quad[3].Color = new Color(Brightness(lightVertices[3]), Brightness(lightVertices[3]), Brightness(lightVertices[3]), 1.0f);
+						break;
+
+					case Direction.South:
+						wall.Value.Quad[0].Color = new Color(Brightness(lightVertices[3]), Brightness(lightVertices[3]), Brightness(lightVertices[3]), 1.0f);
+						wall.Value.Quad[1].Color = new Color(Brightness(lightVertices[3]), Brightness(lightVertices[3]), Brightness(lightVertices[3]), 1.0f);
+						wall.Value.Quad[2].Color = new Color(Brightness(lightVertices[2]), Brightness(lightVertices[2]), Brightness(lightVertices[2]), 1.0f);
+						wall.Value.Quad[3].Color = new Color(Brightness(lightVertices[2]), Brightness(lightVertices[2]), Brightness(lightVertices[2]), 1.0f);
+						break;
+
+					case Direction.West:
+						wall.Value.Quad[0].Color = new Color(Brightness(lightVertices[2]), Brightness(lightVertices[2]), Brightness(lightVertices[2]), 1.0f);
+						wall.Value.Quad[1].Color = new Color(Brightness(lightVertices[2]), Brightness(lightVertices[2]), Brightness(lightVertices[2]), 1.0f);
+						wall.Value.Quad[2].Color = new Color(Brightness(lightVertices[0]), Brightness(lightVertices[0]), Brightness(lightVertices[0]), 1.0f);
+						wall.Value.Quad[3].Color = new Color(Brightness(lightVertices[0]), Brightness(lightVertices[0]), Brightness(lightVertices[0]), 1.0f);
+						break;
+
+					case Direction.Up:
+						wall.Value.Quad[0].Color = new Color(Brightness(lightVertices[1]), Brightness(lightVertices[1]), Brightness(lightVertices[1]), 1.0f);
+						wall.Value.Quad[1].Color = new Color(Brightness(lightVertices[3]), Brightness(lightVertices[3]), Brightness(lightVertices[3]), 1.0f);
+						wall.Value.Quad[2].Color = new Color(Brightness(lightVertices[2]), Brightness(lightVertices[2]), Brightness(lightVertices[2]), 1.0f);
+						wall.Value.Quad[3].Color = new Color(Brightness(lightVertices[0]), Brightness(lightVertices[0]), Brightness(lightVertices[0]), 1.0f);
+						break;
 				}
 			}
 		}
